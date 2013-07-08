@@ -1,0 +1,23 @@
+components <http://www.nat-spec.com/library/components>
+
+abstract NamedElement (
+	name EString
+)
+
+abstract ComponentUser : NamedElement  (
+	~uses Component* <> Component.usedBy
+)
+
+Actor : ComponentUser (
+)
+
+
+ComponentContainer : NamedElement (
+	subComponents Component*
+	externalActors Actor*
+)
+
+Component : ComponentUser  (
+	description EString
+	~usedBy ComponentUser* <> ComponentUser.uses
+)

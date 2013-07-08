@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="de.devboost.natspec.library.documentation.DocumentationPackage"
+            genModel="model/documentation.genmodel"
+            uri="http://www.nat-spec.com/library/documentation">
+      </package>
+   </extension>
+
+</plugin>

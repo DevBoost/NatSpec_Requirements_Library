@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.devboost.natspec.library.documentation/src-gen"
+    modelPluginID="de.devboost.natspec.library.documentation" modelName="Documentation"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false">
+  <foreignModel>documentation.ecore</foreignModel>
+  <genPackages prefix="Documentation" basePackage="de.devboost.natspec.library" disposableProviderFactory="true"
+      ecorePackage="documentation.ecore#/">
+    <genClasses ecoreClass="documentation.ecore#//Documentation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/sections"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/terminology"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Documentation/title"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Section"/>
+    <genClasses ecoreClass="documentation.ecore#//Subsection"/>
+    <genClasses ecoreClass="documentation.ecore#//Subsubsection"/>
+    <genClasses image="false" ecoreClass="documentation.ecore#//TextFragmentContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextFragmentContainer/fragments"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Paragraph"/>
+    <genClasses image="false" ecoreClass="documentation.ecore#//Fragment"/>
+    <genClasses ecoreClass="documentation.ecore#//Line">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Line/text"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//List">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//List/items"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//ListItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//ListItem/text"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="documentation.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Table">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Table/tableHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Table/tableRows"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//TableHeader">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableHeader/headerCells"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//TableRow">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableRow/rowCells"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Image">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/originalSource"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//TermEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TermEntry/description"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

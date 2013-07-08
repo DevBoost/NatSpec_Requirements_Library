@@ -1,0 +1,64 @@
+documentation <http://www.nat-spec.com/library/documentation>
+
+Documentation (
+	title EString 
+	sections Section*
+	terminology TermEntry*
+)
+
+abstract NamedElement (
+	id EString
+	name EString
+)
+
+abstract TextFragmentContainer (
+	fragments Fragment*
+)
+
+Section : TextFragmentContainer, NamedElement (
+)
+
+Subsection : TextFragmentContainer, Fragment, NamedElement (
+)
+
+Subsubsection  : TextFragmentContainer, Fragment, NamedElement (
+)
+
+Paragraph : TextFragmentContainer, Fragment (
+)
+
+abstract Fragment ()
+
+Line : Fragment (
+	text EString
+)
+
+List : Fragment (
+	items ListItem*
+)
+
+ListItem : TextFragmentContainer(
+	text EString
+)
+
+Table : Fragment (
+	tableHeader TableHeader
+	tableRows TableRow*
+)
+
+TableHeader (
+	headerCells EString*
+)
+
+TableRow (
+	rowCells EString*
+)
+
+Image : Fragment, NamedElement (
+	originalSource EString
+	width EIntegerObject
+)
+
+TermEntry : NamedElement (
+	description EString
+)

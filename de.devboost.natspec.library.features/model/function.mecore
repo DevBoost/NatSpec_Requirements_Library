@@ -1,0 +1,26 @@
+function <http://www.nat-spec.com/library/function>
+
+abstract DescribedElement (
+	description EString
+)
+
+abstract GraphVertex (
+	vertex EJavaObject
+)
+
+
+FunctionList : DescribedElement, GraphVertex (
+	components Component*
+)
+
+Component : DescribedElement, GraphVertex (
+	functionGroups FunctionGroup*
+)
+
+FunctionGroup : DescribedElement, GraphVertex (
+	functions Function*
+	abbrev EString
+)
+
+Function : DescribedElement, GraphVertex (
+)

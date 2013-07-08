@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: NatSpec Library for Lean Ecore Modelling
+Bundle-SymbolicName: de.devboost.natspec.library.ecore
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: de.devboost.natspec.annotations,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi
+Export-Package: de.devboost.natspec.library.ecore

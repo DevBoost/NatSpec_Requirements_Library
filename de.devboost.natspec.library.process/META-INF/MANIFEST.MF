@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: NatSpec Library for Lean Process Modelling
+Bundle-SymbolicName: de.devboost.natspec.library.process
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: DevBoost GmbH
+Require-Bundle: org.eclipse.core.runtime,
+ de.devboost.natspec.annotations,
+ com.mxgraph.jgraphx,
+ de.devboost.essentials
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: de.devboost.natspec.library.process
