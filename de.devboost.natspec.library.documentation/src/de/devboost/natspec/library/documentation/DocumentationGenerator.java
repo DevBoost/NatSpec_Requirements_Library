@@ -29,6 +29,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseDocumentation(Documentation documentation) {
 		String result = "<h1 class=\"title\">" + documentation.getTitle()
 				+ "</h1>\n";
+		result += "<div class=\"divFooter\">UNCLASSIFIED</div>";
+		result = insertPageBreak(result);
 		result += "<h2>Outline</h2>";
 		for (Section s : documentation.getSections()) {
 			sectionCount++;
@@ -74,6 +76,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 		}
 
+		result = insertPageBreak(result);
+		
+		
 		for (Section s : documentation.getSections()) {
 			result += doSwitch(s);
 		}
@@ -89,9 +94,16 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 
 
+	private String insertPageBreak(String result) {
+		result += "\n<div class=\"page-break\"></div>\n";
+		return result;
+	}
+
 	@Override
 	public String caseSection(Section section) {
-		String result = "<a name=\"" + section.getId()
+		String result = insertPageBreak("");
+		
+		result += "<a name=\"" + section.getId()
 				+ "\"><h2 class=\"section\">" + section.getId() + " "
 				+ section.getName() + "</h2></a>\n";
 		for (Fragment f : section.getFragments()) {

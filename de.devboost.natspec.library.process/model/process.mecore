@@ -1,0 +1,33 @@
+processes <http://www.nat-spec.com/library/processes>
+
+abstract GraphVertex (
+	vertex EJavaObject
+)
+
+abstract NamedElement (
+ name EString
+)
+
+BusinessProcess : GraphVertex, NamedElement (
+ roles EString*
+ steps Step*
+ 
+)
+
+Step : GraphVertex, NamedElement (
+ inputs Input* 
+ outputs Output*
+ rationale EString
+ ~previousSteps Step* <> Step.nextSteps
+ ~nextSteps Step* <> Step.previousSteps
+)
+
+Input : GraphVertex, NamedElement (
+ optional EBoolean
+ external EBoolean
+)
+
+
+Output : GraphVertex, NamedElement (
+ 
+)
