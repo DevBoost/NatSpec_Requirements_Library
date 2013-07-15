@@ -308,11 +308,12 @@ public class DocumentationSupport {
 		addNatSpecFile(path, c, "Rules", false);
 	}
 
-	@TextSyntax("#1 : #2")
-	public void addTerminoligyEntry(String entryName,
+	@TextSyntax("Define #1 : #2")
+	public void addTerminoligyEntry(List<String> entryName,
 			List<String> entryDescription, Documentation documentation) {
 		TermEntry termEntry = factory.createTermEntry();
-		termEntry.setName(entryName);
+		termEntry.setName(new StringUtils().explode(entryName,
+				" "));
 		termEntry.setDescription(new StringUtils().explode(entryDescription,
 				" "));
 		documentation.getTerminology().add(termEntry);

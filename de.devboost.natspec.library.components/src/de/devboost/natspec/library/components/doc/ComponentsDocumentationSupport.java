@@ -58,7 +58,7 @@ public class ComponentsDocumentationSupport {
 			for (ComponentUser componentUser : usedBy) {
 				nameList.add(componentUser.getName());
 			}
-			String usersNames = new StringUtils().explode(nameList, "; ");
+			String usersNames = new StringUtils().explode(nameList, ";</br> ") + " ";
 			row.getRowCells().add(usersNames);
 			row.getRowCells().add(component.getDescription());
 		}

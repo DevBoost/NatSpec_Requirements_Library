@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mxgraph.view.mxGraph;
-
 import de.devboost.essentials.MapUtils;
 import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;

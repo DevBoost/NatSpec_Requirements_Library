@@ -45,12 +45,15 @@ public class ProcessDocumentationSupport {
 		Paragraph paragraph = factory.createParagraph();
 		Table table = factory.createTable();
 		paragraph.getFragments().add(table);
-		
+
 		TableHeader tableHeader = factory.createTableHeader();
 		table.setTableHeader(tableHeader);
 		tableHeader.getHeaderCells().add("<b>Process:</b>");
-		tableHeader.getHeaderCells().add(process.getName());
-		
+		tableHeader.getHeaderCells().add(
+				process.getName() + " (Stakeholder: "
+						+ new StringUtils().explode(process.getRoles(), " ")
+						+ ")");
+
 		EList<Step> steps = process.getSteps();
 		for (Step step : steps) {
 			TableRow stepRow = factory.createTableRow();
@@ -58,7 +61,6 @@ public class ProcessDocumentationSupport {
 			stepRow.getRowCells().add("<b>Step</b>");
 			stepRow.getRowCells().add(step.getName());
 
-			
 			stepRow = factory.createTableRow();
 			table.getTableRows().add(stepRow);
 			stepRow.getRowCells().add("&nbsp;&nbsp;&nbsp;&nbsp;Input");
@@ -74,7 +76,8 @@ public class ProcessDocumentationSupport {
 				}
 				inputsString.add(inputName);
 			}
-			stepRow.getRowCells().add(new StringUtils().explode(inputsString, "</br>"));
+			stepRow.getRowCells().add(
+					new StringUtils().explode(inputsString, "</br>"));
 
 			stepRow = factory.createTableRow();
 			table.getTableRows().add(stepRow);
@@ -90,8 +93,9 @@ public class ProcessDocumentationSupport {
 				String outputName = output.getName();
 				outputsString.add(outputName);
 			}
-			stepRow.getRowCells().add(new StringUtils().explode(outputsString, "</br>"));
-			
+			stepRow.getRowCells().add(
+					new StringUtils().explode(outputsString, "</br>"));
+
 		}
 		generator.saveFragmentToFile(paragraph, process.getName());
 	}

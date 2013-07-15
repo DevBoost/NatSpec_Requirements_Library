@@ -225,7 +225,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseTermEntry(TermEntry entry) {
 		entry.setId("entry_"+entryCounter++);
 		String result = "<a name=\""+entry.getId()+"\"><strong>" + entry.getName() + "</strong></a>: "
-				+ entry.getDescription();
+				+ entry.getDescription() + "</br>";
 		return result;
 	}
 
