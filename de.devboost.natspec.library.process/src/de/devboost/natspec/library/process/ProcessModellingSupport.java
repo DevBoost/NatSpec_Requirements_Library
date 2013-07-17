@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EList;
 
 import com.mxgraph.view.mxGraph;
 
-import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.process.processes.BusinessProcess;
 import de.devboost.natspec.process.processes.Input;
@@ -39,17 +39,17 @@ public class ProcessModellingSupport {
 	public BusinessProcess createProcess(List<String> processname) {
 		Object parent = graph.getDefaultParent();
 		Object vertex = graph.insertVertex(parent, null,
-				new StringUtils().explode(processname, " "), 240, 150, 80, 30);
+				StringUtils.join(processname, " "), 240, 150, 80, 30);
 		BusinessProcess process = processFactory.createBusinessProcess();
 		process.setVertex(vertex);
-		process.setName(new StringUtils().explode(processname, " "));
+		process.setName(StringUtils.join(processname, " "));
 		graph.insertEdge(parent, null, "", processRoot, vertex);
 		return process;
 	}
 
 	@TextSyntax("Executed by: #1")
 	public void createRoles(List<String> roles, BusinessProcess process) {
-		process.getRoles().add(new StringUtils().explode(roles, " "));
+		process.getRoles().add(StringUtils.join(roles, " "));
 	}
 
 	@TextSyntax("Step #1")
@@ -62,12 +62,12 @@ public class ProcessModellingSupport {
 			BusinessProcess businessProcess) {
 		Object parent = graph.getDefaultParent();
 		Object stepVertex = graph.insertVertex(parent, null,
-				new StringUtils().explode(stepname, " "), 240, 150, 80, 30);
+				StringUtils.join(stepname, " "), 240, 150, 80, 30);
 		graph.insertEdge(parent, null, "", businessProcess.getVertex(),
 				stepVertex);
 		Step step = processFactory.createStep();
 		businessProcess.getSteps().add(step);
-		step.setName(new StringUtils().explode(stepname, " "));
+		step.setName(StringUtils.join(stepname, " "));
 		step.setVertex(stepVertex);
 		return step;
 	}
@@ -106,26 +106,26 @@ public class ProcessModellingSupport {
 			List<String> from) {
 		Input input = processFactory.createInput();
 		step.getInputs().add(input);
-		input.setName(new StringUtils().explode(inputName, " "));
+		input.setName(StringUtils.join(inputName, " "));
 		return input;
 	}
 
 	@TextSyntax("Rationale: #1")
 	public void addRationale(List<String> rationale, Step step) {
-		step.setRationale(new StringUtils().explode(rationale, " "));
+		step.setRationale(StringUtils.join(rationale, " "));
 	}
 
 	@TextSyntax("Output: #1")
 	public void createStepOutput(List<String> output, Step step) {
 		Output stepOutput = processFactory.createOutput();
 		step.getOutputs().add(stepOutput);
-		stepOutput.setName(new StringUtils().explode(output, " "));
+		stepOutput.setName(StringUtils.join(output, " "));
 	}
 
 	@TextSyntax("Follows: #1")
 	public void addFollowsRelation(List<String> preceedingStep,
 			Step contextStep, BusinessProcess process) {
-		String prevStepName = new StringUtils().explode(preceedingStep, " ");
+		String prevStepName = StringUtils.join(preceedingStep, " ");
 		EList<Step> steps = process.getSteps();
 		Step prevStep = null;
 		for (Step step : steps) {

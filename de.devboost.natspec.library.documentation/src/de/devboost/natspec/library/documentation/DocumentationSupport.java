@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.ecore.EObject;
 
-import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;
 
 public class DocumentationSupport {
@@ -148,19 +148,20 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Paragraph #1")
-	public Paragraph createParagraphWithHeading(List<String> heading, TextFragmentContainer container) {
+	public Paragraph createParagraphWithHeading(List<String> heading,
+			TextFragmentContainer container) {
 		Paragraph paragraph = factory.createParagraph();
 		container = locateProperContainer(container);
 		container.getFragments().add(paragraph);
 		if (!heading.isEmpty()) {
 			Line headingLine = factory.createLine();
-			headingLine.setText("<strong>"+new StringUtils().explode(heading, " " )+" </strong>");
-			paragraph.getFragments().add(headingLine );
+			headingLine.setText("<strong>" + StringUtils.join(heading, " ")
+					+ " </strong>");
+			paragraph.getFragments().add(headingLine);
 		}
 		return paragraph;
 	}
 
-	
 	private TextFragmentContainer locateProperContainer(
 			TextFragmentContainer container) {
 		while (container instanceof ListItem) {
@@ -201,7 +202,7 @@ public class DocumentationSupport {
 			TextFragmentContainer container) {
 		Image image = factory.createImage();
 		container.getFragments().add(image);
-		image.setName(new StringUtils().explode(name, " "));
+		image.setName(StringUtils.join(name, " "));
 		image.setOriginalSource(externalPath);
 		return image;
 	}
@@ -312,17 +313,16 @@ public class DocumentationSupport {
 	public void addTerminoligyEntry(List<String> entryName,
 			List<String> entryDescription, Documentation documentation) {
 		TermEntry termEntry = factory.createTermEntry();
-		termEntry.setName(new StringUtils().explode(entryName,
-				" "));
-		termEntry.setDescription(new StringUtils().explode(entryDescription,
-				" "));
+		termEntry.setName(StringUtils.join(entryName, " "));
+		termEntry.setDescription(StringUtils.join(entryDescription, " "));
 		documentation.getTerminology().add(termEntry);
 	}
 
 	@TextSyntax("Author #1")
 	public void addAuthor(List<String> authors, TextFragmentContainer container) {
-		addLine(container, "<div class=\"author_tag\">"
-				+ new StringUtils().explode(authors, " ") + "</div>");
+		addLine(container,
+				"<div class=\"author_tag\">" + StringUtils.join(authors, " ")
+						+ "</div>");
 	}
 
 }

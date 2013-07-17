@@ -10,8 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.devboost.natspec.annotations,
  com.mxgraph.jgraphx,
- de.devboost.essentials,
- de.devboost.natspec.library.documentation
+ de.devboost.natspec.library.documentation,
+ org.apache.commons.lang
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: de.devboost.natspec.library.process,

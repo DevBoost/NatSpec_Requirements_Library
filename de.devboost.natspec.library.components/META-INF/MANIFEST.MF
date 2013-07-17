@@ -9,10 +9,10 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: com.mxgraph.jgraphx,
  de.devboost.natspec.annotations,
- de.devboost.essentials,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- de.devboost.natspec.library.documentation
+ de.devboost.natspec.library.documentation,
+ org.apache.commons.lang
 Bundle-ActivationPolicy: lazy
 Export-Package: de.devboost.natspec.library.components,
  de.devboost.natspec.library.components.components,

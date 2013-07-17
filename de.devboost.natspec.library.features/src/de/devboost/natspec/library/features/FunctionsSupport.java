@@ -2,9 +2,10 @@ package de.devboost.natspec.library.features;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.mxgraph.view.mxGraph;
 
-import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.function.Component;
 import de.devboost.natspec.library.function.Function;
@@ -26,7 +27,7 @@ public class FunctionsSupport {
 	@TextSyntax("Function List for #1")
 	public FunctionList functionListForPEPProcess(List<String> listname) {
 		Object parent = graph.getDefaultParent();
-		String listnameString = new StringUtils().explode(listname, " ");
+		String listnameString = StringUtils.join(listname, " ");
 		Object vertex = graph.insertVertex(parent, null,
 				listname, 240, 150, 80, 30);
 		
@@ -40,7 +41,7 @@ public class FunctionsSupport {
 	public Component createComponent(List<String> componentName,
 			FunctionList group) {
 		Object parent = graph.getDefaultParent();
-		String componentNameString = new StringUtils().explode(componentName,
+		String componentNameString = StringUtils.join(componentName,
 				" ");
 		Object vertex = graph.insertVertex(parent, null, componentNameString,
 				240, 150, 80, 30);
@@ -58,7 +59,7 @@ public class FunctionsSupport {
 	public FunctionGroup createFunctionGroup(List<String> functionDescription, String abbrev,
 			Component parentComponent) {
 		Object parent = graph.getDefaultParent();
-		String functionDescriptionString = new StringUtils().explode(functionDescription, " ");
+		String functionDescriptionString = StringUtils.join(functionDescription, " ");
 		Object vertex = graph.insertVertex(parent, null,
 				functionDescriptionString, 240, 150,
 				80, 30);
@@ -77,7 +78,7 @@ public class FunctionsSupport {
 	public Function createFunction(List<String> functionDescription,
 			FunctionGroup group) {
 		Object parent = graph.getDefaultParent();
-		String functionDescriptionString = new StringUtils().explode(functionDescription, " ");
+		String functionDescriptionString = StringUtils.join(functionDescription, " ");
 		Object vertex = graph.insertVertex(parent, null,
 				functionDescriptionString, 240, 150,
 				80, 30);

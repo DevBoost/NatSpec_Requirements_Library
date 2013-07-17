@@ -1,11 +1,12 @@
 package de.devboost.natspec.library.components;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import de.devboost.essentials.MapUtils;
-import de.devboost.essentials.StringUtils;
+import org.apache.commons.lang.StringUtils;
+
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.components.components.Actor;
 import de.devboost.natspec.library.components.components.Component;
@@ -26,7 +27,7 @@ public class ComponentModellingSupport {
 	public ComponentContainer createContainerComponent(List<String> name) {
 		ComponentContainer container = ComponentsFactory.eINSTANCE
 				.createComponentContainer();
-		container.setName(new StringUtils().explode(name, " "));
+		container.setName(StringUtils.join(name, " "));
 		return container;
 
 	}
@@ -35,7 +36,7 @@ public class ComponentModellingSupport {
 	public Component createSubComponent(List<String> name,
 			ComponentContainer parent) {
 		Component component = ComponentsFactory.eINSTANCE.createComponent();
-		String explodedName = new StringUtils().explode(name, " ");
+		String explodedName = StringUtils.join(name, " ");
 		component.setName(explodedName);
 		parent.getSubComponents().add(component);
 		List<ComponentUser> users = usedToUsers.get(explodedName);
@@ -50,26 +51,45 @@ public class ComponentModellingSupport {
 	@TextSyntax("Actor #1")
 	public void createActor(List<String> name, ComponentContainer parent) {
 		Actor actor = ComponentsFactory.eINSTANCE.createActor();
-		actor.setName(new StringUtils().explode(name, " "));
+		actor.setName(StringUtils.join(name, " "));
 		parent.getExternalActors().add(actor);
 	}
 
 	@TextSyntax("Uses #1")
 	public void createUseRelation(List<String> usedName, ComponentUser user,
 			ComponentContainer parent) {
-		String usedComponent = new StringUtils().explode(usedName, " ");
+		String usedComponent = StringUtils.join(usedName, " ");
 		for (Component c : parent.getSubComponents()) {
 			if (usedComponent.equals(c.getName())) {
 				user.getUses().add(c);
 			}
 		}
-		new MapUtils().addMapMapping(usedToUsers, usedComponent, user);
+		addMapMapping(usedToUsers, usedComponent, user);
 	}
 
 	@TextSyntax("Description: #1")
 	public void createComponentDescription(List<String> description,
 			Component component) {
-		component.setDescription(new StringUtils().explode(description, " "));
+		component.setDescription(StringUtils.join(description, " "));
 	}
 
+	
+	/**
+	 * Adds the given value to the list that is reference by the key in the map.
+	 * If the key does not yet reference a list a new list is created and the
+	 * values is added to this list. This methods is useful for multi-value
+	 * maps (i.e., maps where one key references to a list of values).
+	 * 
+	 * @param map the map to add the value to
+	 * @param key the key to use
+	 * @param value the value to add
+	 */
+	public static <K, V> void addMapMapping(Map<K, List<V>> map, K key, V value) {
+		List<V> list = map.get(key);
+		if (list == null) {
+			list = new LinkedList<V>();
+			map.put(key, list);
+		}
+		list.add(value);
+	}
 }

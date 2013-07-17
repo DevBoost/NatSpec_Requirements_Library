@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EList;
 
-import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.components.components.Component;
 import de.devboost.natspec.library.components.components.ComponentContainer;
@@ -26,7 +26,7 @@ public class ComponentsDocumentationSupport {
 	public Fragment includeFunctionListInDocumentation(List<String> listName,
 			TextFragmentContainer container) throws IOException {
 		String fragment = new DocumentationGenerator()
-				.getDocumentationFragmentContents(new StringUtils().explode(
+				.getDocumentationFragmentContents(StringUtils.join(
 						listName, " "));
 		Line line = DocumentationFactory.eINSTANCE.createLine();
 		line.setText(fragment);
@@ -58,7 +58,7 @@ public class ComponentsDocumentationSupport {
 			for (ComponentUser componentUser : usedBy) {
 				nameList.add(componentUser.getName());
 			}
-			String usersNames = new StringUtils().explode(nameList, ";</br> ") + " ";
+			String usersNames = StringUtils.join(nameList, ";</br> ") + " ";
 			row.getRowCells().add(usersNames);
 			row.getRowCells().add(component.getDescription());
 		}

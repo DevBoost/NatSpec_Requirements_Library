@@ -17,5 +17,5 @@ Require-Bundle: org.eclipse.core.runtime,
  com.mxgraph.jgraphx,
  de.devboost.natspec.library.documentation,
  de.devboost.natspec.annotations,
- de.devboost.essentials
+ org.apache.commons.lang
 Bundle-ActivationPolicy: lazy

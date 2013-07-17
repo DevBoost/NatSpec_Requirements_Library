@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EList;
 
-import de.devboost.essentials.StringUtils;
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.documentation.DocumentationFactory;
 import de.devboost.natspec.library.documentation.DocumentationGenerator;
@@ -28,8 +28,8 @@ public class ProcessDocumentationSupport {
 	public Fragment includeFunctionListInDocumentation(List<String> listName,
 			TextFragmentContainer container) throws IOException {
 		String fragment = new DocumentationGenerator()
-				.getDocumentationFragmentContents(new StringUtils().explode(
-						listName, " "));
+				.getDocumentationFragmentContents(StringUtils.join(listName,
+						" "));
 		Line line = DocumentationFactory.eINSTANCE.createLine();
 		line.setText(fragment);
 		container.getFragments().add(line);
@@ -51,8 +51,7 @@ public class ProcessDocumentationSupport {
 		tableHeader.getHeaderCells().add("<b>Process:</b>");
 		tableHeader.getHeaderCells().add(
 				process.getName() + " (Stakeholder: "
-						+ new StringUtils().explode(process.getRoles(), " ")
-						+ ")");
+						+ StringUtils.join(process.getRoles(), " ") + ")");
 
 		EList<Step> steps = process.getSteps();
 		for (Step step : steps) {
@@ -76,8 +75,7 @@ public class ProcessDocumentationSupport {
 				}
 				inputsString.add(inputName);
 			}
-			stepRow.getRowCells().add(
-					new StringUtils().explode(inputsString, "</br>"));
+			stepRow.getRowCells().add(StringUtils.join(inputsString, "</br>"));
 
 			stepRow = factory.createTableRow();
 			table.getTableRows().add(stepRow);
@@ -93,8 +91,7 @@ public class ProcessDocumentationSupport {
 				String outputName = output.getName();
 				outputsString.add(outputName);
 			}
-			stepRow.getRowCells().add(
-					new StringUtils().explode(outputsString, "</br>"));
+			stepRow.getRowCells().add(StringUtils.join(outputsString, "</br>"));
 
 		}
 		generator.saveFragmentToFile(paragraph, process.getName());
