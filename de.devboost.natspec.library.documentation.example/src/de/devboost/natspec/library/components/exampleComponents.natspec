@@ -1,0 +1,11 @@
+Container Example Components
+	
+	Component ExampleComponent One
+		Description: First exemplary component
+		Uses ExampleComponent Two
+		
+	Component ExampleComponent Two
+		Description: Second exemplary component
+		Uses eTe IDE Core Components
+		
+Create Component Documentation

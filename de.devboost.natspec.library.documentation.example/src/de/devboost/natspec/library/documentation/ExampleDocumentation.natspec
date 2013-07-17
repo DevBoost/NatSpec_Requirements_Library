@@ -1,0 +1,137 @@
+Documentation - Arch42 Documentation an Example System
+
+Section - Meta Data		
+	 
+	Subsection - Authors
+	
+	|---- --------------------------------------------------------------------------------- ----|
+	|-  Author          -|- 		 Affiliation       -|- E-Mail	 	                       -|
+	| Who                | Example Company              | firstname.lastname@company.com        |
+	|---- --------------------------------------------------------------------------------- ----|
+
+	Subsection - Revisions
+	
+	|---- ---------------------------------------------------------------------- ----|
+	|- Date     -|- Revision    -|-  Author  -|- Changes	 	                    -|
+	| 01.03.2013 | 0.1           | Who        | first revision                  	 |
+	| 10.03.2013 | 1.0           | Who        | final revision                       |
+	|---- ---------------------------------------------------------------------- ----|
+
+
+Section - Introduction and Goals
+	
+	Paragraph
+	Short introduction on what system do we design here, why, for whom.
+
+	Subsection - Objectives
+	Overview of the core objectives for the system.
+	
+	Subsection - Stakeholders
+	Overview of potential users of the system (actors) and maybe other stakeholders with an impact on system design
+	
+Section - Constraints
+	
+	Subsection - Architecture Constraints
+	Core Constraints on System Architecture that directly result form application context
+	
+	e.g., web-based architecture due to distributed users, components for mobile access, etc.
+			
+	Subsection - Technical Constraints
+	Technical constraints derived from the system context 
+	
+	e.g. JEE system due to customer demand, hardware, software, frameworks, 
+
+	Subsection - Organizational Constraints
+	Constraints that result from organizational constraints in the project context
+	
+	e.g., acccess rights due to responsibilities or review processes, available resources, legislative issues
+		
+	Subsection - Conventions
+	
+	conventions on programming, documentation, versioning, naming, building etc.
+	
+Section - System Scope and Context
+	
+	
+	Subsection - Technical Context
+	
+	Systems in the context that are to be aligned
+		
+	Subsection - External Interfaces
+	
+	Interfaces for these systems
+		
+Section - Solution Strategy 
+	
+	Outline of basic approach to realise the system
+	
+Section - Components View
+	
+	System components
+	
+	Subsection -  Components Overview
+	
+	From the uppermost level
+	
+	Subsection - Component One Details View
+	
+	Zoom into next level
+	
+	Subsection - Component Two Details View
+	
+	Zoom into next level
+	
+	Subsection - Refine hierarchy as needed...
+	
+Section - Domain Models
+	
+	Business objects form domain perspective, maybe also technical view
+	
+Section - Runtime View
+
+	What functions is the system supposed to satisfy
+
+	Subsection - User Interface
+	
+	Requirements on concrete user interface, if available
+	
+	Subsection - Use Cases & Scenarios
+	
+	Use cases for actors, their steps.
+	
+	Scenarios define concrete path through use case
+		
+Section - Business Rules	
+
+	Subsection - Decision Rules
+	
+	Rules that are to be encoded when the system supports automated decision processes
+	
+	Subsection - Validation Rules
+	
+	Rules that operate on domain models and perform some kind of validation
+		
+	Subsection - Error Handling Rules
+	
+	Rules that define system behaviour in case of errors
+
+Section - Cross-Cutting Requirements
+	
+	Quality requirements that crosscut with scenarios etc.
+	
+	Subsection - Usability
+	
+	Subsection - Accessibility	
+	
+	Subsection - Reliability
+	
+	Subsection - Responsibility
+	
+	Subsection - Security	
+	
+	Subsection - Persistence	
+	
+Section - Risks
+	
+Section - Glossary
+	Define Term : Definition

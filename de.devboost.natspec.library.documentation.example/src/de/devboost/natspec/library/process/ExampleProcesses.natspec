@@ -1,0 +1,26 @@
+// TODO crosscheck with glossary items
+
+Related to PEP Glossar
+
+Process Example Process
+
+	Executed by: Example Stakeholder
+
+	Step (1) First Step
+		External Input: the steps external From: Context
+
+		Rationale: The step's rationale
+
+		Output: the steps output
+
+	Step (2) Second Step
+		Follows: First Step
+
+		External Input: the steps external From: Context
+
+		Rationale: The step's rationale
+
+		Output: the steps output
+
+Create Process Documentation Table
+		

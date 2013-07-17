@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400' rel='stylesheet' type='text/css'/>
+<link rel="stylesheet" href="css.css" />
+</head>
+<body>
+<h1 class="title">Arch42 Documentation an Example System </h1>
+<div class="divFooter">UNCLASSIFIED</div>
+<div class="page-break"></div>
+<h2>Outline</h2><a class="outline_section_reference" href="#1">1 Meta Data		 </a></br>
+<a class="outline_subsection_reference" href="#1.1">1.1 Authors </a></br>
+<a class="outline_subsection_reference" href="#1.2">1.2 Revisions </a></br>
+<a class="outline_section_reference" href="#2">2 Introduction and Goals </a></br>
+<a class="outline_subsection_reference" href="#2.1">2.1 Objectives </a></br>
+<a class="outline_subsection_reference" href="#2.2">2.2 Stakeholders </a></br>
+<a class="outline_section_reference" href="#3">3 Constraints </a></br>
+<a class="outline_subsection_reference" href="#3.1">3.1 Architecture Constraints </a></br>
+<a class="outline_subsection_reference" href="#3.2">3.2 Technical Constraints </a></br>
+<a class="outline_subsection_reference" href="#3.3">3.3 Organizational Constraints </a></br>
+<a class="outline_subsection_reference" href="#3.4">3.4 Conventions </a></br>
+<a class="outline_section_reference" href="#4">4 System Scope and Context </a></br>
+<a class="outline_subsection_reference" href="#4.1">4.1 Technical Context </a></br>
+<a class="outline_subsection_reference" href="#4.2">4.2 External Interfaces </a></br>
+<a class="outline_section_reference" href="#5">5 Solution Strategy </a></br>
+<a class="outline_section_reference" href="#6">6 Components View </a></br>
+<a class="outline_subsection_reference" href="#6.1">6.1 Components Overview </a></br>
+<a class="outline_subsection_reference" href="#6.2">6.2 Component One Details View </a></br>
+<a class="outline_subsection_reference" href="#6.3">6.3 Component Two Details View </a></br>
+<a class="outline_subsection_reference" href="#6.4">6.4 Refine hierarchy as needed... </a></br>
+<a class="outline_section_reference" href="#7">7 Domain Models </a></br>
+<a class="outline_section_reference" href="#8">8 Runtime View </a></br>
+<a class="outline_subsection_reference" href="#8.1">8.1 User Interface </a></br>
+<a class="outline_subsection_reference" href="#8.2">8.2 Use Cases & Scenarios </a></br>
+<a class="outline_section_reference" href="#9">9 Business Rules	 </a></br>
+<a class="outline_subsection_reference" href="#9.1">9.1 Decision Rules </a></br>
+<a class="outline_subsection_reference" href="#9.2">9.2 Validation Rules </a></br>
+<a class="outline_subsection_reference" href="#9.3">9.3 Error Handling Rules </a></br>
+<a class="outline_section_reference" href="#10">10 Cross-Cutting Requirements </a></br>
+<a class="outline_subsection_reference" href="#10.1">10.1 Usability </a></br>
+<a class="outline_subsection_reference" href="#10.2">10.2 Accessibility	 </a></br>
+<a class="outline_subsection_reference" href="#10.3">10.3 Reliability </a></br>
+<a class="outline_subsection_reference" href="#10.4">10.4 Responsibility </a></br>
+<a class="outline_subsection_reference" href="#10.5">10.5 Security	 </a></br>
+<a class="outline_subsection_reference" href="#10.6">10.6 Persistence	 </a></br>
+<a class="outline_section_reference" href="#11">11 Risks </a></br>
+<a class="outline_section_reference" href="#12">12 Glossary </a></br>
+
+<div class="page-break"></div>
+
+<div class="page-break"></div>
+<a name="1"><h2 class="section">1 Meta Data		 </h2></a>
+ <a name="1.1"><h3 class="subsection">1.1 Authors </h3></a>
+ <table><tr><th>Author</th><th>Affiliation</th><th> E-Mail	 </th></tr>
+<tr><td>Who</td><td>Example Company</td><td> firstname.lastname@company.com</td></tr>
+</table>
+<a name="1.2"><h3 class="subsection">1.2 Revisions </h3></a>
+ <table><tr><th>Date</th><th>Revision</th><th>Author</th><th> Changes	 </th></tr>
+<tr><td>01.03.2013</td><td>0.1</td><td>Who</td><td> first revision </td></tr>
+<tr><td>10.03.2013</td><td>1.0</td><td>Who</td><td> final revision</td></tr>
+</table>
+
+<div class="page-break"></div>
+<a name="2"><h2 class="section">2 Introduction and Goals </h2></a>
+ <p>
+Short introduction on what system do we design here, why, for whom. </p>
+<a name="2.1"><h3 class="subsection">2.1 Objectives </h3></a>
+Overview of the core objectives for the system.  <a name="2.2"><h3 class="subsection">2.2 Stakeholders </h3></a>
+Overview of potential users of the system (actors) and maybe other stakeholders with an impact on system design  
+<div class="page-break"></div>
+<a name="3"><h2 class="section">3 Constraints </h2></a>
+ <a name="3.1"><h3 class="subsection">3.1 Architecture Constraints </h3></a>
+Core Constraints on System Architecture that directly result form application context  e.g., web-based architecture due to distributed users, components for mobile access, etc.  <a name="3.2"><h3 class="subsection">3.2 Technical Constraints </h3></a>
+Technical constraints derived from the system context  e.g. JEE system due to customer demand, hardware, software, frameworks, <a name="3.3"><h3 class="subsection">3.3 Organizational Constraints </h3></a>
+Constraints that result from organizational constraints in the project context  e.g., acccess rights due to responsibilities or review processes, available resources, legislative issues  <a name="3.4"><h3 class="subsection">3.4 Conventions </h3></a>
+ conventions on programming, documentation, versioning, naming, building etc.  
+<div class="page-break"></div>
+<a name="4"><h2 class="section">4 System Scope and Context </h2></a>
+  <a name="4.1"><h3 class="subsection">4.1 Technical Context </h3></a>
+ Systems in the context that are to be aligned  <a name="4.2"><h3 class="subsection">4.2 External Interfaces </h3></a>
+ Interfaces for these systems  
+<div class="page-break"></div>
+<a name="5"><h2 class="section">5 Solution Strategy </h2></a>
+ Outline of basic approach to realise the system  
+<div class="page-break"></div>
+<a name="6"><h2 class="section">6 Components View </h2></a>
+ System components  <a name="6.1"><h3 class="subsection">6.1 Components Overview </h3></a>
+ From the uppermost level  <a name="6.2"><h3 class="subsection">6.2 Component One Details View </h3></a>
+ Zoom into next level  <a name="6.3"><h3 class="subsection">6.3 Component Two Details View </h3></a>
+ Zoom into next level  <a name="6.4"><h3 class="subsection">6.4 Refine hierarchy as needed... </h3></a>
+ 
+<div class="page-break"></div>
+<a name="7"><h2 class="section">7 Domain Models </h2></a>
+ Business objects form domain perspective, maybe also technical view  
+<div class="page-break"></div>
+<a name="8"><h2 class="section">8 Runtime View </h2></a>
+What functions is the system supposed to satisfy <a name="8.1"><h3 class="subsection">8.1 User Interface </h3></a>
+ Requirements on concrete user interface, if available  <a name="8.2"><h3 class="subsection">8.2 Use Cases & Scenarios </h3></a>
+ Use cases for actors, their steps.  Scenarios define concrete path through use case  
+<div class="page-break"></div>
+<a name="9"><h2 class="section">9 Business Rules	 </h2></a>
+<a name="9.1"><h3 class="subsection">9.1 Decision Rules </h3></a>
+ Rules that are to be encoded when the system supports automated decision processes  <a name="9.2"><h3 class="subsection">9.2 Validation Rules </h3></a>
+ Rules that operate on domain models and perform some kind of validation  <a name="9.3"><h3 class="subsection">9.3 Error Handling Rules </h3></a>
+ Rules that define system behaviour in case of errors 
+<div class="page-break"></div>
+<a name="10"><h2 class="section">10 Cross-Cutting Requirements </h2></a>
+ Quality requirements that crosscut with scenarios etc.  <a name="10.1"><h3 class="subsection">10.1 Usability </h3></a>
+ <a name="10.2"><h3 class="subsection">10.2 Accessibility	 </h3></a>
+ <a name="10.3"><h3 class="subsection">10.3 Reliability </h3></a>
+ <a name="10.4"><h3 class="subsection">10.4 Responsibility </h3></a>
+ <a name="10.5"><h3 class="subsection">10.5 Security	 </h3></a>
+ <a name="10.6"><h3 class="subsection">10.6 Persistence	 </h3></a>
+ 
+<div class="page-break"></div>
+<a name="11"><h2 class="section">11 Risks </h2></a>
+ 
+<div class="page-break"></div>
+<a name="12"><h2 class="section">12 Glossary </h2></a>
+<a name="entry_0"><strong>Term</strong></a>: Definition</br>
