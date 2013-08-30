@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.mxgraph.jgraphx,
  de.devboost.natspec.library.documentation,
  org.apache.commons.lang
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.devboost.natspec.library.process,
  de.devboost.natspec.library.process.doc,

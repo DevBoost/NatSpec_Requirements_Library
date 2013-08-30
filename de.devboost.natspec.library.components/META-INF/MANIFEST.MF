@@ -6,13 +6,13 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: com.mxgraph.jgraphx,
- de.devboost.natspec.annotations,
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: de.devboost.natspec.annotations,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.devboost.natspec.library.documentation,
- org.apache.commons.lang
+ org.apache.commons.lang,
+ com.mxgraph.jgraphx
 Bundle-ActivationPolicy: lazy
 Export-Package: de.devboost.natspec.library.components,
  de.devboost.natspec.library.components.components,

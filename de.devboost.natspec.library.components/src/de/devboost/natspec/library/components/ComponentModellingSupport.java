@@ -17,7 +17,7 @@ import de.devboost.natspec.library.components.components.ComponentsFactory;
 public class ComponentModellingSupport {
 
 	
-	private Map<String, List<ComponentUser>> usedToUsers = new HashMap<>();
+	private Map<String, List<ComponentUser>> usedToUsers = new HashMap<String, List<ComponentUser>>();
 
 	public ComponentModellingSupport() {
 	

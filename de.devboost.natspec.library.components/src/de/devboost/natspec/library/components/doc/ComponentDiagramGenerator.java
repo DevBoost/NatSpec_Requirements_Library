@@ -17,7 +17,6 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxEdgeStyle;
 import com.mxgraph.view.mxGraph;
 
 import de.devboost.natspec.library.components.components.Actor;
@@ -36,7 +35,7 @@ public class ComponentDiagramGenerator extends JFrame {
 	private mxGraph graph;
 	private mxGraphComponent graphComponent;
 
-	private Map<String, mxCell> vertexMap = new HashMap<>();
+	private Map<String, mxCell> vertexMap = new HashMap<String, mxCell>();
 
 	private StyleBuilder containerStyle;
 	private StyleBuilder componentStyle;

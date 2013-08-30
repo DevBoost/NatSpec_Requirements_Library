@@ -75,7 +75,7 @@ public class ProcessModellingSupport {
 	@TextSyntax("Automated Step #1")
 	public Step createAutomatedStep(List<String> stepname,
 			BusinessProcess businessProcess) {
-		List<String> stepnames = new LinkedList<>();
+		List<String> stepnames = new LinkedList<String>();
 		stepnames.addAll(stepname);
 		stepnames.add("[AUTOMATED]");
 		return createStep(stepnames, businessProcess);

@@ -53,7 +53,7 @@ public class ComponentsDocumentationSupport {
 			TableRow row = factory.createTableRow();
 			table.getTableRows().add(row);
 			row.getRowCells().add(component.getName());
-			List<String> nameList = new LinkedList<>();
+			List<String> nameList = new LinkedList<String>();
 			EList<ComponentUser> usedBy = component.getUsedBy();
 			for (ComponentUser componentUser : usedBy) {
 				nameList.add(componentUser.getName());

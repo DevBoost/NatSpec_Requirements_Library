@@ -72,8 +72,6 @@ public class ExampleProcesses extends JFrame {
 			processModellingSupport.createStepOutput(java.util.Arrays.asList(new java.lang.String[] {"the", "steps", "output"}), step__2__Second_Step);
 			// Create Process Documentation Table
 			processDocumentationSupport.saveFunctionListForDocumentation(businessProcess_Example_Process);
-			// 
-			processModellingSupport.defaultMatch(java.util.Arrays.asList(new String[] {""}));
 			
 			layoutGraph();
 		} finally {
