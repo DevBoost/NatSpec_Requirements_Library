@@ -49,5 +49,9 @@
     <genClasses ecoreClass="documentation.ecore#//TermEntry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TermEntry/description"/>
     </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//XML">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/contextClassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/resource"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

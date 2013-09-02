@@ -325,4 +325,12 @@ public class DocumentationSupport {
 						+ "</div>");
 	}
 
+	@TextSyntax("XML of #1 from resource #2 at #3")
+	public void codeFromFile( List<String> name, String path, String className, TextFragmentContainer container) {
+		XML xml = factory.createXML();
+		container.getFragments().add(xml);
+		xml.setName(StringUtils.join(name, " "));
+		xml.setResource(path);
+		xml.setContextClassName(className);
+	}
 }

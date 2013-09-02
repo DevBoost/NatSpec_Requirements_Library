@@ -62,3 +62,8 @@ Image : Fragment, NamedElement (
 TermEntry : NamedElement (
 	description EString
 )
+
+XML : Fragment, NamedElement (
+	resource EString
+	contextClassName EString
+)

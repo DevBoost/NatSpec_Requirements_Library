@@ -7,6 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import de.devboost.natspec.library.documentation.util.DocumentationSwitch;
 
@@ -21,6 +25,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private int subsubsectionCount;
 	private int figureCounter = 1;
 	private int entryCounter;
+	private int xmlCounter = 1;
 	
 	public DocumentationGenerator() {
 	}
@@ -214,6 +219,37 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				+ " - " + image.getName() + "</div>";
 		return result;
 	}
+	
+	@Override
+	public String caseXML(XML xml) {
+		StringBuffer result = new StringBuffer();
+		result.append("<br/><br/>");
+		result.append("<div class=\"figure_description\">XML Listing " + xmlCounter ++
+				+ " - " + xml.getName() + "</div>");
+		result.append("<pre>");
+		
+		String content;
+		try {
+			Class<?> clazz = Class.forName(xml.getContextClassName());
+			InputStream inputStream = clazz.getResourceAsStream(xml.getResource());
+			
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(inputStream, writer, "UTF-8");
+			content = StringEscapeUtils.escapeXml(writer.toString());
+			result.append(content);
+			//result.append(writer.toString());
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		result.append("</pre>");
+		return result.toString();
+	}
 
 
 //	private String weaveTerminologyReferences(TermEntry entry, String result) {
@@ -231,12 +267,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public void saveDocumentationToFile(Documentation documentation)
 			throws Exception {
-		StringBuffer completeFile = new StringBuffer();
-		initHTMLHeader(completeFile);
-		completeFile.append(doSwitch(documentation));
+		String completeDocumentation = getDocumentationAsString(documentation);
+		
 		File file = new File(DOC_PATH + "Documentation.html");
 
-		// if file doesnt exists, then create it
+		// if file doesn't exists, then create it
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 			if (!parentFile.exists()) {
@@ -247,13 +282,20 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		FileOutputStream fop = new FileOutputStream(file);
 
 		// get the content in bytes
-		byte[] contentInBytes = completeFile.toString().getBytes();
+		byte[] contentInBytes = completeDocumentation.getBytes();
 
 		fop.write(contentInBytes);
 		fop.flush();
 		fop.close();
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 
+	}
+	
+	public String getDocumentationAsString(Documentation documentation) {
+		StringBuffer completeFile = new StringBuffer();
+		initHTMLHeader(completeFile);
+		completeFile.append(doSwitch(documentation));
+		return completeFile.toString();
 	}
 
 	public void saveFragmentToFile(Fragment documentation, String filename)

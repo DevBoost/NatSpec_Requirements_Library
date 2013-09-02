@@ -13,5 +13,6 @@ Export-Package: de.devboost.natspec.library.documentation,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.devboost.natspec.annotations,
- org.apache.commons.lang
+ org.apache.commons.lang,
+ org.apache.commons.io
 Bundle-ActivationPolicy: lazy
