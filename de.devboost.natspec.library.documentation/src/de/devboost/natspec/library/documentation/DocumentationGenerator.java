@@ -19,6 +19,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
 	public static final String DOC_IMGAE_PATH = "./images/";
+	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
 	private int sectionCount;
 	private int subsectionCount;
@@ -267,7 +268,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public void saveDocumentationToFile(Documentation documentation)
 			throws Exception {
-		String completeDocumentation = getDocumentationAsString(documentation);
+		String completeDocumentation = getDocumentationAsString(documentation, DEFAULT_CSS_FILENAME);
 		
 		File file = new File(DOC_PATH + "Documentation.html");
 
@@ -291,9 +292,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	}
 	
-	public String getDocumentationAsString(Documentation documentation) {
+	public String getDocumentationAsString(Documentation documentation, String cssPath) {
 		StringBuffer completeFile = new StringBuffer();
-		initHTMLHeader(completeFile);
+		initHTMLHeader(completeFile, cssPath);
 		completeFile.append(doSwitch(documentation));
 		return completeFile.toString();
 	}
@@ -301,11 +302,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public void saveFragmentToFile(Fragment documentation, String filename)
 			throws Exception {
 		StringBuffer completeFile = new StringBuffer();
-		initHTMLHeader(completeFile);
+		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
 		completeFile.append(doSwitch(documentation));
 		File file = new File(DOC_FRAGMENT_PATH + filename + ".html");
 
-		// if file doesnt exists, then create it
+		// if file doesn't exists, then create it
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 			if (!parentFile.exists()) {
@@ -325,13 +326,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	}
 
-	private void initHTMLHeader(StringBuffer buffer) {
+	private void initHTMLHeader(StringBuffer buffer, String cssPath) {
 		buffer.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 		buffer.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
 		buffer.append("<head>\n");
 		buffer.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
 		buffer.append("<link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400' rel='stylesheet' type='text/css'/>\n");
-		buffer.append("<link rel=\"stylesheet\" href=\"css.css\" />\n");
+		buffer.append("<link rel=\"stylesheet\" href=\"" + cssPath + "\" />\n");
 		buffer.append("</head>\n");
 		buffer.append("<body>\n");
 	}
