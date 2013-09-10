@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xmlapi
+Bundle-SymbolicName: de.devboost.natspec.library.documentation.xmlapi
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: de.devboost.natspec.annotations,
+ de.devboost.natspec.library.documentation
+Export-Package: de.devboost.natspec.library.documentation.xmlapi
