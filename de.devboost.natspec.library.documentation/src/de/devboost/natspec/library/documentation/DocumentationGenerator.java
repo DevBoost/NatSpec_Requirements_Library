@@ -41,7 +41,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			subsectionCount = 0;
 			s.setId(sectionCount + "");
 			result += "<a class=\"outline_section_reference\" href=\"#"
-					+ s.getId() + "\">" + s.getId() + " " + s.getName()
+					+ s.getId() + "\">" + s.getId() + " " + s.getName().trim()
 					+ "</a></br>\n";
 
 			for (Fragment f : s.getFragments()) {
@@ -55,7 +55,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 							+ subsection.getId()
 							+ "\">"
 							+ subsection.getId()
-							+ " " + subsection.getName() + "</a></br>\n";
+							+ " " + subsection.getName().trim() + "</a></br>\n";
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
@@ -70,7 +70,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 									+ "\">"
 									+ subsubsection.getId()
 									+ " "
-									+ subsubsection.getName() + "</a></br>\n";
+									+ subsubsection.getName().trim() + "</a></br>\n";
 
 						}
 					}
