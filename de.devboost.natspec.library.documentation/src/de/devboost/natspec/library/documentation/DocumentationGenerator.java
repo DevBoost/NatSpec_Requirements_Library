@@ -19,6 +19,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
 	public static final String DOC_IMAGE_PATH = "./images/";
+	
 	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
 	private int sectionCount;
@@ -28,9 +29,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private int entryCounter;
 	private int xmlCounter = 1;
 	
-	public DocumentationGenerator() {
-	}
-
 	@Override
 	public String caseDocumentation(Documentation documentation) {
 		String result = "<h1 class=\"title\">" + documentation.getTitle()
@@ -75,9 +73,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 									+ subsubsection.getName() + "</a></br>\n";
 
 						}
-
 					}
-
 				}
 			}
 		}
@@ -209,11 +205,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseImage(Image image) {
 		String result = "<br/>";
 		if (image.getWidth() != null) {
-			result += "<img class=\"manStyled\" src=\"../"
+			result += "<img class=\"manStyled\" src=\""
 					+ image.getOriginalSource() + "\" width=\""
 					+ image.getWidth() + "%\" />";
 		} else {
-			result += "<img src=\"../" + image.getOriginalSource()
+			result += "<img src=\"" + image.getOriginalSource()
 					+ "\" width=\"100%\" />";
 		}
 		result += "<div class=\"figure_description\">Figure " + figureCounter++
@@ -293,7 +289,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 	
 	public String getDocumentationAsString(Documentation documentation, String cssPath) {
-		StringBuffer completeFile = new StringBuffer();
+		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, cssPath);
 		completeFile.append(doSwitch(documentation));
 		return completeFile.toString();
@@ -301,7 +297,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public void saveFragmentToFile(Fragment documentation, String filename)
 			throws Exception {
-		StringBuffer completeFile = new StringBuffer();
+		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
 		completeFile.append(doSwitch(documentation));
 		File file = new File(DOC_FRAGMENT_PATH + filename + ".html");
@@ -326,7 +322,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	}
 
-	private void initHTMLHeader(StringBuffer buffer, String cssPath) {
+	private void initHTMLHeader(StringBuilder buffer, String cssPath) {
 		buffer.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 		buffer.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
 		buffer.append("<head>\n");
