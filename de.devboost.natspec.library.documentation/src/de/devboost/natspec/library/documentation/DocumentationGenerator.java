@@ -94,8 +94,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	}
 
-
-
 	private String insertPageBreak(String result) {
 		result += "\n<div class=\"page-break\"></div>\n";
 		return result;
@@ -104,35 +102,33 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseSection(Section section) {
 		String result = insertPageBreak("");
-		
-		result += "<a name=\"" + section.getId()
-				+ "\"><h2 class=\"section\">" + section.getId() + " "
-				+ section.getName() + "</h2></a>\n";
+
+		result += "<h2 id=\"" + section.getId() + "\" class=\"section\">"
+				+ section.getId() + " " + section.getName() + "</h2>\n";
 		for (Fragment f : section.getFragments()) {
 			result += doSwitch(f);
 		}
+		
 		return result;
-
 	}
 
 	@Override
 	public String caseSubsection(Subsection subsection) {
-		String result = "<a name=\"" + subsection.getId()
-				+ "\"><h3 class=\"subsection\">" + subsection.getId() + " "
-				+ subsection.getName() + "</h3></a>\n";
+		String result = "<h3 id=\"" + subsection.getId()
+				+ "\" class=\"subsection\">" + subsection.getId() + " "
+				+ subsection.getName() + "</h3>\n";
 		for (Fragment f : subsection.getFragments()) {
 			result += doSwitch(f);
 		}
 
 		return result;
-
 	}
 
 	@Override
 	public String caseSubsubsection(Subsubsection subsubsection) {
-		String result = "<a name=\"" + subsubsection.getId()
-				+ "\"><h3 class=\"subsubsection\">" + subsubsection.getId()
-				+ " " + subsubsection.getName() + "</h3></a>\n";
+		String result = "<h3 id=\"" + subsubsection.getId()
+				+ "\" class=\"subsubsection\">" + subsubsection.getId() + " "
+				+ subsubsection.getName() + "</h3></a>\n";
 		for (Fragment f : subsubsection.getFragments()) {
 			result += doSwitch(f);
 		}
