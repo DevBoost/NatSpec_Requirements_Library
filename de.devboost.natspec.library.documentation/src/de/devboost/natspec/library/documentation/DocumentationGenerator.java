@@ -18,7 +18,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
-	public static final String DOC_IMGAE_PATH = "./images/";
+	public static final String DOC_IMAGE_PATH = "./images/";
 	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
 	private int sectionCount;
