@@ -8,9 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Assert;
 
 import de.devboost.natspec.library.documentation.util.DocumentationSwitch;
 
@@ -18,7 +22,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
-	public static final String DOC_IMAGE_PATH = "./images/";
+	public static final String DOC_IMGAE_PATH = "./images/";
 	
 	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
@@ -28,6 +32,46 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private int figureCounter = 1;
 	private int entryCounter;
 	private int xmlCounter = 1;
+
+	private File imagePath;
+	private Map<Integer, NamedElement> imageTable = new LinkedHashMap<>();
+	private Configuration configuration;
+	
+	/**
+	 * value constructor with a given generator configuration
+	 */
+	public DocumentationGenerator(Configuration configuration) {
+		Assert.isNotNull(configuration, "configuration is required");
+		this.configuration = configuration;
+		imagePath = new File(DOC_IMGAE_PATH);
+		if (configuration.isCopyImages()) {
+			if (!deleteIfExists(imagePath)) {
+				System.err.println("warning: image path has not cleaned.");
+			}
+		}
+	}
+
+	/**
+	 * default constructor
+	 */
+	public DocumentationGenerator() {
+		this(new Configuration());
+	}
+	
+	private boolean deleteIfExists(File file) {
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				File[] files = file.listFiles();
+				for (File nestedFile : files) {
+					if (!deleteIfExists(nestedFile)) {
+						return false;
+					}
+				}
+			}
+			return file.delete();
+		}
+		return true;
+	}
 	
 	@Override
 	public String caseDocumentation(Documentation documentation) {
@@ -77,23 +121,55 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 			}
 		}
-
-		result = insertPageBreak(result);
 		
+		if (configuration.isTableOfFigures()) {
+			sectionCount++;
+			result += "<a class=\"outline_section_reference\" href=\"#"
+					+ sectionCount + "\">" + sectionCount + " Table of Figures"
+					+ "</a></br>\n";
+
+			result = insertPageBreak(result);
+		} else {
+			result = insertPageBreak(result);
+		}
 		
 		for (Section s : documentation.getSections()) {
 			result += doSwitch(s);
 		}
+		
 		String glossary = "";
 		for (TermEntry entry : documentation.getTerminology()) {
 			result += doSwitch(entry);
-			//result = weaveTerminologyReferences(entry, result);
-			
+			// result = weaveTerminologyReferences(entry, result);
 		}
-		return result + glossary;
 
+		result += glossary;
+		
+		result = insertPageBreak(result);
+
+		if (configuration.isTableOfFigures()) {
+			result += insertFigureTable(imageTable, sectionCount);
+		}
+
+		return result;
 	}
+	
+	private String insertFigureTable(Map<Integer, NamedElement> map,
+			int sectionCount) {
+		String result = "";
 
+		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount
+				+ " Table of Figures</h2><br/>";
+		for (Map.Entry<Integer, NamedElement> e : imageTable.entrySet()) {
+			result += "<a class=\"figure_table_reference\" href=\"#"
+					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
+					+ e.getKey() + " - " + e.getValue().getName()
+					+ "</a></br>\n";
+		}
+
+		return result;
+	}
+	
 	private String insertPageBreak(String result) {
 		result += "\n<div class=\"page-break\"></div>\n";
 		return result;
@@ -196,16 +272,35 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseListItem(ListItem item) {
 		return "<li>" + item.getText() + "</li>\n";
 	}
+	
+	private static String figureAnchorID(int figureCounter) {
+		return "figure_" + figureCounter;
+	}
+
 
 	@Override
 	public String caseImage(Image image) {
+		String imagePath = image.getOriginalSource();
+		if (configuration.isCopyImages()) {
+			try {
+				imagePath = copyImage(image);
+			} catch (IOException e) {
+				System.err.println("warning: can't copy image '" + imagePath
+						+ "'. Keep the original file reference.");
+				e.printStackTrace();
+			}
+		}
 		String result = "<br/>";
+		if (configuration.isTableOfFigures()) {
+			result += "<a name=\"" + figureAnchorID(figureCounter) + "\" ></a>";
+			imageTable.put(figureCounter, image);
+		}
 		if (image.getWidth() != null) {
 			result += "<img class=\"manStyled\" src=\""
-					+ image.getOriginalSource() + "\" width=\""
+					+ imagePath + "\" width=\""
 					+ image.getWidth() + "%\" />";
 		} else {
-			result += "<img src=\"" + image.getOriginalSource()
+			result += "<img src=\"" + imagePath
 					+ "\" width=\"100%\" />";
 		}
 		result += "<div class=\"figure_description\">Figure " + figureCounter++
@@ -256,6 +351,52 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "<a name=\""+entry.getId()+"\"><strong>" + entry.getName() + "</strong></a>: "
 				+ entry.getDescription() + "</br>";
 		return result;
+	}
+	
+	private String copyImage(Image image) throws IOException {
+		String originalSource = image.getOriginalSource();
+		return copyFile(originalSource);
+	}
+
+	private String copyFile(String fileName) throws IOException {
+		File sourceFile = new File(fileName);
+		File targetFile = new File(imagePath, sourceFile.getName());
+		int idx = 1;
+		if (targetFile.exists()) {
+			String baseFileName = StringUtils.substringBeforeLast(
+					targetFile.getPath(), ".");
+			String fileExtension = StringUtils.substringAfterLast(
+					targetFile.getPath(), ".");
+			String incrementedFileName = baseFileName + "_" + (idx++) + "."
+					+ fileExtension;
+			File potentialTargetFile = new File(incrementedFileName);
+			while (potentialTargetFile.exists()) {
+				incrementedFileName = baseFileName + "_" + (idx++) + "."
+						+ fileExtension;
+				potentialTargetFile = new File(incrementedFileName);
+			}
+			targetFile = potentialTargetFile;
+		}
+		File targetPath = targetFile.getParentFile();
+		if (!targetPath.exists()) {
+			targetPath.mkdirs();
+		}
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(targetFile);
+		try {
+			byte[] bbuf = new byte[2048];
+			int read = fis.read(bbuf);
+			while (read > 0) {
+				fos.write(bbuf, 0, read);
+				read = fis.read(bbuf);
+			}
+		} finally {
+			fis.close();
+			fos.close();
+		}
+		System.out.println("copied " + sourceFile.getPath() + " to "
+				+ targetFile.getPath());
+		return targetFile.getPath().replaceAll("\\\\", "/");
 	}
 
 	public void saveDocumentationToFile(Documentation documentation)
