@@ -23,4 +23,5 @@ FunctionGroup : DescribedElement, GraphVertex (
 )
 
 Function : DescribedElement, GraphVertex (
+	storyRefs EString*
 )

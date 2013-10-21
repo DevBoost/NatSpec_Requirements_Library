@@ -90,5 +90,11 @@ public class FunctionsSupport {
 				function.getVertex());
 		return function;
 	}
+	
+	@TextSyntax("Defined in Story: #1")
+	public void definedIn(String storyRef, Function function) {
+		function.getStoryRefs().add(storyRef);
+	}
+
 
 }

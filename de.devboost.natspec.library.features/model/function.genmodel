@@ -16,7 +16,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference function.ecore#//FunctionGroup/functions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute function.ecore#//FunctionGroup/abbrev"/>
     </genClasses>
-    <genClasses ecoreClass="function.ecore#//Function"/>
+    <genClasses ecoreClass="function.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute function.ecore#//Function/storyRefs"/>
+    </genClasses>
     <genClasses ecoreClass="function.ecore#//DescribedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute function.ecore#//DescribedElement/description"/>
     </genClasses>

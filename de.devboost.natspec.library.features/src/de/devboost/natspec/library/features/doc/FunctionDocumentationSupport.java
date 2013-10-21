@@ -63,8 +63,9 @@ public class FunctionDocumentationSupport {
 				for (Function function : functions) {
 					functionCounter++;
 					ListItem featureItem = factory.createListItem();
+					String storyRefString = StringUtils.join(function.getStoryRefs(), ", ");
 					featureItem.setText("//" + functionGroup.getAbbrev() + " "+ functionCounter*10 + "// -  " + function.getDescription()
-							+ "</br>");
+							+ " ("+storyRefString + ") </br>");
 					features.getItems().add(featureItem);
 				}
 			}

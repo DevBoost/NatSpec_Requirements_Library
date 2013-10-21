@@ -47,6 +47,12 @@
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
       <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="storyRefs" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
+        <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DescribedElement" abstract="true">
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
