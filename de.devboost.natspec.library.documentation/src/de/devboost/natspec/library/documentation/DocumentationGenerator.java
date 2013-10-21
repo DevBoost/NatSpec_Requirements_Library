@@ -34,7 +34,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private int xmlCounter = 1;
 
 	private File imagePath;
-	private Map<Integer, NamedElement> imageTable = new LinkedHashMap<>();
+	private Map<Integer, NamedElement> imageTable = new LinkedHashMap<Integer, NamedElement>();
 	private Configuration configuration;
 	
 	/**
