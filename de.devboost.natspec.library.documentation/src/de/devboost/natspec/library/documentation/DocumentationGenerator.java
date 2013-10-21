@@ -22,7 +22,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
-	public static final String DOC_IMGAE_PATH = "./images/";
+	public static final String DOC_IMAGE_PATH = "./doc/images/";
 	
 	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
@@ -43,7 +43,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public DocumentationGenerator(Configuration configuration) {
 		Assert.isNotNull(configuration, "configuration is required");
 		this.configuration = configuration;
-		imagePath = new File(DOC_IMGAE_PATH);
+		imagePath = new File(DOC_IMAGE_PATH);
 		if (configuration.isCopyImages()) {
 			if (!deleteIfExists(imagePath)) {
 				System.err.println("warning: image path has not cleaned.");
@@ -290,7 +290,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				e.printStackTrace();
 			}
 		}
-		String result = "<br/>";
+		String result = "<br/><span id=\"" + figureAnchorID(figureCounter) + "\">";
 		if (configuration.isTableOfFigures()) {
 			result += "<a name=\"" + figureAnchorID(figureCounter) + "\" ></a>";
 			imageTable.put(figureCounter, image);
@@ -305,6 +305,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		}
 		result += "<div class=\"figure_description\">Figure " + figureCounter++
 				+ " - " + image.getName() + "</div>";
+		result += "</span>";
 		return result;
 	}
 	
@@ -396,7 +397,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		}
 		System.out.println("copied " + sourceFile.getPath() + " to "
 				+ targetFile.getPath());
-		return targetFile.getPath().replaceAll("\\\\", "/");
+		String rawPath = targetFile.getPath().replaceAll("\\\\", "/");
+		// ./doc/images --> ./images
+		rawPath = StringUtils.replace(rawPath, DOC_PATH, "./");
+		return rawPath;
 	}
 
 	public void saveDocumentationToFile(Documentation documentation)
