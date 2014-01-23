@@ -196,6 +196,13 @@ public class DocumentationSupport {
 		return listItem;
 	}
 
+	@TextSyntax("\\* #1")
+	public ListItem continueListItem(List<String> item,
+			ListItem listItem) {
+		listItem.setText(listItem.getText() + flattenList(item));
+		return listItem;
+	}
+
 	@TextSyntax("Image of #1 at #2")
 	public Image image(List<String> name, String externalPath,
 			TextFragmentContainer container) {
