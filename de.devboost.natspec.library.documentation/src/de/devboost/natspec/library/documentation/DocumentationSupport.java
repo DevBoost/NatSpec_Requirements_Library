@@ -28,7 +28,7 @@ public class DocumentationSupport {
 		return this.documentation;
 	}
 
-	private String flattenList(List<String> name) {
+	public String flattenList(List<String> name) {
 		String result = "";
 		for (String string : name) {
 			result += string + " ";
@@ -52,11 +52,11 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Subsection - #1")
-	public Subsection addSubsection(List<String> name, Section s) {
+	public Subsection addSubsection(List<String> name, Section section) {
 		Subsection subsection = factory.createSubsection();
 		String subsectionName = flattenList(name);
 		subsection.setName(subsectionName);
-		s.getFragments().add(subsection);
+		section.getFragments().add(subsection);
 		return subsection;
 	}
 
@@ -122,8 +122,8 @@ public class DocumentationSupport {
 	public Line createTodo(List<String> fullSentence,
 			TextFragmentContainer container) {
 		Line line = factory.createLine();
-		line.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
-				+ "</span></br>");
+		line.setText("<span class=\"todo\">#TODO " + 
+				flattenList(fullSentence) + "</span></br>");
 		container.getFragments().add(line);
 		return line;
 	}
