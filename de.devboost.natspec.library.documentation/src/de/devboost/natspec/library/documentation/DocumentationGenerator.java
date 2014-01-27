@@ -80,7 +80,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseDocumentation(Documentation documentation) {
 		String result = "<h1 class=\"title\">" + documentation.getTitle()
 				+ "</h1>\n";
-		result += "<div class=\"divFooter\">UNCLASSIFIED</div>";
+		result += getClassificationHTML();
 		result = insertPageBreak(result);
 		result += "<h2>Outline</h2>";
 		for (Section s : documentation.getSections()) {
@@ -157,6 +157,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		}
 
 		return result;
+	}
+
+	protected String getClassificationHTML() {
+		return "<div class=\"divFooter\">UNCLASSIFIED</div>";
 	}
 
 	/**
