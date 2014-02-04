@@ -81,7 +81,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "<h1 class=\"title\">" + documentation.getTitle()
 				+ "</h1>\n";
 		result += getClassificationHTML();
-		result = insertPageBreak(result);
 		result += "<h2>Outline</h2>";
 		for (Section s : documentation.getSections()) {
 			sectionCount++;
@@ -125,6 +124,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 			}
 		}
+		casePageBreak(null);
 
 		boolean hasImages = hasImages(documentation);
 		if (configuration.isTableOfFigures() && hasImages) {
@@ -133,9 +133,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					+ sectionCount + "\">" + sectionCount + " Table of Figures"
 					+ "</a></br>\n";
 
-			result = insertPageBreak(result);
+			result = result + casePageBreak(null);
 		} else {
-			result = insertPageBreak(result);
+			result = result + casePageBreak(null);
 		}
 
 		for (Section s : documentation.getSections()) {
@@ -150,7 +150,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		result += glossary;
 
-		result = insertPageBreak(result);
+		result = result + casePageBreak(null);
 
 		if (configuration.isTableOfFigures() && hasImages) {
 			result += insertFigureTable(imageTable, sectionCount);
@@ -205,14 +205,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		return result;
 	}
 
-	private String insertPageBreak(String result) {
-		result += "\n<div class=\"page-break\"></div>\n";
-		return result;
-	}
-
 	@Override
 	public String caseSection(Section section) {
-		String result = insertPageBreak("");
+		String result = casePageBreak(null);
 
 		result += "<h2 id=\"" + section.getId() + "\" class=\"section\">"
 				+ section.getId() + " " + section.getName() + "</h2>\n";
@@ -343,6 +338,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	@Override
+	public String casePageBreak(PageBreak object) {
+		String html = "<div style=\"page-break-after:always\"></div>";
+		return html;
+	}
+
+	@Override
 	public String caseXML(XML xml) {
 		StringBuffer result = new StringBuffer();
 		result.append("<br/><br/>");
@@ -462,7 +463,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fop.flush();
 		fop.close();
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
-
 	}
 
 	public String getDocumentationAsString(Documentation documentation,

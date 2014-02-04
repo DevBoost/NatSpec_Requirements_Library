@@ -18,6 +18,8 @@ abstract TextFragmentContainer (
 Section : TextFragmentContainer, NamedElement (
 )
 
+PageBreak : Fragment
+
 Subsection : TextFragmentContainer, Fragment, NamedElement (
 )
 

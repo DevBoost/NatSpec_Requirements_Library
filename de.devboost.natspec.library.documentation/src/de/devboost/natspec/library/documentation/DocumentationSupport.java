@@ -70,6 +70,12 @@ public class DocumentationSupport {
 
 	}
 
+	@TextSyntax("Insert page break")
+	public void addPageBreak(TextFragmentContainer container) {
+		PageBreak fragment = factory.createPageBreak();
+		container.getFragments().add(fragment);
+	}
+
 	@TextSyntax("#1")
 	public Line createPlainContents(List<String> fullSentence,
 			TextFragmentContainer container) {
