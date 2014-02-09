@@ -54,5 +54,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/resource"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//PageBreak"/>
+    <genClasses ecoreClass="documentation.ecore#//Listing"/>
+    <genClasses ecoreClass="documentation.ecore#//Code">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Code/text"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

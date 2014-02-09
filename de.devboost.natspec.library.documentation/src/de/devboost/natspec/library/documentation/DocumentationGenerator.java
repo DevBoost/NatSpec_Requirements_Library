@@ -217,6 +217,42 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		return result;
 	}
+	
+	@Override
+	public String caseListing(Listing listing) {
+		StringBuilder result = new StringBuilder();
+		result.append("<div class=\"code\">");
+		int indendation = 0;
+		java.util.List<Fragment> fragments = listing.getFragments();
+		for (Fragment fragment : fragments) {
+			if (fragment instanceof Line) {
+				Line line = (Line) fragment;
+				String text = line.getText().trim();
+				if (text.endsWith("}")) {
+					indendation--;
+				}
+				for (int i = 0; i < indendation; i++) {
+					result.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+				}
+				result.append(text);
+				result.append("<br/>");
+				if (text.endsWith("{")) {
+					indendation++;
+				}
+			}
+		}
+		result.append("</div>");
+		return result.toString();
+	}
+	
+	@Override
+	public String caseCode(Code code) {
+		StringBuilder result = new StringBuilder();
+		result.append("<tt>");
+		result.append(code.getText());
+		result.append("</tt>&nbsp;");
+		return result.toString();
+	}
 
 	@Override
 	public String caseSubsection(Subsection subsection) {

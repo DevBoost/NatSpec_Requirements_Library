@@ -29,9 +29,15 @@ Subsubsection  : TextFragmentContainer, Fragment, NamedElement (
 Paragraph : TextFragmentContainer, Fragment (
 )
 
+Listing : TextFragmentContainer, Fragment
+
 abstract Fragment ()
 
 Line : Fragment (
+	text EString
+)
+
+Code : Fragment (
 	text EString
 )
 

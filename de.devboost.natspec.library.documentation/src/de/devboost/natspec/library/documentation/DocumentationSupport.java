@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.ecore.EObject;
 
+import de.devboost.natspec.annotations.Many;
 import de.devboost.natspec.annotations.TextSyntax;
 
 public class DocumentationSupport {
@@ -155,6 +156,15 @@ public class DocumentationSupport {
 	@TextSyntax("Paragraph #1")
 	public Paragraph createParagraphWithHeading(List<String> heading,
 			TextFragmentContainer container) {
+		
+		if (container instanceof Listing) {
+			Listing listing = (Listing) container;
+			EObject parent = listing.eContainer();
+			if (parent instanceof TextFragmentContainer) {
+				container = (TextFragmentContainer) parent;
+			}
+		}
+		
 		Paragraph paragraph = factory.createParagraph();
 		container = locateProperContainer(container);
 		container.getFragments().add(paragraph);
@@ -346,5 +356,20 @@ public class DocumentationSupport {
 		xml.setName(StringUtils.join(name, " "));
 		xml.setResource(path);
 		xml.setContextClassName(className);
+	}
+
+	@TextSyntax("Listing")
+	public Listing beginListing(TextFragmentContainer container) {
+		Listing createListing = factory.createListing();
+		container.getFragments().add(createListing);
+		return createListing;
+	}
+
+	@TextSyntax("Code #1")
+	public Code code(@Many String text, TextFragmentContainer container) {
+		Code code = factory.createCode();
+		code.setText(text);
+		container.getFragments().add(code);
+		return code;
 	}
 }
