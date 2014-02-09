@@ -88,7 +88,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			s.setId(sectionCount + "");
 			result += "<a class=\"outline_section_reference\" href=\"#"
 					+ s.getId() + "\">" + s.getId() + " " + s.getName().trim()
-					+ "</a></br>\n";
+					+ "</a><br/>\n";
 
 			for (Fragment f : s.getFragments()) {
 				if (f instanceof Subsection) {
@@ -101,7 +101,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 							+ subsection.getId()
 							+ "\">"
 							+ subsection.getId()
-							+ " " + subsection.getName().trim() + "</a></br>\n";
+							+ " " + subsection.getName().trim() + "</a><br/>\n";
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
@@ -117,7 +117,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 									+ subsubsection.getId()
 									+ " "
 									+ subsubsection.getName().trim()
-									+ "</a></br>\n";
+									+ "</a><br/>\n";
 
 						}
 					}
@@ -131,7 +131,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			sectionCount++;
 			result += "<a class=\"outline_section_reference\" href=\"#"
 					+ sectionCount + "\">" + sectionCount + " Table of Figures"
-					+ "</a></br>\n";
+					+ "</a><br/>\n";
 
 			result = result + casePageBreak(null);
 		} else {
@@ -199,7 +199,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			result += "<a class=\"figure_table_reference\" href=\"#"
 					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
 					+ e.getKey() + " - " + e.getValue().getName()
-					+ "</a></br>\n";
+					+ "</a><br/>\n";
 		}
 
 		return result;
@@ -422,7 +422,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		entry.setId("entry_" + entryCounter++);
 		String result = "<a name=\"" + entry.getId() + "\"><strong>"
 				+ entry.getName() + "</strong></a>: " + entry.getDescription()
-				+ "</br>";
+				+ "<br/>";
 		return result;
 	}
 
@@ -559,7 +559,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		File file = new File(DOC_FRAGMENT_PATH + fragmentFilenname.trim()
 				+ ".html");
 		if (!file.exists()) {
-			return "<div class=\"error\">ERROR: could not find documentation fragment at:</br> "
+			return "<div class=\"error\">ERROR: could not find documentation fragment at:<br/> "
 					+ file.getAbsolutePath() + "</div>";
 		}
 		InputStream stream = new FileInputStream(file);
