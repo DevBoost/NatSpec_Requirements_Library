@@ -506,7 +506,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, cssPath);
 		completeFile.append(doSwitch(documentation));
+		closeHTMLHeader(completeFile);
 		return completeFile.toString();
+	}
+
+	private void closeHTMLHeader(StringBuilder builder) {
+		builder.append("</body>\n");
+		builder.append("</html>\n");
 	}
 
 	public void saveFragmentToFile(Fragment documentation, String filename)
@@ -514,6 +520,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
 		completeFile.append(doSwitch(documentation));
+		closeHTMLHeader(completeFile);
 		File file = new File(DOC_FRAGMENT_PATH + filename + ".html");
 
 		// if file doesn't exists, then create it
