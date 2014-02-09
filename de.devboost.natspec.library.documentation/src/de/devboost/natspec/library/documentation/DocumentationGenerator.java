@@ -234,7 +234,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				for (int i = 0; i < indendation; i++) {
 					result.append("&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
-				result.append(text);
+				result.append(StringEscapeUtils.escapeHtml(text));
 				result.append("<br/>");
 				if (text.endsWith("{")) {
 					indendation++;
@@ -249,7 +249,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseCode(Code code) {
 		StringBuilder result = new StringBuilder();
 		result.append("<tt>");
-		result.append(code.getText());
+		result.append(StringEscapeUtils.escapeHtml(code.getText()));
 		result.append("</tt>&nbsp;");
 		return result.toString();
 	}
