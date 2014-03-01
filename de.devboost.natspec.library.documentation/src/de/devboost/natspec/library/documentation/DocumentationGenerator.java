@@ -210,7 +210,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = casePageBreak(null);
 
 		result += "<h2 id=\"" + section.getId() + "\" class=\"section\">"
-				+ section.getId() + " " + section.getName() + "</h2>\n";
+				+ section.getId() + " " + section.getName().trim() + "</h2>\n";
 		for (Fragment f : section.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -258,7 +258,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseSubsection(Subsection subsection) {
 		String result = "<h3 id=\"" + subsection.getId()
 				+ "\" class=\"subsection\">" + subsection.getId() + " "
-				+ subsection.getName() + "</h3>\n";
+				+ subsection.getName().trim() + "</h3>\n";
 		for (Fragment f : subsection.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -270,7 +270,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseSubsubsection(Subsubsection subsubsection) {
 		String result = "<h3 id=\"" + subsubsection.getId()
 				+ "\" class=\"subsubsection\">" + subsubsection.getId() + " "
-				+ subsubsection.getName() + "</h3></a>\n";
+				+ subsubsection.getName().trim() + "</h3>\n";
 		for (Fragment f : subsubsection.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -290,7 +290,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseLine(Line line) {
-		return line.getText();
+		return StringEscapeUtils.escapeHtml(line.getText());
 	}
 
 	@Override
