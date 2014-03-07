@@ -336,7 +336,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseListItem(ListItem item) {
-		return "<li>" + item.getText() + "</li>\n";
+		String trimmedText = item.getText().trim();
+		String escapedText = StringEscapeUtils.escapeHtml(trimmedText);
+		return "<li>" + escapedText + "</li>\n";
 	}
 
 	private static String figureAnchorID(int figureCounter) {
