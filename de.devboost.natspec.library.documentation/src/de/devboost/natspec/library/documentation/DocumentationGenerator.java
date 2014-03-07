@@ -29,6 +29,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	private static final String DEFAULT_CSS_FILENAME = "css.css";
 
+	private final Configuration configuration;
+
 	private int sectionCount;
 	private int subsectionCount;
 	private int subsubsectionCount;
@@ -38,18 +40,18 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	private File imagePath;
 	private Map<Integer, NamedElement> imageTable = new LinkedHashMap<Integer, NamedElement>();
-	private Configuration configuration;
 
 	/**
 	 * value constructor with a given generator configuration
 	 */
 	public DocumentationGenerator(Configuration configuration) {
-		Assert.isNotNull(configuration, "configuration is required");
+		Assert.isNotNull(configuration, "Configuration is required");
 		this.configuration = configuration;
 		imagePath = new File(DOC_IMAGE_PATH);
 		if (configuration.isCopyImages()) {
 			if (!deleteIfExists(imagePath)) {
-				System.err.println("warning: image path has not cleaned.");
+				// TODO
+				System.err.println("Warning: image path has not cleaned.");
 			}
 		}
 	}
@@ -208,22 +210,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	@Override
-	public String caseSection(Section section) {
-		String result = casePageBreak(null);
-
-		result += "<h2 id=\"" + section.getId() + "\" class=\"section\">"
-				+ section.getId() + " " + section.getName().trim() + "</h2>\n";
-		for (Fragment f : section.getFragments()) {
-			result += doSwitch(f);
-		}
-
-		return result;
-	}
-	
-	@Override
 	public String caseListing(Listing listing) {
 		StringBuilder result = new StringBuilder();
 		result.append("<div class=\"code\">");
+		
 		int indendation = 0;
 		java.util.List<Fragment> fragments = listing.getFragments();
 		for (Fragment fragment : fragments) {
@@ -243,6 +233,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 			}
 		}
+		
 		result.append("</div>");
 		return result.toString();
 	}
@@ -257,10 +248,26 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	@Override
+	public String caseSection(Section section) {
+		String result = casePageBreak(null);
+
+		String sectionID = section.getId();
+		String trimmedName = section.getName().trim();
+		result += "<h2 id=\"" + sectionID + "\" class=\"section\">" + sectionID
+				+ " " + trimmedName + "</h2>\n";
+		for (Fragment f : section.getFragments()) {
+			result += doSwitch(f);
+		}
+
+		return result;
+	}
+	
+	@Override
 	public String caseSubsection(Subsection subsection) {
-		String result = "<h3 id=\"" + subsection.getId()
-				+ "\" class=\"subsection\">" + subsection.getId() + " "
-				+ subsection.getName().trim() + "</h3>\n";
+		String subsectionID = subsection.getId();
+		String trimmedName = subsection.getName().trim();
+		String result = "<h3 id=\"" + subsectionID + "\" class=\"subsection\">"
+				+ subsectionID + " " + trimmedName + "</h3>\n";
 		for (Fragment f : subsection.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -270,9 +277,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseSubsubsection(Subsubsection subsubsection) {
-		String result = "<h3 id=\"" + subsubsection.getId()
-				+ "\" class=\"subsubsection\">" + subsubsection.getId() + " "
-				+ subsubsection.getName().trim() + "</h3>\n";
+		String subsubsectionID = subsubsection.getId();
+		String trimmedName = subsubsection.getName().trim();
+		// FIXME Shouldn't this be h4 since subsection has also h3?
+		String result = "<h3 id=\"" + subsubsectionID
+				+ "\" class=\"subsubsection\">" + subsubsectionID + " "
+				+ trimmedName + "</h3>\n";
 		for (Fragment f : subsubsection.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -380,6 +390,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String casePageBreak(PageBreak object) {
+		// TODO Use class instead of style to allow customization via CSS
 		String html = "<div style=\"page-break-after:always\"></div>";
 		return html;
 	}
@@ -405,22 +416,16 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			// result.append(writer.toString());
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			// TODO Handle exception
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO Handle exception
 			e.printStackTrace();
 		}
 
 		result.append("</pre>");
 		return result.toString();
 	}
-
-	// private String weaveTerminologyReferences(TermEntry entry, String result)
-	// {
-	// return result.replaceAll(entry.getName(), "<a href=\"#" + entry.getId()
-	// + "\">" + entry.getName() + "</a>");
-	// }
 
 	@Override
 	public String caseTermEntry(TermEntry entry) {
@@ -455,13 +460,17 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			targetFile = potentialTargetFile;
 		}
+		
 		File targetPath = targetFile.getParentFile();
 		if (!targetPath.exists()) {
 			targetPath.mkdirs();
 		}
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(targetFile);
+		
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
 		try {
+			fis = new FileInputStream(sourceFile);
+			fos = new FileOutputStream(targetFile);
 			byte[] bbuf = new byte[2048];
 			int read = fis.read(bbuf);
 			while (read > 0) {
@@ -469,11 +478,19 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				read = fis.read(bbuf);
 			}
 		} finally {
-			fis.close();
-			fos.close();
+			if (fis != null) {
+				fis.close();
+			}
+			if (fos != null) {
+				fos.close();
+			}
 		}
-		System.out.println("copied " + sourceFile.getPath() + " to "
+		
+		// TODO Remove this (use some kind of logging mechanism instead)
+		System.out.println("Copied " + sourceFile.getPath() + " to "
 				+ targetFile.getPath());
+
+		// TODO Why not use replace("\\", "/") instead of replaceAll()?
 		String rawPath = targetFile.getPath().replaceAll("\\\\", "/");
 		// ./doc/images --> ./images
 		rawPath = StringUtils.replace(rawPath, DOC_PATH, "./");
@@ -481,7 +498,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	public void saveDocumentationToFile(Documentation documentation)
-			throws Exception {
+			throws IOException {
+		
 		String completeDocumentation = getDocumentationAsString(documentation,
 				DEFAULT_CSS_FILENAME);
 
@@ -495,19 +513,24 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			file.createNewFile();
 		}
-		FileOutputStream fop = new FileOutputStream(file);
+		
+		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
+		// FIXME Use explicit encoding?
 		byte[] contentInBytes = completeDocumentation.getBytes();
 
-		fop.write(contentInBytes);
-		fop.flush();
-		fop.close();
+		fos.write(contentInBytes);
+		fos.flush();
+		fos.close();
+		
+		// TODO Remove this
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
 
 	public String getDocumentationAsString(Documentation documentation,
 			String cssPath) {
+		
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, cssPath);
 		completeFile.append(doSwitch(documentation));
@@ -521,7 +544,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	public void saveFragmentToFile(Fragment documentation, String filename)
-			throws Exception {
+			throws IOException {
+		
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
 		completeFile.append(doSwitch(documentation));
@@ -536,16 +560,17 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			file.createNewFile();
 		}
-		FileOutputStream fop = new FileOutputStream(file);
+		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
 		byte[] contentInBytes = completeFile.toString().getBytes();
 
-		fop.write(contentInBytes);
-		fop.flush();
-		fop.close();
+		fos.write(contentInBytes);
+		fos.flush();
+		fos.close();
+		
+		// TODO Remove this
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
-
 	}
 
 	private void initHTMLHeader(StringBuilder buffer, String cssPath) {
@@ -561,23 +586,25 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public String getDocumentationFragmentContents(String fragmentFilenname)
 			throws IOException {
+		
 		File file = new File(DOC_FRAGMENT_PATH + fragmentFilenname.trim()
 				+ ".html");
 		if (!file.exists()) {
-			return "<div class=\"error\">ERROR: could not find documentation fragment at:<br/> "
+			// TODO Throw exception instead?
+			return "<div class=\"error\">ERROR: Can't find documentation fragment at:<br/> "
 					+ file.getAbsolutePath() + "</div>";
 		}
+		
 		InputStream stream = new FileInputStream(file);
-		BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
 		StringBuilder sb = new StringBuilder();
 		String line;
-		while ((line = br.readLine()) != null) {
+		while ((line = reader.readLine()) != null) {
 			sb.append(line);
 		}
 
-		br.close();
+		reader.close();
 		return sb.toString();
 	}
-
 }
