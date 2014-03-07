@@ -164,19 +164,18 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	/**
-	 * iterates through the given root elements content and returns the first
+	 * Iterates through the given root elements content and returns the first
 	 * element having the given instance type.
 	 * 
 	 * @return the first object that is an instance of the given type, or
 	 *         <code>null</code>, if no such element has been located.
 	 */
-	@SuppressWarnings("unchecked")
 	private <T> T firstOn(EObject root, Class<T> instanceType) {
-		for (TreeIterator<EObject> it = EcoreUtil.getAllContents(root, false); it
-				.hasNext();) {
+		TreeIterator<EObject> it = EcoreUtil.getAllContents(root, false);
+		while (it.hasNext()) {
 			EObject next = it.next();
 			if (instanceType.isInstance(next)) {
-				return (T) next;
+				return instanceType.cast(next);
 			}
 		}
 		return null;
