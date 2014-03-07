@@ -171,7 +171,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	 *         <code>null</code>, if no such element has been located.
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T firstOn(EObject root, Class<T> instanceType) {
+	private <T> T firstOn(EObject root, Class<T> instanceType) {
 		for (TreeIterator<EObject> it = EcoreUtil.getAllContents(root, false); it
 				.hasNext();) {
 			EObject next = it.next();
@@ -342,7 +342,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		return "<li>" + escapedText + "</li>\n";
 	}
 
-	private static String figureAnchorID(int figureCounter) {
+	private String figureAnchorID(int figureCounter) {
 		return "figure_" + figureCounter;
 	}
 
