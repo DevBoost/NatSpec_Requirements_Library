@@ -326,12 +326,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseList(List list) {
-		String result = "<ul>\n";
+		StringBuilder result = new StringBuilder();
+		result.append("<ul>\n");
 		for (ListItem item : list.getItems()) {
-			result += doSwitch(item);
+			result.append(doSwitch(item));
 		}
-		result += "</ul>\n";
-		return result;
+		result.append("</ul>\n");
+		return result.toString();
 	}
 
 	@Override
