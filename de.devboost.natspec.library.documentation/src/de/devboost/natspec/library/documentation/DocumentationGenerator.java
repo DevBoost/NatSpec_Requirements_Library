@@ -182,7 +182,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	/**
-	 * determines, if the documentation contains at least on image element
+	 * Determines, if the documentation contains at least on image element.
+	 * 
+	 * @return <code>true</code> if there is an image in the documentation,
+	 *         otherwise <code>false</code>
 	 */
 	private boolean hasImages(Documentation documentation) {
 		return firstOn(documentation, Image.class) != null;
