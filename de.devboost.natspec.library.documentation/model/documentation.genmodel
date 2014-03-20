@@ -6,6 +6,10 @@
   <foreignModel>documentation.ecore</foreignModel>
   <genPackages prefix="Documentation" basePackage="de.devboost.natspec.library" disposableProviderFactory="true"
       ecorePackage="documentation.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="documentation.ecore#//Unit">
+      <genEnumLiterals ecoreEnumLiteral="documentation.ecore#//Unit/PERCENT"/>
+      <genEnumLiterals ecoreEnumLiteral="documentation.ecore#//Unit/PIXELS"/>
+    </genEnums>
     <genClasses ecoreClass="documentation.ecore#//Documentation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/sections"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/terminology"/>
@@ -43,8 +47,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableRow/rowCells"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Image">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/width"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/originalSource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference documentation.ecore#//Image/width"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//TermEntry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TermEntry/description"/>
@@ -57,6 +61,10 @@
     <genClasses ecoreClass="documentation.ecore#//Listing"/>
     <genClasses ecoreClass="documentation.ecore#//Code">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Code/text"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Width">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/unit"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

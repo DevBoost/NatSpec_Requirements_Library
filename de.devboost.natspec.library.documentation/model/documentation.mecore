@@ -64,7 +64,17 @@ TableRow (
 
 Image : Fragment, NamedElement (
 	originalSource EString
+	width Width
+)
+
+enum Unit (
+	PERCENT "%"
+	PIXELS "px"
+)
+
+Width (
 	width EIntegerObject
+	unit Unit
 )
 
 TermEntry : NamedElement (

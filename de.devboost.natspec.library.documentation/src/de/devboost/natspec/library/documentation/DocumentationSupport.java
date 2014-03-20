@@ -129,8 +129,8 @@ public class DocumentationSupport {
 	public Line createTodo(List<String> fullSentence,
 			TextFragmentContainer container) {
 		Line line = factory.createLine();
-		line.setText("<span class=\"todo\">#TODO " + 
-				flattenList(fullSentence) + "</span></br>");
+		line.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
+				+ "</span></br>");
 		container.getFragments().add(line);
 		return line;
 	}
@@ -156,7 +156,7 @@ public class DocumentationSupport {
 	@TextSyntax("Paragraph #1")
 	public Paragraph createParagraphWithHeading(List<String> heading,
 			TextFragmentContainer container) {
-		
+
 		if (container instanceof Listing) {
 			Listing listing = (Listing) container;
 			EObject parent = listing.eContainer();
@@ -164,7 +164,7 @@ public class DocumentationSupport {
 				container = (TextFragmentContainer) parent;
 			}
 		}
-		
+
 		Paragraph paragraph = factory.createParagraph();
 		container = locateProperContainer(container);
 		container.getFragments().add(paragraph);
@@ -213,8 +213,7 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("\\* #1")
-	public ListItem continueListItem(List<String> item,
-			ListItem listItem) {
+	public ListItem continueListItem(List<String> item, ListItem listItem) {
 		listItem.setText(listItem.getText() + flattenList(item));
 		return listItem;
 	}
@@ -229,12 +228,17 @@ public class DocumentationSupport {
 		return image;
 	}
 
-	@TextSyntax("Image of #1 at #2 width #3 %")
+	@TextSyntax("Image of #1 at #2 width #3 #4")
 	public Image image(List<String> name, String externalPath,
-			String widthPercent, TextFragmentContainer container) {
+			String widthPercent, String stringUnit,
+			TextFragmentContainer container) {
 		Image image = image(name, externalPath, container);
 		try {
-			image.setWidth(Integer.parseInt(widthPercent));
+			Width width = factory.createWidth();
+			width.setWidth(Integer.parseInt(widthPercent));
+			Unit unit = Unit.get(stringUnit);
+			width.setUnit(unit);
+			image.setWidth(width);
 		} catch (NumberFormatException e) {
 		}
 		return image;
@@ -350,7 +354,7 @@ public class DocumentationSupport {
 	@TextSyntax("XML of #1 from resource #2 at #3")
 	public void codeFromFile(List<String> name, String path, String className,
 			TextFragmentContainer container) {
-		
+
 		XML xml = factory.createXML();
 		container.getFragments().add(xml);
 		xml.setName(StringUtils.join(name, " "));

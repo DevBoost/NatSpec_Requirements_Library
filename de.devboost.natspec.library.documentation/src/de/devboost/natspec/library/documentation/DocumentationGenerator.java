@@ -213,7 +213,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseListing(Listing listing) {
 		StringBuilder result = new StringBuilder();
 		result.append("<div class=\"code\">");
-		
+
 		int indendation = 0;
 		java.util.List<Fragment> fragments = listing.getFragments();
 		for (Fragment fragment : fragments) {
@@ -233,11 +233,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 			}
 		}
-		
+
 		result.append("</div>");
 		return result.toString();
 	}
-	
+
 	@Override
 	public String caseCode(Code code) {
 		StringBuilder result = new StringBuilder();
@@ -261,7 +261,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		return result;
 	}
-	
+
 	@Override
 	public String caseSubsection(Subsection subsection) {
 		String subsectionID = subsection.getId();
@@ -378,7 +378,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		}
 		if (image.getWidth() != null) {
 			result += "<img class=\"manStyled\" src=\"" + imagePath
-					+ "\" width=\"" + image.getWidth() + "%\" />";
+					+ "\" width=\"" + image.getWidth().getWidth()
+					+ image.getWidth().getUnit().getLiteral() + "\" />";
 		} else {
 			result += "<img src=\"" + imagePath + "\" width=\"100%\" />";
 		}
@@ -460,12 +461,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			targetFile = potentialTargetFile;
 		}
-		
+
 		File targetPath = targetFile.getParentFile();
 		if (!targetPath.exists()) {
 			targetPath.mkdirs();
 		}
-		
+
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
 		try {
@@ -485,7 +486,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				fos.close();
 			}
 		}
-		
+
 		// TODO Remove this (use some kind of logging mechanism instead)
 		System.out.println("Copied " + sourceFile.getPath() + " to "
 				+ targetFile.getPath());
@@ -499,7 +500,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public void saveDocumentationToFile(Documentation documentation)
 			throws IOException {
-		
+
 		String completeDocumentation = getDocumentationAsString(documentation,
 				DEFAULT_CSS_FILENAME);
 
@@ -513,7 +514,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			file.createNewFile();
 		}
-		
+
 		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
@@ -523,14 +524,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fos.write(contentInBytes);
 		fos.flush();
 		fos.close();
-		
+
 		// TODO Remove this
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
 
 	public String getDocumentationAsString(Documentation documentation,
 			String cssPath) {
-		
+
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, cssPath);
 		completeFile.append(doSwitch(documentation));
@@ -545,7 +546,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public void saveFragmentToFile(Fragment documentation, String filename)
 			throws IOException {
-		
+
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
 		completeFile.append(doSwitch(documentation));
@@ -568,7 +569,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fos.write(contentInBytes);
 		fos.flush();
 		fos.close();
-		
+
 		// TODO Remove this
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
@@ -586,7 +587,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public String getDocumentationFragmentContents(String fragmentFilenname)
 			throws IOException {
-		
+
 		File file = new File(DOC_FRAGMENT_PATH + fragmentFilenname.trim()
 				+ ".html");
 		if (!file.exists()) {
@@ -594,9 +595,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			return "<div class=\"error\">ERROR: Can't find documentation fragment at:<br/> "
 					+ file.getAbsolutePath() + "</div>";
 		}
-		
+
 		InputStream stream = new FileInputStream(file);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(stream));
 
 		StringBuilder sb = new StringBuilder();
 		String line;
