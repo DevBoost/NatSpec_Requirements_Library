@@ -306,6 +306,17 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	@Override
+	public String caseLink(Link link) {
+		StringBuilder result = new StringBuilder();
+		result.append("<a href=\"");
+		result.append(link.getUri());
+		result.append("\" target=\"_blank\">");
+		result.append(link.getName());
+		result.append("</a>\n");
+		return result.toString();
+	}
+
+	@Override
 	public String caseTable(Table object) {
 		String result = "<table>";
 		result += doSwitch(object.getTableHeader());

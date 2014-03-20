@@ -85,3 +85,7 @@ XML : Fragment, NamedElement (
 	resource EString
 	contextClassName EString
 )
+
+Link : Fragment, NamedElement (
+	uri EString
+)

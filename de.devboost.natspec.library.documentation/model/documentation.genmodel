@@ -66,5 +66,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/width"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/unit"/>
     </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Link">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Link/uri"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

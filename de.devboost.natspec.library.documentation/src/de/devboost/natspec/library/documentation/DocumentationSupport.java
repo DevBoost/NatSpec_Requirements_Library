@@ -376,4 +376,21 @@ public class DocumentationSupport {
 		container.getFragments().add(code);
 		return code;
 	}
+
+	@TextSyntax("Link to #1")
+	public Link link(String uri, TextFragmentContainer container) {
+		Link link = factory.createLink();
+		container.getFragments().add(link);
+		link.setName(uri);
+		link.setUri(uri);
+		return link;
+	}
+
+	@TextSyntax("Link to #2 with caption #1")
+	public Link link(List<String> caption, String uri,
+			TextFragmentContainer container) {
+		Link link = link(uri, container);
+		link.setName(StringUtils.join(caption, " "));
+		return link;
+	}
 }
