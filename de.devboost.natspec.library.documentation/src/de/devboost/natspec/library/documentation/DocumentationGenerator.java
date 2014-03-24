@@ -200,7 +200,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "";
 
 		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount
-				+ " Table of Figures</h2><br/>";
+				+ " Table of Figures</h2>\n";
 		for (Map.Entry<Integer, NamedElement> e : imageTable.entrySet()) {
 			result += "<a class=\"figure_table_reference\" href=\"#"
 					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
