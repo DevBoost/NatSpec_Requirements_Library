@@ -44,6 +44,17 @@ public class DocumentationSupport {
 		return documentation;
 	}
 
+	@TextSyntax("Reference to #1 with caption #2")
+	public Reference addReference(String label, List<String> caption,
+			TextFragmentContainer container, Documentation d) {
+		Reference reference = factory.createReference();
+		reference.setName(flattenList(caption));
+		reference.setReferredLabel(label);
+
+		container.getFragments().add(reference);
+		return reference;
+	}
+
 	@TextSyntax("Section - #1")
 	public Section addSection(List<String> name, Documentation d) {
 		Section section = factory.createSection();
@@ -59,6 +70,14 @@ public class DocumentationSupport {
 		subsection.setName(subsectionName);
 		section.getFragments().add(subsection);
 		return subsection;
+	}
+
+	@TextSyntax("Subsection (#2) - #1")
+	public Subsection addLabeledSubsection(List<String> name, String label,
+			Section section) {
+		Subsection result = addSubsection(name, section);
+		result.setLabel(label);
+		return result;
 	}
 
 	@TextSyntax("Subsubsection - #1")
