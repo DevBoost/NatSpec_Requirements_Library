@@ -222,7 +222,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			if (fragment instanceof Line) {
 				Line line = (Line) fragment;
 				String text = line.getText().trim();
-				if (text.endsWith("}")) {
+				if (text.endsWith("}") || text.endsWith("};")) {
 					indendation--;
 				}
 				for (int i = 0; i < indendation; i++) {
@@ -230,7 +230,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 				result.append(StringEscapeUtils.escapeHtml(text));
 				result.append("<br/>");
-				if (text.endsWith("{")) {
+				if (text.endsWith("{") && !text.contains("}")) {
 					indendation++;
 				}
 			}
