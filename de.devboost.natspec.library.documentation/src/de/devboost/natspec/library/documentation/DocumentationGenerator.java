@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.devboost.natspec.library.documentation.util.DocumentationSwitch;
 
+// TODO Replace output to System.out and System.err with listener mechanism
 public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	public static final String DOC_PATH = "./doc/";
@@ -39,31 +40,40 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private int xmlCounter = 1;
 
 	private File imagePath;
-	private Map<Integer, NamedElement> imageTable = new LinkedHashMap<Integer, NamedElement>();
+	private Map<Integer, NamedElement> imageMap = new LinkedHashMap<Integer, NamedElement>();
 
 	/**
-	 * value constructor with a given generator configuration
+	 * Creates a new {@link DocumentationGenerator} using a default
+	 * configuration.
+	 */
+	public DocumentationGenerator() {
+		this(new Configuration());
+	}
+
+	/**
+	 * Creates a new {@link DocumentationGenerator} using the given
+	 * configuration.
 	 */
 	public DocumentationGenerator(Configuration configuration) {
 		Assert.isNotNull(configuration, "Configuration is required");
+		
 		this.configuration = configuration;
-		imagePath = new File(DOC_IMAGE_PATH);
+		this.imagePath = new File(DOC_IMAGE_PATH);
 		if (configuration.isCopyImages()) {
 			if (!deleteIfExists(imagePath)) {
-				// TODO
 				System.err.println("Warning: image path has not cleaned.");
 			}
 		}
 	}
 
 	/**
-	 * default constructor
+	 * Deletes the given file. If the file is a directory, all its contents
+	 * (i.e., sub directories and contained files) are deleted as well.
+	 * 
+	 * @return <code>true</code> is deletion was successful, otherwise
+	 *         <code>false</code>
 	 */
-	public DocumentationGenerator() {
-		this(new Configuration());
-	}
-
-	private boolean deleteIfExists(File file) {
+	protected boolean deleteIfExists(File file) {
 		if (file.exists()) {
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
@@ -155,7 +165,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result = result + casePageBreak(null);
 
 		if (configuration.isTableOfFigures() && hasImages) {
-			result += insertFigureTable(imageTable, sectionCount);
+			result += insertFigureTable(imageMap, sectionCount);
 		}
 
 		return result;
@@ -199,7 +209,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount
 				+ " Table of Figures</h2><br/>";
-		for (Map.Entry<Integer, NamedElement> e : imageTable.entrySet()) {
+		for (Map.Entry<Integer, NamedElement> e : imageMap.entrySet()) {
 			result += "<a class=\"figure_table_reference\" href=\"#"
 					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
 					+ e.getKey() + " - " + e.getValue().getName()
@@ -385,7 +395,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				+ "\">";
 		if (configuration.isTableOfFigures()) {
 			result += "<a name=\"" + figureAnchorID(figureCounter) + "\" ></a>";
-			imageTable.put(figureCounter, image);
+			imageMap.put(figureCounter, image);
 		}
 		if (image.getWidth() != null) {
 			result += "<img class=\"manStyled\" src=\"" + imagePath
@@ -425,13 +435,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			IOUtils.copy(inputStream, writer, "UTF-8");
 			content = StringEscapeUtils.escapeXml(writer.toString());
 			result.append(content);
-			// result.append(writer.toString());
-
 		} catch (ClassNotFoundException e) {
-			// TODO Handle exception
+			// FIXME Handle exception
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Handle exception
+			// FIXME Handle exception
 			e.printStackTrace();
 		}
 
@@ -498,7 +506,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 		}
 
-		// TODO Remove this (use some kind of logging mechanism instead)
 		System.out.println("Copied " + sourceFile.getPath() + " to "
 				+ targetFile.getPath());
 
@@ -535,19 +542,16 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fos.write(contentInBytes);
 		fos.flush();
 		fos.close();
-
-		// TODO Remove this
-		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
 
 	public String getDocumentationAsString(Documentation documentation,
 			String cssPath) {
 
-		StringBuilder completeFile = new StringBuilder();
-		initHTMLHeader(completeFile, cssPath);
-		completeFile.append(doSwitch(documentation));
-		closeHTMLHeader(completeFile);
-		return completeFile.toString();
+		StringBuilder completeFileContents = new StringBuilder();
+		initHTMLHeader(completeFileContents, cssPath);
+		completeFileContents.append(doSwitch(documentation));
+		closeHTMLHeader(completeFileContents);
+		return completeFileContents.toString();
 	}
 
 	private void closeHTMLHeader(StringBuilder builder) {
@@ -581,7 +585,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fos.flush();
 		fos.close();
 
-		// TODO Remove this
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
 
