@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
@@ -112,8 +113,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					result += "<a class=\"outline_subsection_reference\" href=\"#"
 							+ subsection.getId()
 							+ "\">"
-							+ subsection.getId()
-							+ " " + subsection.getName().trim() + "</a><br/>\n";
+							+ id
+							+ " "
+							+ subsection.getName().trim() + "</a><br/>\n";
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
@@ -208,7 +210,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "";
 
 		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount
-				+ " Table of Figures</h2><br/>";
+				+ " Table of Figures</h2>\n";
 		for (Map.Entry<Integer, NamedElement> e : imageMap.entrySet()) {
 			result += "<a class=\"figure_table_reference\" href=\"#"
 					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
@@ -255,6 +257,62 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result.append(StringEscapeUtils.escapeHtml(code.getText()));
 		result.append("</tt>&nbsp;");
 		return result.toString();
+	}
+
+	@Override
+	public String caseReference(Reference object) {
+		StringBuilder result = new StringBuilder();
+		result.append("<a href=\"#");
+		NamedElement referredElement = getNamedElementWithLabel(
+				object.getReferredLabel(), object.eContainer());
+		result.append(referredElement.getId());
+		result.append("\">");
+		result.append(object.getName());
+		result.append("</a>\n");
+		return result.toString();
+	}
+
+	private NamedElement getNamedElementWithLabel(String label,
+			EObject eContainer) {
+		while (!(eContainer instanceof Documentation)
+				&& null != eContainer.eContainer()) {
+			eContainer = eContainer.eContainer();
+		}
+
+		if (null != eContainer && eContainer instanceof Documentation) {
+			Documentation documentation = (Documentation) eContainer;
+
+			if (documentation.getSections().size() > 0) {
+				java.util.List<NamedElement> elementsToVisit = new LinkedList<NamedElement>();
+				elementsToVisit.addAll(documentation.getSections());
+				NamedElement currentElement = elementsToVisit.iterator().next();
+
+				while (null != currentElement) {
+					if (label.equals(currentElement.getLabel())) {
+						return currentElement;
+					}
+
+					if (currentElement instanceof TextFragmentContainer) {
+						for (Fragment fragment : ((TextFragmentContainer) currentElement)
+								.getFragments()) {
+							if (fragment instanceof NamedElement) {
+								elementsToVisit.add((NamedElement) fragment);
+							}
+						}
+					}
+
+					elementsToVisit.remove(0);
+
+					if (elementsToVisit.size() > 0) {
+						currentElement = elementsToVisit.iterator().next();
+					} else {
+						currentElement = null;
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 
 	@Override
