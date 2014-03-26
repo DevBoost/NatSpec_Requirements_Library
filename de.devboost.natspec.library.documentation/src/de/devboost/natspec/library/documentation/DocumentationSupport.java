@@ -63,6 +63,13 @@ public class DocumentationSupport {
 		return section;
 	}
 
+	@TextSyntax("Section (#1) - #2")
+	public Section addSection(String label, List<String> name, Documentation d) {
+		Section section = addSection(name, d);
+		section.setLabel(label);
+		return section;
+	}
+
 	@TextSyntax("Subsection - #1")
 	public Subsection addSubsection(List<String> name, Section section) {
 		Subsection subsection = factory.createSubsection();
@@ -72,8 +79,8 @@ public class DocumentationSupport {
 		return subsection;
 	}
 
-	@TextSyntax("Subsection (#2) - #1")
-	public Subsection addLabeledSubsection(List<String> name, String label,
+	@TextSyntax("Subsection (#1) - #2")
+	public Subsection addLabeledSubsection(String label, List<String> name,
 			Section section) {
 		Subsection result = addSubsection(name, section);
 		result.setLabel(label);
@@ -88,6 +95,13 @@ public class DocumentationSupport {
 		s.getFragments().add(subsubsection);
 		return subsubsection;
 
+	}
+
+	@TextSyntax("Subsubsection (#1) - #2")
+	public Subsubsection addLabeledSubsubsection(String label, List<String> name, Subsection s) {
+		Subsubsection subsubsection = addSubsubsection(name, s);
+		subsubsection.setLabel(label);
+		return subsubsection;
 	}
 
 	@TextSyntax("Insert page break")
