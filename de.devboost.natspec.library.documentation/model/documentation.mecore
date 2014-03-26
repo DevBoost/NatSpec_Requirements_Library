@@ -9,7 +9,6 @@ Documentation (
 abstract NamedElement (
 	id EString
 	name EString
-	label EString
 )
 
 abstract TextFragmentContainer (
@@ -89,8 +88,4 @@ XML : Fragment, NamedElement (
 
 Link : Fragment, NamedElement (
 	uri EString
-)
-
-Reference : Fragment, NamedElement (
-	referredLabel EString
 )

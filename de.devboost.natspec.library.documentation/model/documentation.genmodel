@@ -11,36 +11,30 @@
       <genEnumLiterals ecoreEnumLiteral="documentation.ecore#//Unit/PIXELS"/>
     </genEnums>
     <genClasses ecoreClass="documentation.ecore#//Documentation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Documentation/title"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/sections"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Documentation/terminology"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Documentation/title"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="documentation.ecore#//NamedElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/label"/>
-    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Section"/>
+    <genClasses ecoreClass="documentation.ecore#//Subsection"/>
+    <genClasses ecoreClass="documentation.ecore#//Subsubsection"/>
     <genClasses image="false" ecoreClass="documentation.ecore#//TextFragmentContainer">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextFragmentContainer/fragments"/>
     </genClasses>
-    <genClasses ecoreClass="documentation.ecore#//Section"/>
-    <genClasses ecoreClass="documentation.ecore#//PageBreak"/>
-    <genClasses ecoreClass="documentation.ecore#//Subsection"/>
-    <genClasses ecoreClass="documentation.ecore#//Subsubsection"/>
     <genClasses ecoreClass="documentation.ecore#//Paragraph"/>
-    <genClasses ecoreClass="documentation.ecore#//Listing"/>
     <genClasses image="false" ecoreClass="documentation.ecore#//Fragment"/>
     <genClasses ecoreClass="documentation.ecore#//Line">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Line/text"/>
-    </genClasses>
-    <genClasses ecoreClass="documentation.ecore#//Code">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Code/text"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//List">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//List/items"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//ListItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//ListItem/text"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="documentation.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//NamedElement/name"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Table">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Table/tableHeader"/>
@@ -54,24 +48,26 @@
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Image">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/originalSource"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Image/width"/>
-    </genClasses>
-    <genClasses ecoreClass="documentation.ecore#//Width">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/width"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference documentation.ecore#//Image/width"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//TermEntry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TermEntry/description"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//XML">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/resource"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/contextClassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//XML/resource"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//PageBreak"/>
+    <genClasses ecoreClass="documentation.ecore#//Listing"/>
+    <genClasses ecoreClass="documentation.ecore#//Code">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Code/text"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Width">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/unit"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Link">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Link/uri"/>
-    </genClasses>
-    <genClasses ecoreClass="documentation.ecore#//Reference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Reference/referredLabel"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
