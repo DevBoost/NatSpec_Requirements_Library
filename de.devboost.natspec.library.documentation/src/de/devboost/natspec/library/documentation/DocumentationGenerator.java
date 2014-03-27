@@ -494,11 +494,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			content = StringEscapeUtils.escapeXml(writer.toString());
 			result.append(content);
 		} catch (ClassNotFoundException e) {
-			// FIXME Handle exception
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// FIXME Handle exception
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 		result.append("</pre>");
