@@ -38,6 +38,10 @@ Line : Fragment (
 	text EString
 )
 
+HtmlCode : Fragment (
+	code EString
+)
+
 Code : Fragment (
 	text EString
 )

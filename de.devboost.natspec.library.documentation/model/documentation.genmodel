@@ -73,5 +73,8 @@
     <genClasses ecoreClass="documentation.ecore#//Reference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Reference/referredLabel"/>
     </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//HtmlCode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//HtmlCode/code"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

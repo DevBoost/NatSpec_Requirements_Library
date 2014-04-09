@@ -372,6 +372,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseLine(Line line) {
 		return StringEscapeUtils.escapeHtml(line.getText());
 	}
+	
+	public String caseHtmlCode(HtmlCode htmlCode) {
+		return htmlCode.getCode();
+	}
 
 	@Override
 	public String caseLink(Link link) {
