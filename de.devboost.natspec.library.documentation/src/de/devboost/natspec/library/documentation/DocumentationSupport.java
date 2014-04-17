@@ -46,7 +46,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Reference to #1 with caption #2")
 	public Reference addReference(String label, List<String> caption,
-			TextFragmentContainer container, Documentation d) {
+			FragmentContainer container, Documentation d) {
 		Reference reference = factory.createReference();
 		reference.setName(flattenList(caption));
 		reference.setReferredLabel(label);
@@ -105,28 +105,28 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Insert page break")
-	public void addPageBreak(TextFragmentContainer container) {
+	public void addPageBreak(FragmentContainer container) {
 		PageBreak fragment = factory.createPageBreak();
 		container.getFragments().add(fragment);
 	}
 
 	@TextSyntax("#1")
 	public Line createPlainContents(List<String> fullSentence,
-			TextFragmentContainer container) {
+			TextContainer container) {
 		String text = flattenList(fullSentence);
 		return addLine(container, text);
 	}
 
-	private Line addLine(TextFragmentContainer container, String text) {
+	private Line addLine(TextContainer container, String text) {
 		Line line = factory.createLine();
 		line.setText(text);
-		container.getFragments().add(line);
+		container.getLines().add(line);
 		return line;
 	}
 
 	@TextSyntax("|---- #1 ----|")
 	public Table createOrEndTable(List<String> tableDescription,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 		if (!withinTable) {
 			withinTable = true;
 			Table table = factory.createTable();
@@ -160,11 +160,11 @@ public class DocumentationSupport {
 
 	@TextSyntax("#todo #1")
 	public Line createTodo(List<String> fullSentence,
-			TextFragmentContainer container) {
+			TextContainer container) {
 		Line line = factory.createLine();
 		line.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
 				+ "</span></br>");
-		container.getFragments().add(line);
+		container.getLines().add(line);
 		return line;
 	}
 
@@ -188,13 +188,13 @@ public class DocumentationSupport {
 
 	@TextSyntax("Paragraph #1")
 	public Paragraph createParagraphWithHeading(List<String> heading,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 
 		if (container instanceof Listing) {
 			Listing listing = (Listing) container;
 			EObject parent = listing.eContainer();
-			if (parent instanceof TextFragmentContainer) {
-				container = (TextFragmentContainer) parent;
+			if (parent instanceof FragmentContainer) {
+				container = (FragmentContainer) parent;
 			}
 		}
 
@@ -205,21 +205,22 @@ public class DocumentationSupport {
 			Line headingLine = factory.createLine();
 			headingLine.setText("<strong>" + StringUtils.join(heading, " ")
 					+ " </strong>");
-			paragraph.getFragments().add(headingLine);
+			paragraph.getLines().add(headingLine);
 		}
 		return paragraph;
 	}
 
-	private TextFragmentContainer locateProperContainer(
-			TextFragmentContainer container) {
+	// TODO This can be removed if the metamodel structure is correct
+	private FragmentContainer locateProperContainer(
+			FragmentContainer container) {
 		while (container instanceof ListItem) {
 			EObject parentContainer = container.eContainer();
 			while (parentContainer != null
-					&& !(parentContainer instanceof TextFragmentContainer)) {
+					&& !(parentContainer instanceof FragmentContainer)) {
 				parentContainer = parentContainer.eContainer();
 			}
-			if (parentContainer instanceof TextFragmentContainer) {
-				container = (TextFragmentContainer) parentContainer;
+			if (parentContainer instanceof FragmentContainer) {
+				container = (FragmentContainer) parentContainer;
 			} else {
 				break;
 			}
@@ -229,7 +230,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("List")
 	public de.devboost.natspec.library.documentation.List addList(
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 		de.devboost.natspec.library.documentation.List list = factory
 				.createList();
 		container.getFragments().add(list);
@@ -253,7 +254,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Image of #1 at #2")
 	public Image image(List<String> name, String externalPath,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 		Image image = factory.createImage();
 		container.getFragments().add(image);
 		image.setName(StringUtils.join(name, " "));
@@ -264,7 +265,7 @@ public class DocumentationSupport {
 	@TextSyntax("Image of #1 at #2 width #3 #4")
 	public Image image(List<String> name, String externalPath,
 			String widthPercent, String stringUnit,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 		Image image = image(name, externalPath, container);
 		try {
 			Width width = factory.createWidth();
@@ -289,20 +290,20 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Story - #1")
-	public void addStory(String path, TextFragmentContainer c) throws Exception {
+	public void addStory(String path, FragmentContainer c) throws Exception {
 		addNatSpecFile(path, c, "Story", true);
 	}
 
-	private void addNatSpecFile(String path, TextFragmentContainer c,
+	private void addNatSpecFile(String path, FragmentContainer c,
 			String contentKind, boolean showLineNumbers)
 			throws FileNotFoundException, IOException {
 		File f = new File(path);
 		if (f.exists()) {
-			Line l = factory.createLine();
+			HtmlCode l = factory.createHtmlCode();
 			c.getFragments().add(l);
 			String nameWithoutExtension = f.getName().substring(0,
 					f.getName().lastIndexOf('.'));
-			l.setText("<h3 class =\"scenario\">" + contentKind + ": "
+			l.setCode("<h3 class =\"scenario\">" + contentKind + ": "
 					+ insertCamelCaseWhitespaces(nameWithoutExtension)
 					+ "</h3>");
 			FileInputStream inputStream = new FileInputStream(f);
@@ -343,12 +344,12 @@ public class DocumentationSupport {
 				codeFragments.add(codeFragment);
 			}
 			for (String fragment : codeFragments) {
-				Line contents = factory.createLine();
+				HtmlCode contents = factory.createHtmlCode();
 				c.getFragments().add(contents);
 				if (isComment(fragment)) {
-					contents.setText(fragment.substring(2));
+					contents.setCode(fragment.substring(2));
 				} else {
-					contents.setText("<div class=\"code\"><code class=\"natspec_code\">\n"
+					contents.setCode("<div class=\"code\"><code class=\"natspec_code\">\n"
 							+ fragment + "\n</code></div>\n");
 				}
 			}
@@ -364,7 +365,7 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Rules - #1")
-	public void addRules(String path, TextFragmentContainer c) throws Exception {
+	public void addRules(String path, FragmentContainer c) throws Exception {
 		addNatSpecFile(path, c, "Rules", false);
 	}
 
@@ -378,40 +379,42 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Author #1")
-	public void addAuthor(List<String> authors, TextFragmentContainer container) {
-		addLine(container,
-				"<div class=\"author_tag\">" + StringUtils.join(authors, " ")
-						+ "</div>");
+	public void addAuthor(List<String> authors, FragmentContainer container) {
+		HtmlCode html = factory.createHtmlCode();
+		html.setCode("<div class=\"author_tag\">" + StringUtils.join(authors, " ")
+				+ "</div>");
+		container.getFragments().add(html);
 	}
 
 	@TextSyntax("XML of #1 from resource #2 at #3")
 	public void codeFromFile(List<String> name, String path, String className,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 
 		XML xml = factory.createXML();
-		container.getFragments().add(xml);
 		xml.setName(StringUtils.join(name, " "));
 		xml.setResource(path);
 		xml.setContextClassName(className);
+		
+		container.getFragments().add(xml);
 	}
 
 	@TextSyntax("Listing")
-	public Listing beginListing(TextFragmentContainer container) {
+	public Listing beginListing(FragmentContainer container) {
 		Listing createListing = factory.createListing();
 		container.getFragments().add(createListing);
 		return createListing;
 	}
 
 	@TextSyntax("Code #1")
-	public Code code(@Many String text, TextFragmentContainer container) {
+	public Code code(@Many String text, TextContainer container) {
 		Code code = factory.createCode();
 		code.setText(text);
-		container.getFragments().add(code);
+		container.getLines().add(code);
 		return code;
 	}
 
 	@TextSyntax("Link to #1")
-	public Link link(String uri, TextFragmentContainer container) {
+	public Link link(String uri, FragmentContainer container) {
 		Link link = factory.createLink();
 		container.getFragments().add(link);
 		link.setName(uri);
@@ -421,7 +424,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Link to #2 with caption #1")
 	public Link link(List<String> caption, String uri,
-			TextFragmentContainer container) {
+			FragmentContainer container) {
 		Link link = link(uri, container);
 		link.setName(StringUtils.join(caption, " "));
 		return link;

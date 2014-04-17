@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.documentation.DocumentationSupport;
-import de.devboost.natspec.library.documentation.TextFragmentContainer;
+import de.devboost.natspec.library.documentation.TextContainer;
 
 public class XMLAPIDocumentationSupport {
 
@@ -18,11 +18,11 @@ public class XMLAPIDocumentationSupport {
 	}
 
 	@TextSyntax("Insert documentation placeholder: API_LOCATION")
-	public void insertAPILocation(TextFragmentContainer container) {
+	public void insertAPILocation(TextContainer container) {
 		insertPlaceholder(container, API_LOCATION);
 	}
 
-	public void insertPlaceholder(TextFragmentContainer container, String placeholder) {
+	public void insertPlaceholder(TextContainer container, String placeholder) {
 		List<String> content = new ArrayList<String>();
 		content.add(placeholder);
 		documentationSupport.createPlainContents(content, container);

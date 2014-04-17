@@ -227,22 +227,19 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result.append("<div class=\"code\">");
 
 		int indendation = 0;
-		java.util.List<Fragment> fragments = listing.getFragments();
-		for (Fragment fragment : fragments) {
-			if (fragment instanceof Line) {
-				Line line = (Line) fragment;
-				String text = line.getText().trim();
-				if (text.endsWith("}") || text.endsWith("};")) {
-					indendation--;
-				}
-				for (int i = 0; i < indendation; i++) {
-					result.append("&nbsp;&nbsp;&nbsp;&nbsp;");
-				}
-				result.append(StringEscapeUtils.escapeHtml(text));
-				result.append("<br/>");
-				if (text.endsWith("{") && !text.contains("}")) {
-					indendation++;
-				}
+		java.util.List<Text> lines = listing.getLines();
+		for (Text line : lines) {
+			String text = line.getText().trim();
+			if (text.endsWith("}") || text.endsWith("};")) {
+				indendation--;
+			}
+			for (int i = 0; i < indendation; i++) {
+				result.append("&nbsp;&nbsp;&nbsp;&nbsp;");
+			}
+			result.append(StringEscapeUtils.escapeHtml(text));
+			result.append("<br/>");
+			if (text.endsWith("{") && !text.contains("}")) {
+				indendation++;
 			}
 		}
 
@@ -292,8 +289,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 						return currentElement;
 					}
 
-					if (currentElement instanceof TextFragmentContainer) {
-						for (Fragment fragment : ((TextFragmentContainer) currentElement)
+					if (currentElement instanceof FragmentContainer) {
+						for (Fragment fragment : ((FragmentContainer) currentElement)
 								.getFragments()) {
 							if (fragment instanceof NamedElement) {
 								elementsToVisit.add((NamedElement) fragment);
@@ -360,12 +357,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseParagraph(Paragraph paragraph) {
-		String result = "<p>\n";
-		for (Fragment f : paragraph.getFragments()) {
-			result += doSwitch(f);
+		StringBuilder result = new StringBuilder("<p>\n");
+		for (Text text : paragraph.getLines()) {
+			result.append(doSwitch(text));
 		}
-		result += "</p>\n";
-		return result;
+		result.append("</p>\n");
+		return result.toString();
 	}
 
 	@Override

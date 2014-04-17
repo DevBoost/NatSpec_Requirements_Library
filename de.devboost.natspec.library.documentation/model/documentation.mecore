@@ -12,45 +12,44 @@ abstract NamedElement (
 	label EString
 )
 
-abstract TextFragmentContainer (
+Section : FragmentContainer, NamedElement
+Subsection : FragmentContainer, Fragment, NamedElement
+Subsubsection  : FragmentContainer, Fragment, NamedElement
+
+// Fragments are elements that can be used as content for Sections, Subsections
+// and Subsubsections. Examples are: Paragraphs, Images, Lists.
+abstract Fragment
+
+abstract FragmentContainer : TextContainer (
 	fragments Fragment*
 )
 
-Section : TextFragmentContainer, NamedElement (
-)
-
-PageBreak : Fragment
-
-Subsection : TextFragmentContainer, Fragment, NamedElement (
-)
-
-Subsubsection  : TextFragmentContainer, Fragment, NamedElement (
-)
-
-Paragraph : TextFragmentContainer, Fragment (
-)
-
-Listing : TextFragmentContainer, Fragment
-
-abstract Fragment ()
-
-Line : Fragment (
+// Texts are elements that can be used as content for paragraphs. Examples are:
+// plain text lines and inline code fragments.
+abstract Text (
 	text EString
 )
+
+abstract TextContainer (
+	lines Text*
+)
+
+Paragraph : Fragment, TextContainer
+Listing : Fragment, TextContainer
+PageBreak : Fragment
+
+Line : Text
+Code : Text
 
 HtmlCode : Fragment (
 	code EString
-)
-
-Code : Fragment (
-	text EString
 )
 
 List : Fragment (
 	items ListItem*
 )
 
-ListItem : TextFragmentContainer(
+ListItem (
 	text EString
 )
 

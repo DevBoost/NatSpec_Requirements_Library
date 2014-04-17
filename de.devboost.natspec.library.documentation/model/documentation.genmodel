@@ -18,14 +18,9 @@
     <genClasses ecoreClass="documentation.ecore#//Section"/>
     <genClasses ecoreClass="documentation.ecore#//Subsection"/>
     <genClasses ecoreClass="documentation.ecore#//Subsubsection"/>
-    <genClasses image="false" ecoreClass="documentation.ecore#//TextFragmentContainer">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextFragmentContainer/fragments"/>
-    </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Paragraph"/>
     <genClasses image="false" ecoreClass="documentation.ecore#//Fragment"/>
-    <genClasses ecoreClass="documentation.ecore#//Line">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Line/text"/>
-    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Line"/>
     <genClasses ecoreClass="documentation.ecore#//List">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//List/items"/>
     </genClasses>
@@ -60,9 +55,7 @@
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//PageBreak"/>
     <genClasses ecoreClass="documentation.ecore#//Listing"/>
-    <genClasses ecoreClass="documentation.ecore#//Code">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Code/text"/>
-    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//Code"/>
     <genClasses ecoreClass="documentation.ecore#//Width">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/width"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Width/unit"/>
@@ -75,6 +68,15 @@
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//HtmlCode">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//HtmlCode/code"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="documentation.ecore#//FragmentContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//FragmentContainer/fragments"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="documentation.ecore#//TextContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextContainer/lines"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="documentation.ecore#//Text">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Text/text"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
