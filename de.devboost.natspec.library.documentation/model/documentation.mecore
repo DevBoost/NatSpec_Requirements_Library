@@ -26,7 +26,7 @@ abstract FragmentContainer : TextContainer (
 
 // Texts are elements that can be used as content for paragraphs. Examples are:
 // plain text lines and inline code fragments.
-abstract Text (
+abstract Text : Fragment (
 	text EString
 )
 

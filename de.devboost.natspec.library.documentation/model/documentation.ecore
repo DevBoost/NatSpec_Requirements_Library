@@ -280,7 +280,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Text" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Text" abstract="true" eSuperTypes="#//Fragment">
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
       <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
     </eAnnotations>

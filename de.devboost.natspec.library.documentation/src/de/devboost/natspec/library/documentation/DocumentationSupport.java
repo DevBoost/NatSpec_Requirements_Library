@@ -120,7 +120,12 @@ public class DocumentationSupport {
 	private Line addLine(TextContainer container, String text) {
 		Line line = factory.createLine();
 		line.setText(text);
-		container.getLines().add(line);
+		if (container instanceof FragmentContainer) {
+			FragmentContainer fragmentContainer = (FragmentContainer) container;
+			fragmentContainer.getFragments().add(line);
+		} else {
+			container.getLines().add(line);
+		}
 		return line;
 	}
 
@@ -409,7 +414,12 @@ public class DocumentationSupport {
 	public Code code(@Many String text, TextContainer container) {
 		Code code = factory.createCode();
 		code.setText(text);
-		container.getLines().add(code);
+		if (container instanceof FragmentContainer) {
+			FragmentContainer fragmentContainer = (FragmentContainer) container;
+			fragmentContainer.getFragments().add(code);
+		} else {
+			container.getLines().add(code);
+		}
 		return code;
 	}
 

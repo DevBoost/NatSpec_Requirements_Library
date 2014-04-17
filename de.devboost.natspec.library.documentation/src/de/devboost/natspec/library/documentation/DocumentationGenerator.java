@@ -348,6 +348,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "<h3 id=\"" + subsubsectionID
 				+ "\" class=\"subsubsection\">" + subsubsectionID + " "
 				+ trimmedName + "</h3>\n";
+		
 		for (Fragment f : subsubsection.getFragments()) {
 			result += doSwitch(f);
 		}
