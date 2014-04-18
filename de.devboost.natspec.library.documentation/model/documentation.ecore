@@ -248,15 +248,10 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HtmlCode" eSuperTypes="#//Fragment">
+  <eClassifiers xsi:type="ecore:EClass" name="HtmlCode" eSuperTypes="#//Text">
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
       <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
-        <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FragmentContainer" abstract="true" eSuperTypes="#//TextContainer">
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
@@ -273,7 +268,7 @@
     <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
       <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="lines" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="texts" upperBound="-1"
         eType="#//Text" containment="true">
       <eAnnotations source="org.emftext.language.mecore.resource.mecore.mopp.MecoreWrapper">
         <details key="WARNING" value="This element was generated from an .mecore file. Removing this annotation will signal the MinimalEcore builder to keep this element."/>

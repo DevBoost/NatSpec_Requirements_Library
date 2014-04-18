@@ -227,9 +227,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result.append("<div class=\"code\">");
 
 		int indendation = 0;
-		java.util.List<Text> lines = listing.getLines();
-		for (Text line : lines) {
-			String text = line.getText().trim();
+		java.util.List<Text> texts = listing.getTexts();
+		for (Text nextText : texts) {
+			String text = nextText.getText().trim();
 			if (text.endsWith("}") || text.endsWith("};")) {
 				indendation--;
 			}
@@ -359,7 +359,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseParagraph(Paragraph paragraph) {
 		StringBuilder result = new StringBuilder("<p>\n");
-		for (Text text : paragraph.getLines()) {
+		for (Text text : paragraph.getTexts()) {
 			result.append(doSwitch(text));
 		}
 		result.append("</p>\n");
@@ -372,7 +372,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 	
 	public String caseHtmlCode(HtmlCode htmlCode) {
-		return htmlCode.getCode();
+		return htmlCode.getText();
 	}
 
 	@Override

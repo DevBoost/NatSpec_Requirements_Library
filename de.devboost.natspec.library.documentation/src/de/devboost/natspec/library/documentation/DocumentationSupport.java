@@ -124,7 +124,7 @@ public class DocumentationSupport {
 			FragmentContainer fragmentContainer = (FragmentContainer) container;
 			fragmentContainer.getFragments().add(line);
 		} else {
-			container.getLines().add(line);
+			container.getTexts().add(line);
 		}
 		return line;
 	}
@@ -164,13 +164,14 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("#todo #1")
-	public Line createTodo(List<String> fullSentence,
+	public HtmlCode createTodo(List<String> fullSentence,
 			TextContainer container) {
-		Line line = factory.createLine();
-		line.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
+		
+		HtmlCode code = factory.createHtmlCode();
+		code.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
 				+ "</span></br>");
-		container.getLines().add(line);
-		return line;
+		container.getTexts().add(code);
+		return code;
 	}
 
 	private List<String> removeSeparators(List<String> rowContents,
@@ -207,10 +208,10 @@ public class DocumentationSupport {
 		container = locateProperContainer(container);
 		container.getFragments().add(paragraph);
 		if (!heading.isEmpty()) {
-			Line headingLine = factory.createLine();
+			HtmlCode headingLine = factory.createHtmlCode();
 			headingLine.setText("<strong>" + StringUtils.join(heading, " ")
 					+ " </strong>");
-			paragraph.getLines().add(headingLine);
+			paragraph.getTexts().add(headingLine);
 		}
 		return paragraph;
 	}
@@ -304,11 +305,11 @@ public class DocumentationSupport {
 			throws FileNotFoundException, IOException {
 		File f = new File(path);
 		if (f.exists()) {
-			HtmlCode l = factory.createHtmlCode();
-			c.getFragments().add(l);
+			HtmlCode code = factory.createHtmlCode();
+			c.getFragments().add(code);
 			String nameWithoutExtension = f.getName().substring(0,
 					f.getName().lastIndexOf('.'));
-			l.setCode("<h3 class =\"scenario\">" + contentKind + ": "
+			code.setText("<h3 class =\"scenario\">" + contentKind + ": "
 					+ insertCamelCaseWhitespaces(nameWithoutExtension)
 					+ "</h3>");
 			FileInputStream inputStream = new FileInputStream(f);
@@ -352,9 +353,9 @@ public class DocumentationSupport {
 				HtmlCode contents = factory.createHtmlCode();
 				c.getFragments().add(contents);
 				if (isComment(fragment)) {
-					contents.setCode(fragment.substring(2));
+					contents.setText(fragment.substring(2));
 				} else {
-					contents.setCode("<div class=\"code\"><code class=\"natspec_code\">\n"
+					contents.setText("<div class=\"code\"><code class=\"natspec_code\">\n"
 							+ fragment + "\n</code></div>\n");
 				}
 			}
@@ -386,7 +387,7 @@ public class DocumentationSupport {
 	@TextSyntax("Author #1")
 	public void addAuthor(List<String> authors, FragmentContainer container) {
 		HtmlCode html = factory.createHtmlCode();
-		html.setCode("<div class=\"author_tag\">" + StringUtils.join(authors, " ")
+		html.setText("<div class=\"author_tag\">" + StringUtils.join(authors, " ")
 				+ "</div>");
 		container.getFragments().add(html);
 	}
@@ -418,7 +419,7 @@ public class DocumentationSupport {
 			FragmentContainer fragmentContainer = (FragmentContainer) container;
 			fragmentContainer.getFragments().add(code);
 		} else {
-			container.getLines().add(code);
+			container.getTexts().add(code);
 		}
 		return code;
 	}

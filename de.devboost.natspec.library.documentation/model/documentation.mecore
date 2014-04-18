@@ -31,19 +31,19 @@ abstract Text : Fragment (
 )
 
 abstract TextContainer (
-	lines Text*
+	texts Text*
 )
 
 Paragraph : Fragment, TextContainer
 Listing : Fragment, TextContainer
 PageBreak : Fragment
 
+// A plain line of text
 Line : Text
+// A Code element represents an in-line code fragment (in the text)
 Code : Text
-
-HtmlCode : Fragment (
-	code EString
-)
+// A HtmlCode element can be used to insert raw HTML into a document
+HtmlCode : Text
 
 List : Fragment (
 	items ListItem*

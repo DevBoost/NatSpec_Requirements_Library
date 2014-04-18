@@ -66,14 +66,12 @@
     <genClasses ecoreClass="documentation.ecore#//Reference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Reference/referredLabel"/>
     </genClasses>
-    <genClasses ecoreClass="documentation.ecore#//HtmlCode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//HtmlCode/code"/>
-    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//HtmlCode"/>
     <genClasses image="false" ecoreClass="documentation.ecore#//FragmentContainer">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//FragmentContainer/fragments"/>
     </genClasses>
     <genClasses image="false" ecoreClass="documentation.ecore#//TextContainer">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextContainer/lines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//TextContainer/texts"/>
     </genClasses>
     <genClasses image="false" ecoreClass="documentation.ecore#//Text">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Text/text"/>
