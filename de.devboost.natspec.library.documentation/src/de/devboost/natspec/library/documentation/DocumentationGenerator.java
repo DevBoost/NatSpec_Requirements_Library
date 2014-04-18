@@ -514,12 +514,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		return result;
 	}
 
-	private String copyImage(Image image) throws IOException {
+	protected String copyImage(Image image) throws IOException {
 		String originalSource = image.getOriginalSource();
 		return copyFile(originalSource);
 	}
 
-	private String copyFile(String fileName) throws IOException {
+	protected String copyFile(String fileName) throws IOException {
 		File sourceFile = new File(fileName);
 		File targetFile = new File(imagePath, sourceFile.getName());
 		int idx = 1;
