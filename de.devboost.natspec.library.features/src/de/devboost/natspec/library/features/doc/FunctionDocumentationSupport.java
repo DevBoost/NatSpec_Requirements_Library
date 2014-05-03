@@ -10,10 +10,11 @@ import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.documentation.DocumentationFactory;
 import de.devboost.natspec.library.documentation.DocumentationGenerator;
 import de.devboost.natspec.library.documentation.Fragment;
+import de.devboost.natspec.library.documentation.FragmentContainer;
 import de.devboost.natspec.library.documentation.Line;
 import de.devboost.natspec.library.documentation.ListItem;
 import de.devboost.natspec.library.documentation.Paragraph;
-import de.devboost.natspec.library.documentation.TextFragmentContainer;
+import de.devboost.natspec.library.documentation.TextContainer;
 import de.devboost.natspec.library.function.Component;
 import de.devboost.natspec.library.function.Function;
 import de.devboost.natspec.library.function.FunctionGroup;
@@ -23,13 +24,13 @@ public class FunctionDocumentationSupport {
 
 	@TextSyntax("Include Function List Documentation for List #1")
 	public Fragment includeFunctionListInDocumentation(List<String> listName,
-			TextFragmentContainer container) throws IOException {
+			TextContainer container) throws IOException {
 		String fragment = new DocumentationGenerator()
 				.getDocumentationFragmentContents(StringUtils.join(
 						listName, " "));
 		Line line = DocumentationFactory.eINSTANCE.createLine();
 		line.setText(fragment);
-		container.getFragments().add(line);
+		container.getTexts().add(line);
 		return line;
 
 	}
@@ -45,19 +46,19 @@ public class FunctionDocumentationSupport {
 			Line componentHeader = factory.createLine();
 			componentHeader.setText("<h5>Functions for Compontent: "
 					+ component.getDescription() + "</h5>");
-			paragraph.getFragments().add(componentHeader);
+			paragraph.getTexts().add(componentHeader);
 
 			EList<FunctionGroup> functionGroups = component.getFunctionGroups();
 			for (FunctionGroup functionGroup : functionGroups) {
 				Line groupItem = factory.createLine();
-				paragraph.getFragments().add(groupItem);
+				paragraph.getTexts().add(groupItem);
 				
 				groupItem.setText("<strong>" + functionGroup.getDescription() + " (" + functionGroup.getAbbrev()+")"
 						+ "</strong></br>");
 				EList<Function> functions = functionGroup.getFunctions();
 				de.devboost.natspec.library.documentation.List features = factory
 						.createList();
-				paragraph.getFragments().add(features);
+				((FragmentContainer) paragraph.eContainer()).getFragments().add(features);
 				
 				int functionCounter = 0;
 				for (Function function : functions) {

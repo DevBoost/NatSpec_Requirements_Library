@@ -18,19 +18,19 @@ import de.devboost.natspec.library.documentation.Line;
 import de.devboost.natspec.library.documentation.Table;
 import de.devboost.natspec.library.documentation.TableHeader;
 import de.devboost.natspec.library.documentation.TableRow;
-import de.devboost.natspec.library.documentation.TextFragmentContainer;
+import de.devboost.natspec.library.documentation.TextContainer;
 
 public class ComponentsDocumentationSupport {
 
 	@TextSyntax("Include Component Documentation Table from #1")
 	public Fragment includeFunctionListInDocumentation(List<String> listName,
-			TextFragmentContainer container) throws IOException {
+			TextContainer container) throws IOException {
 		String fragment = new DocumentationGenerator()
 				.getDocumentationFragmentContents(StringUtils.join(
 						listName, " "));
 		Line line = DocumentationFactory.eINSTANCE.createLine();
 		line.setText(fragment);
-		container.getFragments().add(line);
+		container.getTexts().add(line);
 		return line;
 
 	}

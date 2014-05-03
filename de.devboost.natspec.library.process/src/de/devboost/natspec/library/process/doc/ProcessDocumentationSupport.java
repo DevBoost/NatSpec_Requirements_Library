@@ -11,12 +11,13 @@ import de.devboost.natspec.annotations.TextSyntax;
 import de.devboost.natspec.library.documentation.DocumentationFactory;
 import de.devboost.natspec.library.documentation.DocumentationGenerator;
 import de.devboost.natspec.library.documentation.Fragment;
+import de.devboost.natspec.library.documentation.FragmentContainer;
 import de.devboost.natspec.library.documentation.Line;
 import de.devboost.natspec.library.documentation.Paragraph;
 import de.devboost.natspec.library.documentation.Table;
 import de.devboost.natspec.library.documentation.TableHeader;
 import de.devboost.natspec.library.documentation.TableRow;
-import de.devboost.natspec.library.documentation.TextFragmentContainer;
+import de.devboost.natspec.library.documentation.TextContainer;
 import de.devboost.natspec.process.processes.BusinessProcess;
 import de.devboost.natspec.process.processes.Input;
 import de.devboost.natspec.process.processes.Output;
@@ -26,13 +27,13 @@ public class ProcessDocumentationSupport {
 
 	@TextSyntax("Include Process Documentation Table for Process #1")
 	public Fragment includeFunctionListInDocumentation(List<String> listName,
-			TextFragmentContainer container) throws IOException {
+			TextContainer container) throws IOException {
 		String fragment = new DocumentationGenerator()
 				.getDocumentationFragmentContents(StringUtils.join(listName,
 						" "));
 		Line line = DocumentationFactory.eINSTANCE.createLine();
 		line.setText(fragment);
-		container.getFragments().add(line);
+		container.getTexts().add(line);
 		return line;
 
 	}
@@ -44,7 +45,7 @@ public class ProcessDocumentationSupport {
 		DocumentationFactory factory = DocumentationFactory.eINSTANCE;
 		Paragraph paragraph = factory.createParagraph();
 		Table table = factory.createTable();
-		paragraph.getFragments().add(table);
+		((FragmentContainer) paragraph.eContainer()).getFragments().add(table);
 
 		TableHeader tableHeader = factory.createTableHeader();
 		table.setTableHeader(tableHeader);
