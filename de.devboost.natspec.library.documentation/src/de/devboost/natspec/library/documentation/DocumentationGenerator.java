@@ -491,6 +491,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			InputStream inputStream = clazz.getResourceAsStream(xml
 					.getResource());
 
+			if (inputStream == null) {
+				throw new RuntimeException("Can't find resource '" + xml.getResource() + "'.");
+			}
+			
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(inputStream, writer, "UTF-8");
 			content = StringEscapeUtils.escapeXml(writer.toString());
