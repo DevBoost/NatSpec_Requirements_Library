@@ -46,12 +46,13 @@ public class DocumentationSupport {
 
 	@TextSyntax("Reference to #1 with caption #2")
 	public Reference addReference(String label, List<String> caption,
-			FragmentContainer container, Documentation d) {
+			TextContainer container, Documentation documentation) {
+		
 		Reference reference = factory.createReference();
 		reference.setName(flattenList(caption));
 		reference.setReferredLabel(label);
 
-		container.getFragments().add(reference);
+		container.getTexts().add(reference);
 		return reference;
 	}
 

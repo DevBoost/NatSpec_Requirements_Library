@@ -94,6 +94,6 @@ Link : Fragment, NamedElement (
 	uri EString
 )
 
-Reference : Fragment, NamedElement(
+Reference : Text, NamedElement(
 	referredLabel EString
 )
