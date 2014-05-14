@@ -388,13 +388,17 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseTable(Table object) {
-		String result = "<table>";
-		result += doSwitch(object.getTableHeader());
-		for (TableRow rows : object.getTableRows()) {
-			result += doSwitch(rows);
+		StringBuilder result = new StringBuilder("<table>");
+		TableHeader tableHeader = object.getTableHeader();
+		if (tableHeader != null) {
+			// If there is no table header, we cannot generated HTML for it
+			result.append(doSwitch(tableHeader));
 		}
-		result += "</table>\n";
-		return result;
+		for (TableRow rows : object.getTableRows()) {
+			result.append(doSwitch(rows));
+		}
+		result.append("</table>\n");
+		return result.toString();
 	}
 
 	@Override
