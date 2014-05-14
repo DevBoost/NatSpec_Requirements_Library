@@ -483,7 +483,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result.append("<br/><br/>");
 		result.append("<div class=\"figure_description\">XML Listing "
 				+ xmlCounter++ + " - " + xml.getName() + "</div>");
-		result.append("<pre>");
+		result.append("<pre class=\"xml_listing\">");
 
 		String content;
 		try {
