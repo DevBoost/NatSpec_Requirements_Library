@@ -484,7 +484,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseXML(XML xml) {
 		StringBuffer result = new StringBuffer();
-		result.append("<br/><br/>");
 		result.append("<div class=\"figure_description\">XML Listing "
 				+ xmlCounter++ + " - " + xml.getName() + "</div>");
 		result.append("<pre class=\"xml_listing\">");
