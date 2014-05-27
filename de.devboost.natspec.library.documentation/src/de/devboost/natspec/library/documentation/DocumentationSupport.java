@@ -171,11 +171,8 @@ public class DocumentationSupport {
 	public HtmlCode createTodo(List<String> fullSentence,
 			TextContainer container) {
 		
-		HtmlCode code = factory.createHtmlCode();
-		code.setText("<span class=\"todo\">#TODO " + flattenList(fullSentence)
-				+ "</span></br>");
-		container.getTexts().add(code);
-		return code;
+		String text = flattenList(fullSentence);
+		return DocumentationElementFactory.INSTANCE.createTodo(text, container);
 	}
 
 	private List<String> removeSeparators(List<String> rowContents,
