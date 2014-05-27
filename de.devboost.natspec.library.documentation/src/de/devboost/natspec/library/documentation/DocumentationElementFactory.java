@@ -33,12 +33,24 @@ public class DocumentationElementFactory {
 	 * 
 	 * @param container the container to add the new line to
 	 * @param text the text the line must contain
-	 * @return 
+	 * @return the created line
 	 */
 	public Line createLine(TextContainer container, String text) {
 		Line line = DOCUMENTATION_FACTORY.createLine();
 		line.setText(text);
 		container.getTexts().add(line);
 		return line;
+	}
+
+	/**
+	 * Creates a new paragraph and adds the given text as line to the paragraph.
+	 * 
+	 * @param text the text the paragraph must contain
+	 * @return the created paragraph
+	 */
+	public Paragraph createParagraph(String text) {
+		Paragraph paragraph = DOCUMENTATION_FACTORY.createParagraph();
+		createLine(paragraph, text);
+		return paragraph;
 	}
 }
