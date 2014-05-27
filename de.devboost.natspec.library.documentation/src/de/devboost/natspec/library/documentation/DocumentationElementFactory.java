@@ -27,4 +27,18 @@ public class DocumentationElementFactory {
 		
 		return htmlCode;
 	}
+
+	/**
+	 * Creates a new line and adds it to the given container.
+	 * 
+	 * @param container the container to add the new line to
+	 * @param text the text the line must contain
+	 * @return 
+	 */
+	public Line createLine(TextContainer container, String text) {
+		Line line = DOCUMENTATION_FACTORY.createLine();
+		line.setText(text);
+		container.getTexts().add(line);
+		return line;
+	}
 }
