@@ -22,7 +22,8 @@ public class DocumentationSupport {
 	private DocumentationFactory factory;
 
 	public DocumentationSupport(Class<?> testClass) {
-		factory = DocumentationFactory.eINSTANCE;
+		super();
+		this.factory = DocumentationFactory.eINSTANCE;
 	}
 
 	public Documentation getDocumentation() {

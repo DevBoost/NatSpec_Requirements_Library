@@ -490,12 +490,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		String content;
 		try {
-			Class<?> clazz = Class.forName(xml.getContextClassName());
-			InputStream inputStream = clazz.getResourceAsStream(xml
-					.getResource());
+			String contextClassName = xml.getContextClassName();
+			Class<?> clazz = Class.forName(contextClassName);
+			String resource = xml.getResource();
+			InputStream inputStream = clazz.getResourceAsStream(resource);
 
 			if (inputStream == null) {
-				throw new RuntimeException("Can't find resource '" + xml.getResource() + "'.");
+				throw new RuntimeException("Can't find resource '" + resource + "'.");
 			}
 			
 			StringWriter writer = new StringWriter();
