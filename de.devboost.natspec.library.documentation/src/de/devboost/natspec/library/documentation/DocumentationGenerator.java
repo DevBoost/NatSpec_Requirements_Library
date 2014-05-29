@@ -455,23 +455,30 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				e.printStackTrace();
 			}
 		}
-		String result = "<br/><span id=\"" + figureAnchorID(figureCounter)
-				+ "\">";
+		
+		String anchorID = figureAnchorID(figureCounter);
+		StringBuilder result = new StringBuilder();
+		// FIXME Remove explicit line break
+		result.append("<br/><span id=\"" + anchorID + "\">");
+		
 		if (configuration.isTableOfFigures()) {
-			result += "<a name=\"" + figureAnchorID(figureCounter) + "\" ></a>";
+			result.append("<a name=\"" + anchorID + "\" ></a>");
 			imageMap.put(figureCounter, image);
 		}
+		
 		if (image.getWidth() != null) {
-			result += "<img class=\"manStyled\" src=\"" + imagePath
+			result.append("<img class=\"manStyled\" src=\"" + imagePath
 					+ "\" width=\"" + image.getWidth().getWidth()
-					+ image.getWidth().getUnit().getLiteral() + "\" />";
+					+ image.getWidth().getUnit().getLiteral() + "\" />");
 		} else {
-			result += "<img src=\"" + imagePath + "\" width=\"100%\" />";
+			result.append("<img src=\"" + imagePath + "\" width=\"100%\" />");
 		}
-		result += "<div class=\"figure_description\">Figure " + figureCounter++
-				+ " - " + image.getName() + "</div>";
-		result += "</span>";
-		return result;
+		
+		result.append("<div class=\"figure_description\">Figure " + figureCounter++
+				+ " - " + image.getName() + "</div>");
+		result.append("</span>");
+		
+		return result.toString();
 	}
 
 	@Override
