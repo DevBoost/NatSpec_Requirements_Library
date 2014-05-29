@@ -1,5 +1,7 @@
 package de.devboost.natspec.library.documentation;
 
+import java.util.List;
+
 /**
  * This factory can be used to create complex documentation elements that
  * consist of multiple basic documentation element that are provided by the
@@ -52,5 +54,24 @@ public class DocumentationElementFactory {
 		Paragraph paragraph = DOCUMENTATION_FACTORY.createParagraph();
 		createLine(paragraph, text);
 		return paragraph;
+	}
+
+	/**
+	 * Creates a new list item with the given text and adds it to the specified
+	 * list.
+	 * 
+	 * @param list the list to extend with the new item
+	 * @param text the text of the new item
+	 * @return the newly create list item
+	 */
+	public ListItem createListItem(
+			de.devboost.natspec.library.documentation.List list, String text) {
+		
+		ListItem item = DOCUMENTATION_FACTORY.createListItem();
+		item.setText(text);
+
+		List<ListItem> items = list.getItems();
+		items.add(item);
+		return item;
 	}
 }
