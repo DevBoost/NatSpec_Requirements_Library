@@ -316,10 +316,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseSection(Section section) {
 		String result = casePageBreak(null);
 
-		String sectionID = section.getId();
-		String trimmedName = section.getName().trim();
-		result += "<h2 id=\"" + sectionID + "\" class=\"section\">" + sectionID
-				+ " " + trimmedName + "</h2>\n";
+		String id = section.getId();
+		String name = section.getName();
+		String trimmedName = name.trim();
+		
+		result += "<h2 id=\"" + id + "\" class=\"section\">" + id + " "
+				+ trimmedName + "</h2>\n";
+		
 		for (Fragment f : section.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -329,12 +332,15 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseSubsection(Subsection subsection) {
-		String subsectionID = subsection.getId();
-		String trimmedName = subsection.getName().trim();
-		String result = "<h3 id=\"" + subsectionID + "\" class=\"subsection\">"
-				+ subsectionID + " " + trimmedName + "</h3>\n";
-		for (Fragment f : subsection.getFragments()) {
-			result += doSwitch(f);
+		String id = subsection.getId();
+		String name = subsection.getName();
+		String trimmedName = name.trim();
+		
+		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id
+				+ " " + trimmedName + "</h3>\n";
+
+		for (Fragment fragment : subsection.getFragments()) {
+			result += doSwitch(fragment);
 		}
 
 		return result;
@@ -342,15 +348,15 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseSubsubsection(Subsubsection subsubsection) {
-		String subsubsectionID = subsubsection.getId();
-		String trimmedName = subsubsection.getName().trim();
-		// FIXME Shouldn't this be h4 since subsection has also h3?
-		String result = "<h3 id=\"" + subsubsectionID
-				+ "\" class=\"subsubsection\">" + subsubsectionID + " "
-				+ trimmedName + "</h3>\n";
+		String id = subsubsection.getId();
+		String name = subsubsection.getName();
+		String trimmedName = name.trim();
 		
-		for (Fragment f : subsubsection.getFragments()) {
-			result += doSwitch(f);
+		String result = "<h4 id=\"" + id + "\" class=\"subsubsection\">" + id
+				+ " " + trimmedName + "</h4>\n";
+		
+		for (Fragment fragment : subsubsection.getFragments()) {
+			result += doSwitch(fragment);
 		}
 
 		return result;
