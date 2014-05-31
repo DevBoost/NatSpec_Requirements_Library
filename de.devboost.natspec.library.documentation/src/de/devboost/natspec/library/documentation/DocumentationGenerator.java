@@ -110,12 +110,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					subsubsectionCount = 0;
 					String id = sectionCount + "." + subsectionCount;
 					subsection.setId(id);
+					String name = subsection.getName();
+					String trimmedName = name == null ? "" : name.trim();
 					result += "<a class=\"outline_subsection_reference\" href=\"#"
 							+ subsection.getId()
 							+ "\">"
 							+ id
 							+ " "
-							+ subsection.getName().trim() + "</a><br/>\n";
+							+ trimmedName + "</a><br/>\n";
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
@@ -334,7 +336,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseSubsection(Subsection subsection) {
 		String id = subsection.getId();
 		String name = subsection.getName();
-		String trimmedName = name.trim();
+		String trimmedName = name == null ? "" : name.trim();
 		
 		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id
 				+ " " + trimmedName + "</h3>\n";
