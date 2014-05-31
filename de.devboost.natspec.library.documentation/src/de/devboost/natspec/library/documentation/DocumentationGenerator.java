@@ -464,7 +464,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		
 		String anchorID = figureAnchorID(figureCounter);
 		StringBuilder result = new StringBuilder();
-		// FIXME Remove explicit line break
+		// TODO Remove explicit line break
 		result.append("<br/><span id=\"" + anchorID + "\">");
 		
 		if (configuration.isTableOfFigures()) {
