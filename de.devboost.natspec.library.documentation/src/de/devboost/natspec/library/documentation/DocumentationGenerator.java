@@ -595,6 +595,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		return rawPath;
 	}
 
+	/**
+	 * Converts the given documentation to HTML and saves it to a file using the
+	 * default platform encoding.
+	 * 
+	 * @param documentation
+	 * @throws IOException
+	 */
 	public void saveDocumentationToFile(Documentation documentation)
 			throws IOException {
 
@@ -615,7 +622,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
-		// FIXME Use explicit encoding?
 		byte[] contentInBytes = completeDocumentation.getBytes();
 
 		fos.write(contentInBytes);
