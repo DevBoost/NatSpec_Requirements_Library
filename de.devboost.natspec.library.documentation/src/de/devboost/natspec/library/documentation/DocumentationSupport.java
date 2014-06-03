@@ -395,15 +395,12 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("XML of #1 from resource #2 at #3")
-	public void codeFromFile(List<String> name, String path, String className,
+	public void codeFromFile(List<String> nameParts, String path, String className,
 			FragmentContainer container) {
 
-		XML xml = factory.createXML();
-		xml.setName(StringUtils.join(name, " "));
-		xml.setResource(path);
-		xml.setContextClassName(className);
-		
-		container.getFragments().add(xml);
+		String name = StringUtils.join(nameParts, " ");
+		DocumentationElementFactory.INSTANCE.createXML(container, path,
+				className, name);
 	}
 
 	@TextSyntax("Listing")

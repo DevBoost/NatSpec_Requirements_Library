@@ -74,4 +74,17 @@ public class DocumentationElementFactory {
 		items.add(item);
 		return item;
 	}
+
+	public XML createXML(FragmentContainer container, String path,
+			String className, String name) {
+		
+		XML xml = DOCUMENTATION_FACTORY.createXML();
+		xml.setName(name);
+		xml.setResource(path);
+		xml.setContextClassName(className);
+		
+		container.getFragments().add(xml);
+		
+		return xml;
+	}
 }
