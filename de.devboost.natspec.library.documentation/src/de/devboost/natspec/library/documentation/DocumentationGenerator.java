@@ -273,12 +273,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	private NamedElement getNamedElementWithLabel(String label,
 			EObject eContainer) {
+		
 		while (!(eContainer instanceof Documentation)
 				&& null != eContainer.eContainer()) {
 			eContainer = eContainer.eContainer();
 		}
 
-		if (null != eContainer && eContainer instanceof Documentation) {
+		if (eContainer instanceof Documentation) {
 			Documentation documentation = (Documentation) eContainer;
 
 			if (documentation.getSections().size() > 0) {
