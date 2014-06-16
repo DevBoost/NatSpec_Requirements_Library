@@ -153,7 +153,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		} else {
 			result = result + casePageBreak(null);
 		}
-
+		
 		for (Section s : documentation.getSections()) {
 			result += doSwitch(s);
 		}
@@ -326,6 +326,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result += "<h2 id=\"" + id + "\" class=\"section\">" + id + " "
 				+ trimmedName + "</h2>\n";
 		
+		for (Text t : section.getTexts()) {
+			result += doSwitch(t);
+		}
+		
 		for (Fragment f : section.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -342,6 +346,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id
 				+ " " + trimmedName + "</h3>\n";
 
+		for (Text t : subsection.getTexts()) {
+			result += doSwitch(t);
+		}
+		
 		for (Fragment fragment : subsection.getFragments()) {
 			result += doSwitch(fragment);
 		}
@@ -357,6 +365,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		
 		String result = "<h4 id=\"" + id + "\" class=\"subsubsection\">" + id
 				+ " " + trimmedName + "</h4>\n";
+		
+		for (Text t : subsubsection.getTexts()) {
+			result += doSwitch(t);
+		}
 		
 		for (Fragment fragment : subsubsection.getFragments()) {
 			result += doSwitch(fragment);
