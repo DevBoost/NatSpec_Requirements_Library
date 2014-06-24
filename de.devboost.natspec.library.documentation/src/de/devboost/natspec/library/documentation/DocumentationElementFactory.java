@@ -87,4 +87,18 @@ public class DocumentationElementFactory {
 		
 		return xml;
 	}
+
+	public Code createCode(TextContainer container, String value) {
+		Code code = DOCUMENTATION_FACTORY.createCode();
+		code.setText(value);
+		container.getTexts().add(code);
+		return code;
+	}
+	
+	public HtmlCode createHtmlCode(TextContainer container, String value) {
+		HtmlCode html = DOCUMENTATION_FACTORY.createHtmlCode();
+		html.setText(value);
+		container.getTexts().add(html);
+		return html;
+	}
 }
