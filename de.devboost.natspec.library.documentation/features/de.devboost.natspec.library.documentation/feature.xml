@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.devboost.natspec.library.documentation"
+      label="NatSpec Library to write technical documentations"
+      version="1.0.0"
+      provider-name="DevBoost GmbH">
+
+   <description>
+      NatSpec Library to write technical documentations
+   </description>
+
+   <copyright>
+      Copyright (c) 2012-2014 DevBoost GmbH, Berlin, Amtsgericht Charlottenburg, HRB 140026.
+   </copyright>
+
+   <license>
+      Copyright (c) 2012-2014 DevBoost GmbH. All rights reserved.
+   </license>
+
+   <requires>
+		<import feature="org.eclipse.core.runtime"/>
+		<import feature="org.eclipse.emf.ecore"/>
+		
+		<import feature="org.apache.commons.io2_0_1"/>
+		<import feature="org.apache.commons.lang_2_6_0"/>
+		
+		<import feature="de.devboost.natspec.annotations"/>
+   </requires>
+
+   <plugin
+         id="de.devboost.natspec.library.documentation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
