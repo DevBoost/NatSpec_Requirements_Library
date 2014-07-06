@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Feature
+Bundle-SymbolicName: de.devboost.natspec.library.documentation.xmlapi.feature
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: DevBoost GmbH
