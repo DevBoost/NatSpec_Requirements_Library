@@ -18,7 +18,8 @@
    </license>
 
    <requires>
-		<import feature="org.eclipse.core.runtime"/>
+		<import feature="org.eclipse.platform"/>
+		
 		<import feature="org.eclipse.emf.ecore"/>
 		
 		<import feature="org.apache.commons.io2_0_1"/>
