@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.devboost.natspec.library.documentation"
-      label="NatSpec Library to write technical documentations"
+      label="NatSpec Library to Write Technical Documentations"
       version="1.0.0"
       provider-name="DevBoost GmbH">
 
    <description>
-      NatSpec Library to write technical documentations
+      NatSpec Library to Write Technical Documentations
    </description>
 
    <copyright>

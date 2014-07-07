@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.devboost.natspec.library.documentation.xmlapi"
-      label="NatSpec Library to write documentation for XML APIs"
+      label="NatSpec Library to Write Documentation for XML APIs"
       version="1.0.0"
       provider-name="DevBoost GmbH">
 
