@@ -282,6 +282,7 @@ public class DocumentationSupport {
 			width.setUnit(unit);
 			image.setWidth(width);
 		} catch (NumberFormatException e) {
+			// let test fail
 		}
 		return image;
 	}
