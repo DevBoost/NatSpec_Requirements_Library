@@ -10,9 +10,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.devboost.natspec.library.documentation,
  de.devboost.natspec.library.documentation.impl,
  de.devboost.natspec.library.documentation.util
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,
- de.devboost.natspec.annotations,
- org.apache.commons.lang,
- org.apache.commons.io
+ de.devboost.natspec.annotations;visibility:=reexport,
+ org.apache.commons.lang;visibility:=reexport,
+ org.apache.commons.io;visibility:=reexport
 Bundle-ActivationPolicy: lazy
