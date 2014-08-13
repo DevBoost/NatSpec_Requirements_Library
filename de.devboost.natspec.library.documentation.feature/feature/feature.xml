@@ -23,7 +23,7 @@
 		<import feature="org.eclipse.emf.ecore"/>
 		
 		<import feature="org.apache.commons.io2_0_1"/>
-		<import feature="org.apache.commons.lang_3_1_0"/>
+		<import feature="org.apache.commons.lang_2_6_0"/>
 		
 		<import feature="de.devboost.natspec.annotations"/>
    </requires>
