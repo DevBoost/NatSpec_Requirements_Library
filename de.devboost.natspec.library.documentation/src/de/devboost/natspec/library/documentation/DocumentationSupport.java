@@ -1,16 +1,18 @@
 package de.devboost.natspec.library.documentation;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.ecore.EObject;
+
+import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.io.Files;
 
 import de.devboost.natspec.annotations.Many;
 import de.devboost.natspec.annotations.TextSyntax;
@@ -300,56 +302,86 @@ public class DocumentationSupport {
 
 	@TextSyntax("Story - #1")
 	public void addStory(String path, FragmentContainer c) throws Exception {
-		addNatSpecFile(path, c, "Story", true);
+		addNatSpecFile(path, c, "Story", true, false);
+	}
+	
+	@TextSyntax("StorySubsection - #1")
+	public void addSubsectionStory(@Many String path, Section section) throws Exception {
+		addNatSpecFile(path, section, "Story", true, true);
 	}
 
 	private void addNatSpecFile(String path, FragmentContainer c,
-			String contentKind, boolean showLineNumbers)
+			String contentKind, boolean showLineNumbers, boolean createSubSection)
 			throws FileNotFoundException, IOException {
 		File f = new File(path);
 		if (f.exists()) {
-			HtmlCode code = factory.createHtmlCode();
-			c.getFragments().add(code);
-			String nameWithoutExtension = f.getName().substring(0,
-					f.getName().lastIndexOf('.'));
-			code.setText("<h3 class =\"scenario\">" + contentKind + ": "
-					+ insertCamelCaseWhitespaces(nameWithoutExtension)
-					+ "</h3>");
-			FileInputStream inputStream = new FileInputStream(f);
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					inputStream));
-
-			String line;
-			int lineNumber = 1;
-			// TODO handle comments as plain documentation
-			List<String> codeFragments = new LinkedList<String>();
-			String codeFragment = "";
-			while ((line = br.readLine()) != null) {
-				if (isComment(line)) {
-					if (!codeFragment.isEmpty()) {
+			String nameWithoutExtension = f.getName().substring(0, f.getName().lastIndexOf('.'));
+			String nameWithCamelCaseWhitespaces = insertCamelCaseWhitespaces(nameWithoutExtension);
+			
+			if (createSubSection && c instanceof Section) {
+				Section section = (Section) c;
+				Subsection subsection = factory.createSubsection();
+				subsection.setName(contentKind + ": " + nameWithCamelCaseWhitespaces);
+				section.getFragments().add(subsection);	
+			} else {
+				HtmlCode code = factory.createHtmlCode();
+				c.getFragments().add(code);
+				code.setText("<h3 class =\"scenario\">" + contentKind + ": "
+						+ nameWithCamelCaseWhitespaces
+						+ "</h3>");
+			}
+			
+			List<String> codeFragments = new ArrayList<String>();
+			List<String> codeFragmentParts = new ArrayList<String>();
+			List<String> lines = Files.readLines(f, Charsets.UTF_8);
+			
+			for (int idx = 0; idx < lines.size(); ++idx) {
+				String currentLine = lines.get(idx);
+				String nextLine = null;
+				if (idx < lines.size() - 1) {
+					nextLine = lines.get(idx + 1);
+				}
+				
+				// We skip FIXMEs and TODOs
+				if (isFIXMEComment(currentLine) || isTODOComment(currentLine)) {
+					continue;
+				}
+				
+				// We skip empty lines that are at the beginning of a new fragment block
+				if (codeFragmentParts.isEmpty() && currentLine.isEmpty()) {
+					continue;
+				}
+				
+				// We skip subsequent empty lines or empty lines at the end of the fragment block
+				if ((nextLine == null || nextLine.isEmpty() || isComment(nextLine)) && currentLine.isEmpty()) {
+					continue;
+				}
+				
+				if (isComment(currentLine)) {
+					if (!codeFragmentParts.isEmpty()) {
+						String codeFragment = Joiner.on(" ").join(codeFragmentParts);
 						codeFragments.add(codeFragment);
-						codeFragment = "";
+						codeFragmentParts.clear();
 					}
-					codeFragments.add(line);
+					codeFragments.add(currentLine);
+					continue;
+				}
+				
+				if (showLineNumbers) {
+					String codeFragment = "<span class=\"linenumber\">"
+							+ (idx + 1)
+							+ "</span><span class=\"codeline\">" + currentLine
+							+ "&nbsp;</span>\n";
+					codeFragmentParts.add(codeFragment);
 				} else {
-
-					if (showLineNumbers) {
-						codeFragment += "<span class=\"linenumber\">"
-								+ lineNumber
-								+ "</span><span class=\"codeline\">" + line
-								+ "&nbsp;</span>\n";
-						lineNumber++;
-					} else {
-						codeFragment += "<span class=\"codeline\">" + line
-								+ "&nbsp;</span>\n";
-
-					}
+					String codeFragment = "<span class=\"codeline\">" + currentLine
+							+ "&nbsp;</span>\n";
+					codeFragmentParts.add(codeFragment);
 				}
 			}
 
-			br.close();
-
-			if (!codeFragment.isEmpty()) {
+			if (!codeFragmentParts.isEmpty()) {
+				String codeFragment = Joiner.on(" ").join(codeFragmentParts);
 				codeFragments.add(codeFragment);
 			}
 			for (String fragment : codeFragments) {
@@ -372,10 +404,18 @@ public class DocumentationSupport {
 	private boolean isComment(String line) {
 		return line.trim().startsWith("//");
 	}
+	
+	private boolean isFIXMEComment(String line) {
+		return line.trim().startsWith("// FIXME");
+	}
+	
+	private boolean isTODOComment(String line) {
+		return line.trim().startsWith("// TODO");
+	}
 
 	@TextSyntax("Rules - #1")
 	public void addRules(String path, FragmentContainer c) throws Exception {
-		addNatSpecFile(path, c, "Rules", false);
+		addNatSpecFile(path, c, "Rules", false, false);
 	}
 
 	@TextSyntax("Define #1 : #2")
