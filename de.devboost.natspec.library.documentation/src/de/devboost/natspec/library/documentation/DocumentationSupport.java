@@ -1,18 +1,17 @@
 package de.devboost.natspec.library.documentation;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.ecore.EObject;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Joiner;
-import com.google.common.io.Files;
 
 import de.devboost.natspec.annotations.Many;
 import de.devboost.natspec.annotations.TextSyntax;
@@ -333,7 +332,7 @@ public class DocumentationSupport {
 			
 			List<String> codeFragments = new ArrayList<String>();
 			List<String> codeFragmentParts = new ArrayList<String>();
-			List<String> lines = Files.readLines(f, Charsets.UTF_8);
+			List<String> lines = readLinesFromFile(f);
 			
 			for (int idx = 0; idx < lines.size(); ++idx) {
 				String currentLine = lines.get(idx);
@@ -359,7 +358,7 @@ public class DocumentationSupport {
 				
 				if (isComment(currentLine)) {
 					if (!codeFragmentParts.isEmpty()) {
-						String codeFragment = Joiner.on(" ").join(codeFragmentParts);
+						String codeFragment = StringUtils.join(codeFragmentParts, ' ');
 						codeFragments.add(codeFragment);
 						codeFragmentParts.clear();
 					}
@@ -381,7 +380,7 @@ public class DocumentationSupport {
 			}
 
 			if (!codeFragmentParts.isEmpty()) {
-				String codeFragment = Joiner.on(" ").join(codeFragmentParts);
+				String codeFragment = StringUtils.join(codeFragmentParts, ' ');
 				codeFragments.add(codeFragment);
 			}
 			for (String fragment : codeFragments) {
@@ -399,6 +398,20 @@ public class DocumentationSupport {
 			System.out.println("Can't find " + contentKind + " at: "
 					+ f.getAbsolutePath());
 		}
+	}
+
+	private List<String> readLinesFromFile(File file) throws IOException {
+		List<String> lines = new ArrayList<String>();
+		FileInputStream inputStream = new FileInputStream(file);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		
+		String line;
+		while ((line = bufferedReader.readLine()) != null) {
+			lines.add(line);
+		}
+		bufferedReader.close();
+		
+		return lines;
 	}
 
 	private boolean isComment(String line) {
