@@ -262,8 +262,11 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseReference(Reference object) {
 		StringBuilder result = new StringBuilder();
 		result.append("<a href=\"#");
-		NamedElement referredElement = getNamedElementWithLabel(
-				object.getReferredLabel(), object.eContainer());
+		String referredLabel = object.getReferredLabel();
+		NamedElement referredElement = getNamedElementWithLabel(referredLabel, object.eContainer());
+		if (referredElement == null) {
+			throw new RuntimeException("Can't find referenced label '" + referredLabel + "'.");
+		}
 		result.append(referredElement.getId());
 		result.append("\">");
 		result.append(object.getName());
