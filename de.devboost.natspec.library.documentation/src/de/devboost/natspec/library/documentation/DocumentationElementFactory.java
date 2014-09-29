@@ -101,4 +101,11 @@ public class DocumentationElementFactory {
 		container.getTexts().add(html);
 		return html;
 	}
+
+	public Reference createReference(String referencedLabel, String caption) {
+		Reference reference = DOCUMENTATION_FACTORY.createReference();
+		reference.setName(caption);
+		reference.setReferredLabel(referencedLabel);
+		return reference;
+	}
 }
