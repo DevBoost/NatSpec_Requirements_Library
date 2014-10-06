@@ -523,11 +523,15 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		try {
 			String contextClassName = xml.getContextClassName();
 			Class<?> clazz = Class.forName(contextClassName);
+			if (clazz == null) {
+				throw new RuntimeException("Can't find class '" + contextClassName + "'.");
+			}
+			
 			String resource = xml.getResource();
 			InputStream inputStream = clazz.getResourceAsStream(resource);
 
 			if (inputStream == null) {
-				throw new RuntimeException("Can't find resource '" + resource + "'.");
+				throw new RuntimeException("Can't find resource '" + resource + "' near class '" + clazz.getName() + "'.");
 			}
 			
 			StringWriter writer = new StringWriter();
