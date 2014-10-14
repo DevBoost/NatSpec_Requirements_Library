@@ -117,7 +117,9 @@ public class DocumentationSupport {
 	public Line createPlainContents(List<String> fullSentence,
 			TextContainer container) {
 		String text = flattenList(fullSentence);
-		if (text.startsWith("##")) {
+		if (text.startsWith("###")) {
+			text = "///" + text.substring(3);
+		} else if (text.startsWith("##")) {
 			text = "//" + text.substring(2);
 		}
 		return addLine(container, text);
