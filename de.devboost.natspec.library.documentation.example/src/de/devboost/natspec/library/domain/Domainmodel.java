@@ -20,6 +20,7 @@ public class Domainmodel {
 	public void createMetamodelFromDomainmodel() {
 		// The code in this method is generated from: /de.devboost.natspec.library.documentation.example/src/de/devboost/natspec/library/domain/Domainmodel.natspec
 		// Never change this method or any contents of this file, all local changes will be overwritten.
+		// Change _NatSpecTemplate.java instead.
 		
 		// Glossary for domain Airplane Systems
 		org.eclipse.emf.ecore.EPackage ePackage_Airplane_Systems = ecoreMetamodellingSupport.createEPackage(java.util.Arrays.asList(new java.lang.String[] {"Airplane", "Systems"}));

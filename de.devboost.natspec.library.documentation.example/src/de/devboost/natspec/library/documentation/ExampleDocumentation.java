@@ -21,27 +21,28 @@ public class ExampleDocumentation {
 	public void saveDocumentation() throws Exception {
 		// The code in this method is generated from: /de.devboost.natspec.library.documentation.example/src/de/devboost/natspec/library/documentation/ExampleDocumentation.natspec
 		// Never change this method or any contents of this file, all local changes will be overwritten.
+		// Change _NatSpecTemplate.java instead.
 		
 		// Documentation - Arch42 Documentation an Example System
 		de.devboost.natspec.library.documentation.Documentation documentation_Arch42_Documentation_an_Example_System = documentationSupport.initDocumentation(java.util.Arrays.asList(new java.lang.String[] {"Arch42", "Documentation", "an", "Example", "System"}));
-		// Section - Meta Data		
-		de.devboost.natspec.library.documentation.Section section_Meta_Data__ = documentationSupport.addSection(java.util.Arrays.asList(new java.lang.String[] {"Meta", "Data		"}), documentation_Arch42_Documentation_an_Example_System);
+		// Section - Meta Data
+		de.devboost.natspec.library.documentation.Section section_Meta_Data = documentationSupport.addSection(java.util.Arrays.asList(new java.lang.String[] {"Meta", "Data"}), documentation_Arch42_Documentation_an_Example_System);
 		// Subsection - Authors
-		de.devboost.natspec.library.documentation.Subsection subsection_Authors = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Authors"}), section_Meta_Data__);
+		de.devboost.natspec.library.documentation.Subsection subsection_Authors = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Authors"}), section_Meta_Data);
 		// |---- --------------------------------------------------------------------------------- ----|
 		de.devboost.natspec.library.documentation.Table table__________________________________________________________________________________ = documentationSupport.createOrEndTable(java.util.Arrays.asList(new java.lang.String[] {"---------------------------------------------------------------------------------"}), subsection_Authors);
-		// |- Author -|-  Affiliation -|- E-Mail	  -|
-		documentationSupport.createTableHeader(java.util.Arrays.asList(new java.lang.String[] {"Author", "-|-", "", "Affiliation", "-|-", "E-Mail	", ""}), table__________________________________________________________________________________);
+		// |- Author -|-  Affiliation -|- E-Mail  -|
+		documentationSupport.createTableHeader(java.util.Arrays.asList(new java.lang.String[] {"Author", "-|-", "", "Affiliation", "-|-", "E-Mail", ""}), table__________________________________________________________________________________);
 		// | Who | Example Company | firstname.lastname@company.com |
 		documentationSupport.createTableRow(java.util.Arrays.asList(new java.lang.String[] {"Who", "|", "Example", "Company", "|", "firstname.lastname@company.com"}), table__________________________________________________________________________________);
 		// |---- --------------------------------------------------------------------------------- ----|
 		de.devboost.natspec.library.documentation.Table table__________________________________________________________________________________0 = documentationSupport.createOrEndTable(java.util.Arrays.asList(new java.lang.String[] {"---------------------------------------------------------------------------------"}), subsection_Authors);
 		// Subsection - Revisions
-		de.devboost.natspec.library.documentation.Subsection subsection_Revisions = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Revisions"}), section_Meta_Data__);
+		de.devboost.natspec.library.documentation.Subsection subsection_Revisions = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Revisions"}), section_Meta_Data);
 		// |---- ---------------------------------------------------------------------- ----|
 		de.devboost.natspec.library.documentation.Table table_______________________________________________________________________ = documentationSupport.createOrEndTable(java.util.Arrays.asList(new java.lang.String[] {"----------------------------------------------------------------------"}), subsection_Revisions);
-		// |- Date -|- Revision -|- Author -|- Changes	  -|
-		documentationSupport.createTableHeader(java.util.Arrays.asList(new java.lang.String[] {"Date", "-|-", "Revision", "-|-", "Author", "-|-", "Changes	", ""}), table_______________________________________________________________________);
+		// |- Date -|- Revision -|- Author -|- Changes  -|
+		documentationSupport.createTableHeader(java.util.Arrays.asList(new java.lang.String[] {"Date", "-|-", "Revision", "-|-", "Author", "-|-", "Changes", ""}), table_______________________________________________________________________);
 		// | 01.03.2013 | 0.1 | Who | first revision  |
 		documentationSupport.createTableRow(java.util.Arrays.asList(new java.lang.String[] {"01.03.2013", "|", "0.1", "|", "Who", "|", "first", "revision", ""}), table_______________________________________________________________________);
 		// | 10.03.2013 | 1.0 | Who | final revision |
@@ -136,18 +137,18 @@ public class ExampleDocumentation {
 		de.devboost.natspec.library.documentation.Line line_Use_cases_for_actors__their_steps_ = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Use", "cases", "for", "actors,", "their", "steps."}), subsection_Use_Cases___Scenarios);
 		// Scenarios define concrete path through use case
 		de.devboost.natspec.library.documentation.Line line_Scenarios_define_concrete_path_through_use_case = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Scenarios", "define", "concrete", "path", "through", "use", "case"}), subsection_Use_Cases___Scenarios);
-		// Section - Business Rules	
-		de.devboost.natspec.library.documentation.Section section_Business_Rules_ = documentationSupport.addSection(java.util.Arrays.asList(new java.lang.String[] {"Business", "Rules	"}), documentation_Arch42_Documentation_an_Example_System);
+		// Section - Business Rules
+		de.devboost.natspec.library.documentation.Section section_Business_Rules = documentationSupport.addSection(java.util.Arrays.asList(new java.lang.String[] {"Business", "Rules"}), documentation_Arch42_Documentation_an_Example_System);
 		// Subsection - Decision Rules
-		de.devboost.natspec.library.documentation.Subsection subsection_Decision_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Decision", "Rules"}), section_Business_Rules_);
+		de.devboost.natspec.library.documentation.Subsection subsection_Decision_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Decision", "Rules"}), section_Business_Rules);
 		// Rules that are to be encoded when the system supports automated decision processes
 		de.devboost.natspec.library.documentation.Line line_Rules_that_are_to_be_encoded_when_the_system_supports_automated_decision_processes = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Rules", "that", "are", "to", "be", "encoded", "when", "the", "system", "supports", "automated", "decision", "processes"}), subsection_Decision_Rules);
 		// Subsection - Validation Rules
-		de.devboost.natspec.library.documentation.Subsection subsection_Validation_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Validation", "Rules"}), section_Business_Rules_);
+		de.devboost.natspec.library.documentation.Subsection subsection_Validation_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Validation", "Rules"}), section_Business_Rules);
 		// Rules that operate on domain models and perform some kind of validation
 		de.devboost.natspec.library.documentation.Line line_Rules_that_operate_on_domain_models_and_perform_some_kind_of_validation = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Rules", "that", "operate", "on", "domain", "models", "and", "perform", "some", "kind", "of", "validation"}), subsection_Validation_Rules);
 		// Subsection - Error Handling Rules
-		de.devboost.natspec.library.documentation.Subsection subsection_Error_Handling_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Error", "Handling", "Rules"}), section_Business_Rules_);
+		de.devboost.natspec.library.documentation.Subsection subsection_Error_Handling_Rules = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Error", "Handling", "Rules"}), section_Business_Rules);
 		// Rules that define system behaviour in case of errors
 		de.devboost.natspec.library.documentation.Line line_Rules_that_define_system_behaviour_in_case_of_errors = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Rules", "that", "define", "system", "behaviour", "in", "case", "of", "errors"}), subsection_Error_Handling_Rules);
 		// Section - Cross-Cutting Requirements
@@ -156,16 +157,16 @@ public class ExampleDocumentation {
 		de.devboost.natspec.library.documentation.Line line_Quality_requirements_that_crosscut_with_scenarios_etc_ = documentationSupport.createPlainContents(java.util.Arrays.asList(new String[] {"Quality", "requirements", "that", "crosscut", "with", "scenarios", "etc."}), section_Cross_Cutting_Requirements);
 		// Subsection - Usability
 		de.devboost.natspec.library.documentation.Subsection subsection_Usability = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Usability"}), section_Cross_Cutting_Requirements);
-		// Subsection - Accessibility	
-		de.devboost.natspec.library.documentation.Subsection subsection_Accessibility_ = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Accessibility	"}), section_Cross_Cutting_Requirements);
+		// Subsection - Accessibility
+		de.devboost.natspec.library.documentation.Subsection subsection_Accessibility = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Accessibility"}), section_Cross_Cutting_Requirements);
 		// Subsection - Reliability
 		de.devboost.natspec.library.documentation.Subsection subsection_Reliability = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Reliability"}), section_Cross_Cutting_Requirements);
 		// Subsection - Responsibility
 		de.devboost.natspec.library.documentation.Subsection subsection_Responsibility = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Responsibility"}), section_Cross_Cutting_Requirements);
-		// Subsection - Security	
-		de.devboost.natspec.library.documentation.Subsection subsection_Security_ = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Security	"}), section_Cross_Cutting_Requirements);
-		// Subsection - Persistence	
-		de.devboost.natspec.library.documentation.Subsection subsection_Persistence_ = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Persistence	"}), section_Cross_Cutting_Requirements);
+		// Subsection - Security
+		de.devboost.natspec.library.documentation.Subsection subsection_Security = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Security"}), section_Cross_Cutting_Requirements);
+		// Subsection - Persistence
+		de.devboost.natspec.library.documentation.Subsection subsection_Persistence = documentationSupport.addSubsection(java.util.Arrays.asList(new java.lang.String[] {"Persistence"}), section_Cross_Cutting_Requirements);
 		// Section - Risks
 		de.devboost.natspec.library.documentation.Section section_Risks = documentationSupport.addSection(java.util.Arrays.asList(new java.lang.String[] {"Risks"}), documentation_Arch42_Documentation_an_Example_System);
 		// Section - Glossary

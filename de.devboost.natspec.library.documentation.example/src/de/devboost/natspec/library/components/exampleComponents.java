@@ -17,6 +17,7 @@ public class exampleComponents {
 	public void createModel() throws Exception {
 		// The code in this method is generated from: /de.devboost.natspec.library.documentation.example/src/de/devboost/natspec/library/components/exampleComponents.natspec
 		// Never change this method or any contents of this file, all local changes will be overwritten.
+		// Change _NatSpecTemplate.java instead.
 		
 		// Container Example Components
 		de.devboost.natspec.library.components.components.ComponentContainer componentContainer_Example_Components = componentModellingSupport.createContainerComponent(java.util.Arrays.asList(new java.lang.String[] {"Example", "Components"}));

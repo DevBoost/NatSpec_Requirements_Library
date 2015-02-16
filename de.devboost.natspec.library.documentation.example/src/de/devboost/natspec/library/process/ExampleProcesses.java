@@ -45,6 +45,7 @@ public class ExampleProcesses extends JFrame {
 		try {
 			// The code in this method is generated from: /de.devboost.natspec.library.documentation.example/src/de/devboost/natspec/library/process/ExampleProcesses.natspec
 			// Never change this method or any contents of this file, all local changes will be overwritten.
+			// Change _NatSpecTemplate.java instead.
 			
 			// Related to PEP Glossar
 			processModellingSupport.defaultMatch(java.util.Arrays.asList(new String[] {"Related", "to", "PEP", "Glossar"}));
