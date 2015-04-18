@@ -25,7 +25,7 @@ public class HTMLValidator {
 	public boolean isValidXML(String html) {
 
 		try {
-			byte[] bytes = html.getBytes();
+			byte[] bytes = html.getBytes("UTF-8");
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 
 			DocumentBuilderFactory dbFactory = createDocumentBuilderFactory();

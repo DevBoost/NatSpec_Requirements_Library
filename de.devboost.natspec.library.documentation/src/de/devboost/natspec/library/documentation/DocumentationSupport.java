@@ -405,7 +405,7 @@ public class DocumentationSupport {
 	private List<String> readLinesFromFile(File file) throws IOException {
 		List<String> lines = new ArrayList<String>();
 		FileInputStream inputStream = new FileInputStream(file);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 		
 		String line;
 		while ((line = bufferedReader.readLine()) != null) {

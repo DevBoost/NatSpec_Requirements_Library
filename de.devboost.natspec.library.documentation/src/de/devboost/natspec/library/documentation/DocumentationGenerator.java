@@ -140,7 +140,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				}
 			}
 		}
-		casePageBreak(null);
+		result += casePageBreak(null);
 
 		boolean hasImages = hasImages(documentation);
 		if (configuration.isTableOfFigures() && hasImages) {
@@ -644,7 +644,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
-		byte[] contentInBytes = completeDocumentation.getBytes();
+		byte[] contentInBytes = completeDocumentation.getBytes("UTF-8");
 
 		fos.write(contentInBytes);
 		fos.flush();
@@ -686,7 +686,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		FileOutputStream fos = new FileOutputStream(file);
 
 		// get the content in bytes
-		byte[] contentInBytes = completeFile.toString().getBytes();
+		byte[] contentInBytes = completeFile.toString().getBytes("UTF-8");
 
 		fos.write(contentInBytes);
 		fos.flush();
@@ -719,7 +719,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		InputStream stream = new FileInputStream(file);
 		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(stream));
+				new InputStreamReader(stream, "UTF-8"));
 
 		StringBuilder sb = new StringBuilder();
 		String line;
