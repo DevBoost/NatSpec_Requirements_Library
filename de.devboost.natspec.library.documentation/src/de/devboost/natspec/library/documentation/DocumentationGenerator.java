@@ -519,7 +519,20 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				+ xmlCounter++ + " - " + xml.getName() + "</div>");
 		result.append("<pre class=\"xml_listing\">");
 
-		String content;
+		String content = getContent(xml);
+		content = StringEscapeUtils.escapeXml(content);
+		result.append(content);
+
+		result.append("</pre>");
+		return result.toString();
+	}
+
+	private String getContent(XML xml) {
+		String content = xml.getContent();
+		if (content != null) {
+			return content;
+		}
+		
 		try {
 			String contextClassName = xml.getContextClassName();
 			Class<?> clazz = Class.forName(contextClassName);
@@ -536,16 +549,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(inputStream, writer, "UTF-8");
-			content = StringEscapeUtils.escapeXml(writer.toString());
-			result.append(content);
+			content = writer.toString();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-
-		result.append("</pre>");
-		return result.toString();
+		return content;
 	}
 
 	@Override
