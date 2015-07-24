@@ -44,20 +44,18 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	private Map<Integer, NamedElement> imageMap = new LinkedHashMap<Integer, NamedElement>();
 
 	/**
-	 * Creates a new {@link DocumentationGenerator} using a default
-	 * configuration.
+	 * Creates a new {@link DocumentationGenerator} using a default configuration.
 	 */
 	public DocumentationGenerator() {
 		this(new Configuration());
 	}
 
 	/**
-	 * Creates a new {@link DocumentationGenerator} using the given
-	 * configuration.
+	 * Creates a new {@link DocumentationGenerator} using the given configuration.
 	 */
 	public DocumentationGenerator(Configuration configuration) {
 		Assert.isNotNull(configuration, "Configuration is required");
-		
+
 		this.configuration = configuration;
 		this.imagePath = new File(DOC_IMAGE_PATH);
 		if (configuration.isCopyImages()) {
@@ -68,11 +66,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	/**
-	 * Deletes the given file. If the file is a directory, all its contents
-	 * (i.e., sub directories and contained files) are deleted as well.
+	 * Deletes the given file. If the file is a directory, all its contents (i.e., sub directories and contained files)
+	 * are deleted as well.
 	 * 
-	 * @return <code>true</code> is deletion was successful, otherwise
-	 *         <code>false</code>
+	 * @return <code>true</code> is deletion was successful, otherwise <code>false</code>
 	 */
 	protected boolean deleteIfExists(File file) {
 		if (file.exists()) {
@@ -91,17 +88,15 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseDocumentation(Documentation documentation) {
-		String result = "<h1 class=\"title\">" + documentation.getTitle()
-				+ "</h1>\n";
+		String result = "<h1 class=\"title\">" + documentation.getTitle() + "</h1>\n";
 		result += getClassificationHTML();
 		result += "<h2>Outline</h2>";
 		for (Section s : documentation.getSections()) {
 			sectionCount++;
 			subsectionCount = 0;
 			s.setId(sectionCount + "");
-			result += "<a class=\"outline_section_reference\" href=\"#"
-					+ s.getId() + "\">" + s.getId() + " " + s.getName().trim()
-					+ "</a><br/>\n";
+			result += "<a class=\"outline_section_reference\" href=\"#" + s.getId() + "\">" + s.getId() + " "
+					+ s.getName().trim() + "</a><br/>\n";
 
 			for (Fragment f : s.getFragments()) {
 				if (f instanceof Subsection) {
@@ -112,27 +107,17 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					subsection.setId(id);
 					String name = subsection.getName();
 					String trimmedName = name == null ? "" : name.trim();
-					result += "<a class=\"outline_subsection_reference\" href=\"#"
-							+ subsection.getId()
-							+ "\">"
-							+ id
-							+ " "
-							+ trimmedName + "</a><br/>\n";
+					result += "<a class=\"outline_subsection_reference\" href=\"#" + subsection.getId() + "\">" + id
+							+ " " + trimmedName + "</a><br/>\n";
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
 							Subsubsection subsubsection = (Subsubsection) f2;
 							subsubsectionCount++;
-							String subsubid = sectionCount + "."
-									+ subsectionCount + "."
-									+ subsubsectionCount;
+							String subsubid = sectionCount + "." + subsectionCount + "." + subsubsectionCount;
 							subsubsection.setId(subsubid);
-							result += "<a class=\"outline_subsubsection_reference\" href=\"#"
-									+ subsubsection.getId()
-									+ "\">"
-									+ subsubsection.getId()
-									+ " "
-									+ subsubsection.getName().trim()
+							result += "<a class=\"outline_subsubsection_reference\" href=\"#" + subsubsection.getId()
+									+ "\">" + subsubsection.getId() + " " + subsubsection.getName().trim()
 									+ "</a><br/>\n";
 
 						}
@@ -145,15 +130,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		boolean hasImages = hasImages(documentation);
 		if (configuration.isTableOfFigures() && hasImages) {
 			sectionCount++;
-			result += "<a class=\"outline_section_reference\" href=\"#"
-					+ sectionCount + "\">" + sectionCount + " Table of Figures"
-					+ "</a><br/>\n";
+			result += "<a class=\"outline_section_reference\" href=\"#" + sectionCount + "\">" + sectionCount
+					+ " Table of Figures" + "</a><br/>\n";
 
 			result = result + casePageBreak(null);
 		} else {
 			result = result + casePageBreak(null);
 		}
-		
+
 		for (Section s : documentation.getSections()) {
 			result += doSwitch(s);
 		}
@@ -180,11 +164,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	/**
-	 * Iterates through the given root elements content and returns the first
-	 * element having the given instance type.
+	 * Iterates through the given root elements content and returns the first element having the given instance type.
 	 * 
-	 * @return the first object that is an instance of the given type, or
-	 *         <code>null</code>, if no such element has been located.
+	 * @return the first object that is an instance of the given type, or <code>null</code>, if no such element has been
+	 *         located.
 	 */
 	private <T> T firstOn(EObject root, Class<T> instanceType) {
 		TreeIterator<EObject> it = EcoreUtil.getAllContents(root, false);
@@ -200,24 +183,19 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	/**
 	 * Determines, if the documentation contains at least on image element.
 	 * 
-	 * @return <code>true</code> if there is an image in the documentation,
-	 *         otherwise <code>false</code>
+	 * @return <code>true</code> if there is an image in the documentation, otherwise <code>false</code>
 	 */
 	private boolean hasImages(Documentation documentation) {
 		return firstOn(documentation, Image.class) != null;
 	}
 
-	private String insertFigureTable(Map<Integer, NamedElement> map,
-			int sectionCount) {
+	private String insertFigureTable(Map<Integer, NamedElement> map, int sectionCount) {
 		String result = "";
 
-		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount
-				+ " Table of Figures</h2>\n";
+		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount + " Table of Figures</h2>\n";
 		for (Map.Entry<Integer, NamedElement> e : imageMap.entrySet()) {
-			result += "<a class=\"figure_table_reference\" href=\"#"
-					+ figureAnchorID(e.getKey()) + "\">" + "Figure  "
-					+ e.getKey() + " - " + e.getValue().getName()
-					+ "</a><br/>\n";
+			result += "<a class=\"figure_table_reference\" href=\"#" + figureAnchorID(e.getKey()) + "\">" + "Figure  "
+					+ e.getKey() + " - " + e.getValue().getName() + "</a><br/>\n";
 		}
 
 		return result;
@@ -274,11 +252,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		return result.toString();
 	}
 
-	private NamedElement getNamedElementWithLabel(String label,
-			EObject eContainer) {
-		
-		while (!(eContainer instanceof Documentation)
-				&& null != eContainer.eContainer()) {
+	private NamedElement getNamedElementWithLabel(String label, EObject eContainer) {
+
+		while (!(eContainer instanceof Documentation) && null != eContainer.eContainer()) {
 			eContainer = eContainer.eContainer();
 		}
 
@@ -296,8 +272,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					}
 
 					if (currentElement instanceof FragmentContainer) {
-						for (Fragment fragment : ((FragmentContainer) currentElement)
-								.getFragments()) {
+						for (Fragment fragment : ((FragmentContainer) currentElement).getFragments()) {
 							if (fragment instanceof NamedElement) {
 								elementsToVisit.add((NamedElement) fragment);
 							}
@@ -325,14 +300,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String id = section.getId();
 		String name = section.getName();
 		String trimmedName = name.trim();
-		
-		result += "<h2 id=\"" + id + "\" class=\"section\">" + id + " "
-				+ trimmedName + "</h2>\n";
-		
+
+		result += "<h2 id=\"" + id + "\" class=\"section\">" + id + " " + trimmedName + "</h2>\n";
+
 		for (Text t : section.getTexts()) {
 			result += doSwitch(t);
 		}
-		
+
 		for (Fragment f : section.getFragments()) {
 			result += doSwitch(f);
 		}
@@ -345,14 +319,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String id = subsection.getId();
 		String name = subsection.getName();
 		String trimmedName = name == null ? "" : name.trim();
-		
-		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id
-				+ " " + trimmedName + "</h3>\n";
+
+		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id + " " + trimmedName + "</h3>\n";
 
 		for (Text t : subsection.getTexts()) {
 			result += doSwitch(t);
 		}
-		
+
 		for (Fragment fragment : subsection.getFragments()) {
 			result += doSwitch(fragment);
 		}
@@ -365,14 +338,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String id = subsubsection.getId();
 		String name = subsubsection.getName();
 		String trimmedName = name.trim();
-		
-		String result = "<h4 id=\"" + id + "\" class=\"subsubsection\">" + id
-				+ " " + trimmedName + "</h4>\n";
-		
+
+		String result = "<h4 id=\"" + id + "\" class=\"subsubsection\">" + id + " " + trimmedName + "</h4>\n";
+
 		for (Text t : subsubsection.getTexts()) {
 			result += doSwitch(t);
 		}
-		
+
 		for (Fragment fragment : subsubsection.getFragments()) {
 			result += doSwitch(fragment);
 		}
@@ -394,7 +366,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	public String caseLine(Line line) {
 		return StringEscapeUtils.escapeHtml(line.getText());
 	}
-	
+
 	public String caseHtmlCode(HtmlCode htmlCode) {
 		return htmlCode.getText();
 	}
@@ -428,8 +400,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseTableHeader(TableHeader object) {
 		String result = "<tr>";
-		for (String cell : object.getHeaderCells()) {
-			result += "<th>" + cell + "</th>";
+		for (TableCell cell : object.getHeaderCells()) {
+			if (cell.getSpan() > 1) {
+				result += "<th colspan=\"" + cell.getSpan() + "\">" + cell.getContent() + "</th>";
+			} else {
+				result += "<th>" + cell.getContent() + "</th>";
+			}
 		}
 		result += "</tr>\n";
 		return result;
@@ -438,8 +414,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseTableRow(TableRow object) {
 		String result = "<tr>";
-		for (String cell : object.getRowCells()) {
-			result += "<td>" + cell + "</td>";
+		for (TableCell cell : object.getRowCells()) {
+			if (cell.getSpan() > 1) {
+				result += "<td colspan=\"" + cell.getSpan() + "\">" + cell.getContent() + "</td>";
+			} else {
+				result += "<td>" + cell.getContent() + "</td>";
+			}
 		}
 		result += "</tr>\n";
 		return result;
@@ -474,34 +454,32 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			try {
 				imagePath = copyImage(image);
 			} catch (IOException e) {
-				System.err.println("warning: can't copy image '" + imagePath
-						+ "'. Keep the original file reference.");
+				System.err.println("warning: can't copy image '" + imagePath + "'. Keep the original file reference.");
 				e.printStackTrace();
 			}
 		}
-		
+
 		String anchorID = figureAnchorID(figureCounter);
 		StringBuilder result = new StringBuilder();
 		// TODO Remove explicit line break
 		result.append("<br/><span id=\"" + anchorID + "\">");
-		
+
 		if (configuration.isTableOfFigures()) {
 			result.append("<a name=\"" + anchorID + "\" ></a>");
 			imageMap.put(figureCounter, image);
 		}
-		
+
 		if (image.getWidth() != null) {
-			result.append("<img class=\"manStyled\" src=\"" + imagePath
-					+ "\" width=\"" + image.getWidth().getWidth()
+			result.append("<img class=\"manStyled\" src=\"" + imagePath + "\" width=\"" + image.getWidth().getWidth()
 					+ image.getWidth().getUnit().getLiteral() + "\" />");
 		} else {
 			result.append("<img src=\"" + imagePath + "\" width=\"100%\" />");
 		}
-		
-		result.append("<div class=\"figure_description\">Figure " + figureCounter++
-				+ " - " + image.getName() + "</div>");
+
+		result.append(
+				"<div class=\"figure_description\">Figure " + figureCounter++ + " - " + image.getName() + "</div>");
 		result.append("</span>");
-		
+
 		return result.toString();
 	}
 
@@ -515,8 +493,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseXML(XML xml) {
 		StringBuffer result = new StringBuffer();
-		result.append("<div class=\"figure_description\">XML Listing "
-				+ xmlCounter++ + " - " + xml.getName() + "</div>");
+		result.append(
+				"<div class=\"figure_description\">XML Listing " + xmlCounter++ + " - " + xml.getName() + "</div>");
 		result.append("<pre class=\"xml_listing\">");
 
 		String content = getContent(xml);
@@ -532,21 +510,22 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		if (content != null) {
 			return content;
 		}
-		
+
 		try {
 			String contextClassName = xml.getContextClassName();
 			Class<?> clazz = Class.forName(contextClassName);
 			if (clazz == null) {
 				throw new RuntimeException("Can't find class '" + contextClassName + "'.");
 			}
-			
+
 			String resource = xml.getResource();
 			InputStream inputStream = clazz.getResourceAsStream(resource);
 
 			if (inputStream == null) {
-				throw new RuntimeException("Can't find resource '" + resource + "' near class '" + clazz.getName() + "'.");
+				throw new RuntimeException(
+						"Can't find resource '" + resource + "' near class '" + clazz.getName() + "'.");
 			}
-			
+
 			StringWriter writer = new StringWriter();
 			IOUtils.copy(inputStream, writer, "UTF-8");
 			content = writer.toString();
@@ -561,9 +540,8 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	@Override
 	public String caseTermEntry(TermEntry entry) {
 		entry.setId("entry_" + entryCounter++);
-		String result = "<a name=\"" + entry.getId() + "\"><strong>"
-				+ entry.getName() + "</strong></a>: " + entry.getDescription()
-				+ "<br/>";
+		String result = "<a name=\"" + entry.getId() + "\"><strong>" + entry.getName() + "</strong></a>: "
+				+ entry.getDescription() + "<br/>";
 		return result;
 	}
 
@@ -577,16 +555,12 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		File targetFile = new File(imagePath, sourceFile.getName());
 		int idx = 1;
 		if (targetFile.exists()) {
-			String baseFileName = StringUtils.substringBeforeLast(
-					targetFile.getPath(), ".");
-			String fileExtension = StringUtils.substringAfterLast(
-					targetFile.getPath(), ".");
-			String incrementedFileName = baseFileName + "_" + (idx++) + "."
-					+ fileExtension;
+			String baseFileName = StringUtils.substringBeforeLast(targetFile.getPath(), ".");
+			String fileExtension = StringUtils.substringAfterLast(targetFile.getPath(), ".");
+			String incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
 			File potentialTargetFile = new File(incrementedFileName);
 			while (potentialTargetFile.exists()) {
-				incrementedFileName = baseFileName + "_" + (idx++) + "."
-						+ fileExtension;
+				incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
 				potentialTargetFile = new File(incrementedFileName);
 			}
 			targetFile = potentialTargetFile;
@@ -617,8 +591,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 		}
 
-		System.out.println("Copied " + sourceFile.getPath() + " to "
-				+ targetFile.getPath());
+		System.out.println("Copied " + sourceFile.getPath() + " to " + targetFile.getPath());
 
 		// TODO Why not use replace("\\", "/") instead of replaceAll()?
 		String rawPath = targetFile.getPath().replaceAll("\\\\", "/");
@@ -628,17 +601,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	/**
-	 * Converts the given documentation to HTML and saves it to a file using the
-	 * default platform encoding.
+	 * Converts the given documentation to HTML and saves it to a file using the default platform encoding.
 	 * 
 	 * @param documentation
 	 * @throws IOException
 	 */
-	public void saveDocumentationToFile(Documentation documentation)
-			throws IOException {
+	public void saveDocumentationToFile(Documentation documentation) throws IOException {
 
-		String completeDocumentation = getDocumentationAsString(documentation,
-				DEFAULT_CSS_FILENAME);
+		String completeDocumentation = getDocumentationAsString(documentation, DEFAULT_CSS_FILENAME);
 
 		File file = new File(DOC_PATH + "Documentation.html");
 
@@ -661,8 +631,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		fos.close();
 	}
 
-	public String getDocumentationAsString(Documentation documentation,
-			String cssPath) {
+	public String getDocumentationAsString(Documentation documentation, String cssPath) {
 
 		StringBuilder completeFileContents = new StringBuilder();
 		initHTMLHeader(completeFileContents, cssPath);
@@ -676,8 +645,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		builder.append("</html>\n");
 	}
 
-	public void saveFragmentToFile(Fragment documentation, String filename)
-			throws IOException {
+	public void saveFragmentToFile(Fragment documentation, String filename) throws IOException {
 
 		StringBuilder completeFile = new StringBuilder();
 		initHTMLHeader(completeFile, DEFAULT_CSS_FILENAME);
@@ -706,30 +674,29 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	private void initHTMLHeader(StringBuilder buffer, String cssPath) {
-		buffer.append("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+		buffer.append(
+				"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
 		buffer.append("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
 		buffer.append("<head>\n");
 		buffer.append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
-		buffer.append("<link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400' rel='stylesheet' type='text/css'/>\n");
+		buffer.append(
+				"<link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,400' rel='stylesheet' type='text/css'/>\n");
 		buffer.append("<link rel=\"stylesheet\" href=\"" + cssPath + "\" />\n");
 		buffer.append("</head>\n");
 		buffer.append("<body>\n");
 	}
 
-	public String getDocumentationFragmentContents(String fragmentFilenname)
-			throws IOException {
+	public String getDocumentationFragmentContents(String fragmentFilenname) throws IOException {
 
-		File file = new File(DOC_FRAGMENT_PATH + fragmentFilenname.trim()
-				+ ".html");
+		File file = new File(DOC_FRAGMENT_PATH + fragmentFilenname.trim() + ".html");
 		if (!file.exists()) {
 			// TODO Throw exception instead?
-			return "<div class=\"error\">ERROR: Can't find documentation fragment at:<br/> "
-					+ file.getAbsolutePath() + "</div>";
+			return "<div class=\"error\">ERROR: Can't find documentation fragment at:<br/> " + file.getAbsolutePath()
+					+ "</div>";
 		}
 
 		InputStream stream = new FileInputStream(file);
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(stream, "UTF-8"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
 
 		StringBuilder sb = new StringBuilder();
 		String line;

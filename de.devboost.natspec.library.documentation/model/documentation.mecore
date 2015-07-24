@@ -59,11 +59,16 @@ Table : Fragment (
 )
 
 TableHeader (
-	headerCells EString*
+	headerCells TableCell*
 )
 
 TableRow (
-	rowCells EString*
+	rowCells TableCell*
+)
+
+TableCell (
+	content EString
+	span EInt
 )
 
 Image : Fragment, NamedElement (

@@ -37,10 +37,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference documentation.ecore#//Table/tableRows"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//TableHeader">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableHeader/headerCells"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference documentation.ecore#//TableHeader/headerCells"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//TableRow">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableRow/rowCells"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference documentation.ecore#//TableRow/rowCells"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//Image">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/originalSource"/>
@@ -76,6 +76,10 @@
     </genClasses>
     <genClasses image="false" ecoreClass="documentation.ecore#//Text">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Text/text"/>
+    </genClasses>
+    <genClasses ecoreClass="documentation.ecore#//TableCell">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableCell/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TableCell/span"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

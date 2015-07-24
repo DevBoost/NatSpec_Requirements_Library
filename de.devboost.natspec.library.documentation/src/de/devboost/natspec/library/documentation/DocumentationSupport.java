@@ -156,8 +156,10 @@ public class DocumentationSupport {
 		List<String> removeSeparators = removeSeparators(headerContents, "-|-");
 		TableHeader tableHeader = factory.createTableHeader();
 		table.setTableHeader(tableHeader);
-		for (String cell : removeSeparators) {
-			tableHeader.getHeaderCells().add(cell);
+		for (String cellValue : removeSeparators) {
+			TableCell cell = factory.createTableCell();
+			cell.setContent(cellValue);
+			tableHeader.getHeaderCells().add(cell );
 		}
 	}
 
@@ -166,7 +168,9 @@ public class DocumentationSupport {
 		List<String> removeSeparators = removeSeparators(rowContents, "|");
 		TableRow tableRow = factory.createTableRow();
 		table.getTableRows().add(tableRow);
-		for (String cell : removeSeparators) {
+		for (String cellValue : removeSeparators) {
+			TableCell cell = factory.createTableCell();
+			cell.setContent(cellValue);
 			tableRow.getRowCells().add(cell);
 		}
 	}
