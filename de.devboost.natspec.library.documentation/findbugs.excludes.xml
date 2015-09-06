@@ -1,19 +1,19 @@
 <FindBugsFilter>
 
 	<Match>
-		<Class name="~de\.devboost\.natspec\.library\.documentation.\DocumentationFactory" />
+		<Class name="de.devboost.natspec.library.documentation.DocumentationFactory" />
 	</Match>
 	
 	<Match>
-		<Class name="~de\.devboost\.natspec\.library\.documentation.\DocumentationPackage" />
+		<Class name="de.devboost.natspec.library.documentation.DocumentationPackage" />
 	</Match>
 	
 	<Match>
-		<Package name="~de\.devboost\.natspec\.library\.documentation\.impl" />
+		<Package name="de.devboost.natspec.library.documentation.impl" />
 	</Match>
 	
 	<Match>
-		<Package name="~de\.devboost\.natspec\.library\.documentation\.util" />
+		<Package name="de.devboost.natspec.library.documentation.util" />
 	</Match>
 	
 </FindBugsFilter>
