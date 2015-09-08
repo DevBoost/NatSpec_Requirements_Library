@@ -32,11 +32,12 @@ public class DocumentationSupport {
 	}
 
 	public String flattenList(List<String> name) {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		for (String string : name) {
-			result += string + " ";
+			result.append(string);
+			result.append(" ");
 		}
-		return result;
+		return result.toString();
 	}
 
 	@TextSyntax("Documentation - #1")
@@ -226,12 +227,10 @@ public class DocumentationSupport {
 	}
 
 	// TODO This can be removed if the metamodel structure is correct
-	private FragmentContainer locateProperContainer(
-			FragmentContainer container) {
+	private FragmentContainer locateProperContainer(FragmentContainer container) {
 		while (container instanceof ListItem) {
 			EObject parentContainer = container.eContainer();
-			while (parentContainer != null
-					&& !(parentContainer instanceof FragmentContainer)) {
+			while (parentContainer != null && !(parentContainer instanceof FragmentContainer)) {
 				parentContainer = parentContainer.eContainer();
 			}
 			if (parentContainer instanceof FragmentContainer) {
@@ -240,6 +239,7 @@ public class DocumentationSupport {
 				break;
 			}
 		}
+		
 		return container;
 	}
 
@@ -295,14 +295,15 @@ public class DocumentationSupport {
 	}
 
 	private String insertCamelCaseWhitespaces(String ccs) {
-		String result = "";
-		String[] individualWords = ccs
-				.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+		String[] individualWords = ccs.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
+		StringBuilder result = new StringBuilder();
 		for (String word : individualWords) {
-			result += " " + word;
+			result.append(" ");
+			result.append(word);
 		}
-		return result;
+		
+		return result.toString();
 	}
 
 	@TextSyntax("Story - #1")
