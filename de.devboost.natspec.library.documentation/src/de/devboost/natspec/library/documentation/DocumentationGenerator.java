@@ -413,16 +413,23 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseTableRow(TableRow object) {
-		String result = "<tr>";
+		StringBuilder result = new StringBuilder("<tr>");
 		for (TableCell cell : object.getRowCells()) {
 			if (cell.getSpan() > 1) {
-				result += "<td colspan=\"" + cell.getSpan() + "\">" + cell.getContent() + "</td>";
+				result.append("<td colspan=\"");
+				result.append(cell.getSpan());
+				result.append("\">");
+				result.append(cell.getContent());
+				result.append("</td>");
 			} else {
-				result += "<td>" + cell.getContent() + "</td>";
+				result.append("<td>");
+				result.append(cell.getContent());
+				result.append("</td>");
 			}
 		}
-		result += "</tr>\n";
-		return result;
+		
+		result.append("</tr>\n");
+		return result.toString();
 	}
 
 	@Override
