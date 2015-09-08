@@ -584,10 +584,18 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 		} finally {
 			if (fis != null) {
-				fis.close();
+				try {
+					fis.close();
+				} catch (IOException e) {
+					// Ignore
+				}
 			}
 			if (fos != null) {
-				fos.close();
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// Ignore
+				}
 			}
 		}
 
@@ -612,23 +620,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		File file = new File(DOC_PATH + "Documentation.html");
 
-		// if file doesn't exists, then create it
-		if (!file.exists()) {
-			File parentFile = file.getParentFile();
-			if (!parentFile.exists()) {
-				parentFile.mkdirs();
-			}
-			file.createNewFile();
-		}
-
-		FileOutputStream fos = new FileOutputStream(file);
-
 		// get the content in bytes
 		byte[] contentInBytes = completeDocumentation.getBytes("UTF-8");
-
-		fos.write(contentInBytes);
-		fos.flush();
-		fos.close();
+		writeToFile(file, contentInBytes);
 	}
 
 	public String getDocumentationAsString(Documentation documentation, String cssPath) {
@@ -653,6 +647,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		closeHTMLHeader(completeFile);
 		File file = new File(DOC_FRAGMENT_PATH + filename + ".html");
 
+		// get the content in bytes
+		byte[] contentInBytes = completeFile.toString().getBytes("UTF-8");
+		writeToFile(file, contentInBytes);
+
+		System.out.println("Saved documentation to: " + file.getAbsolutePath());
+	}
+
+	private void writeToFile(File file, byte[] contentInBytes) throws IOException {
 		// if file doesn't exists, then create it
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
@@ -661,13 +663,10 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			file.createNewFile();
 		}
-		
+
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(file);
-			// get the content in bytes
-			byte[] contentInBytes = completeFile.toString().getBytes("UTF-8");
-
 			fos.write(contentInBytes);
 			fos.flush();
 		} catch (IOException e) {
@@ -677,8 +676,6 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 				fos.close();
 			}
 		}
-
-		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
 
 	private void initHTMLHeader(StringBuilder buffer, String cssPath) {
