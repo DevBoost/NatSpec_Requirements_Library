@@ -88,15 +88,23 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseDocumentation(Documentation documentation) {
-		String result = "<h1 class=\"title\">" + documentation.getTitle() + "</h1>\n";
-		result += getClassificationHTML();
-		result += "<h2>Outline</h2>";
+		StringBuilder result = new StringBuilder();
+		result.append("<h1 class=\"title\">");
+		result.append(documentation.getTitle());
+		result.append("</h1>\n");
+		result.append(getClassificationHTML());
+		result.append("<h2>Outline</h2>");
 		for (Section s : documentation.getSections()) {
 			sectionCount++;
 			subsectionCount = 0;
 			s.setId(sectionCount + "");
-			result += "<a class=\"outline_section_reference\" href=\"#" + s.getId() + "\">" + s.getId() + " "
-					+ s.getName().trim() + "</a><br/>\n";
+			result.append("<a class=\"outline_section_reference\" href=\"#");
+			result.append(s.getId());
+			result.append("\">");
+			result.append(s.getId());
+			result.append(" ");
+			result.append(s.getName().trim());
+			result.append("</a><br/>\n");
 
 			for (Fragment f : s.getFragments()) {
 				if (f instanceof Subsection) {
@@ -107,8 +115,13 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 					subsection.setId(id);
 					String name = subsection.getName();
 					String trimmedName = name == null ? "" : name.trim();
-					result += "<a class=\"outline_subsection_reference\" href=\"#" + subsection.getId() + "\">" + id
-							+ " " + trimmedName + "</a><br/>\n";
+					result.append("<a class=\"outline_subsection_reference\" href=\"#");
+					result.append(subsection.getId());
+					result.append("\">");
+					result.append(id);
+					result.append(" ");
+					result.append(trimmedName);
+					result.append("</a><br/>\n");
 
 					for (Fragment f2 : subsection.getFragments()) {
 						if (f2 instanceof Subsubsection) {
@@ -116,47 +129,53 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 							subsubsectionCount++;
 							String subsubid = sectionCount + "." + subsectionCount + "." + subsubsectionCount;
 							subsubsection.setId(subsubid);
-							result += "<a class=\"outline_subsubsection_reference\" href=\"#" + subsubsection.getId()
-									+ "\">" + subsubsection.getId() + " " + subsubsection.getName().trim()
-									+ "</a><br/>\n";
-
+							result.append("<a class=\"outline_subsubsection_reference\" href=\"#");
+							result.append(subsubsection.getId());
+							result.append("\">");
+							result.append(subsubsection.getId());
+							result.append(" ");
+							result.append(subsubsection.getName().trim());
+							result.append("</a><br/>\n");
 						}
 					}
 				}
 			}
 		}
-		result += casePageBreak(null);
+		result.append(casePageBreak(null));
 
 		boolean hasImages = hasImages(documentation);
 		if (configuration.isTableOfFigures() && hasImages) {
 			sectionCount++;
-			result += "<a class=\"outline_section_reference\" href=\"#" + sectionCount + "\">" + sectionCount
-					+ " Table of Figures" + "</a><br/>\n";
+			result.append("<a class=\"outline_section_reference\" href=\"#" + sectionCount + "\">");
+			result.append(Integer.toString(sectionCount));
+			result.append(" Table of Figures");
+			result.append("</a><br/>\n");
 
-			result = result + casePageBreak(null);
+			result.append(casePageBreak(null));
 		} else {
-			result = result + casePageBreak(null);
+			result.append(casePageBreak(null));
 		}
 
 		for (Section s : documentation.getSections()) {
-			result += doSwitch(s);
+			result.append(doSwitch(s));
 		}
 
 		String glossary = "";
 		for (TermEntry entry : documentation.getTerminology()) {
-			result += doSwitch(entry);
+			result.append(doSwitch(entry));
 			// result = weaveTerminologyReferences(entry, result);
 		}
 
-		result += glossary;
+		// FIXME glossary is always empty?
+		result.append(glossary);
 
-		result = result + casePageBreak(null);
+		result.append(casePageBreak(null));
 
 		if (configuration.isTableOfFigures() && hasImages) {
-			result += insertFigureTable(imageMap, sectionCount);
+			result.append(insertFigureTable(imageMap, sectionCount));
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	protected String getClassificationHTML() {
@@ -190,15 +209,25 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	private String insertFigureTable(Map<Integer, NamedElement> map, int sectionCount) {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 
-		result += "<a name=\"" + sectionCount + "\"/><h2>" + sectionCount + " Table of Figures</h2>\n";
+		result.append("<a name=\"");
+		result.append(sectionCount);
+		result.append("\"/><h2>");
+		result.append(sectionCount);
+		result.append(" Table of Figures</h2>\n");;
 		for (Map.Entry<Integer, NamedElement> e : imageMap.entrySet()) {
-			result += "<a class=\"figure_table_reference\" href=\"#" + figureAnchorID(e.getKey()) + "\">" + "Figure  "
-					+ e.getKey() + " - " + e.getValue().getName() + "</a><br/>\n";
+			result.append("<a class=\"figure_table_reference\" href=\"#");
+			result.append(figureAnchorID(e.getKey()));
+			result.append("\">");
+			result.append("Figure  ");
+			result.append(e.getKey());
+			result.append(" - ");
+			result.append(e.getValue().getName());
+			result.append("</a><br/>\n");
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	@Override
@@ -295,23 +324,30 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseSection(Section section) {
-		String result = casePageBreak(null);
+		String result1 = casePageBreak(null);
 
 		String id = section.getId();
 		String name = section.getName();
 		String trimmedName = name.trim();
 
-		result += "<h2 id=\"" + id + "\" class=\"section\">" + id + " " + trimmedName + "</h2>\n";
+		StringBuilder result = new StringBuilder(result1);
+		result.append("<h2 id=\"");
+		result.append(id);
+		result.append("\" class=\"section\">");
+		result.append(id);
+		result.append(" ");
+		result.append(trimmedName);
+		result.append("</h2>\n");
 
 		for (Text t : section.getTexts()) {
-			result += doSwitch(t);
+			result.append(doSwitch(t));
 		}
 
 		for (Fragment f : section.getFragments()) {
-			result += doSwitch(f);
+			result.append(doSwitch(f));
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	@Override
@@ -320,17 +356,24 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String name = subsection.getName();
 		String trimmedName = name == null ? "" : name.trim();
 
-		String result = "<h3 id=\"" + id + "\" class=\"subsection\">" + id + " " + trimmedName + "</h3>\n";
+		StringBuilder result = new StringBuilder();
+		result.append("<h3 id=\"");
+		result.append(id);
+		result.append("\" class=\"subsection\">");
+		result.append(id);
+		result.append(" ");
+		result.append(trimmedName);
+		result.append("</h3>\n");
 
 		for (Text t : subsection.getTexts()) {
-			result += doSwitch(t);
+			result.append(doSwitch(t));
 		}
 
 		for (Fragment fragment : subsection.getFragments()) {
-			result += doSwitch(fragment);
+			result.append(doSwitch(fragment));
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	@Override
@@ -339,17 +382,24 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		String name = subsubsection.getName();
 		String trimmedName = name.trim();
 
-		String result = "<h4 id=\"" + id + "\" class=\"subsubsection\">" + id + " " + trimmedName + "</h4>\n";
+		StringBuilder result = new StringBuilder();
+		result.append("<h4 id=\"");
+		result.append(id);
+		result.append("\" class=\"subsubsection\">");
+		result.append(id);
+		result.append(" ");
+		result.append(trimmedName);
+		result.append("</h4>\n");
 
 		for (Text t : subsubsection.getTexts()) {
-			result += doSwitch(t);
+			result.append(doSwitch(t));
 		}
 
 		for (Fragment fragment : subsubsection.getFragments()) {
-			result += doSwitch(fragment);
+			result.append(doSwitch(fragment));
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	@Override
@@ -399,16 +449,22 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	@Override
 	public String caseTableHeader(TableHeader object) {
-		String result = "<tr>";
+		StringBuilder result = new StringBuilder("<tr>");
 		for (TableCell cell : object.getHeaderCells()) {
 			if (cell.getSpan() > 1) {
-				result += "<th colspan=\"" + cell.getSpan() + "\">" + cell.getContent() + "</th>";
+				result.append("<th colspan=\"");
+				result.append(cell.getSpan());
+				result.append("\">");
+				result.append(cell.getContent());
+				result.append("</th>");
 			} else {
-				result += "<th>" + cell.getContent() + "</th>";
+				result.append("<th>");
+				result.append(cell.getContent());
+				result.append("</th>");
 			}
 		}
-		result += "</tr>\n";
-		return result;
+		result.append("</tr>\n");
+		return result.toString();
 	}
 
 	@Override
