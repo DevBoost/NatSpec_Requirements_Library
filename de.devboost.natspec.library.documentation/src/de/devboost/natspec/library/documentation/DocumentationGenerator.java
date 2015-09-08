@@ -511,13 +511,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			return content;
 		}
 
+		String contextClassName = xml.getContextClassName();
 		try {
-			String contextClassName = xml.getContextClassName();
 			Class<?> clazz = Class.forName(contextClassName);
-			if (clazz == null) {
-				throw new RuntimeException("Can't find class '" + contextClassName + "'.");
-			}
-
 			String resource = xml.getResource();
 			InputStream inputStream = clazz.getResourceAsStream(resource);
 
@@ -530,7 +526,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			IOUtils.copy(inputStream, writer, "UTF-8");
 			content = writer.toString();
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Can't find class '" + contextClassName + "'.", e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
