@@ -661,14 +661,22 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 			file.createNewFile();
 		}
-		FileOutputStream fos = new FileOutputStream(file);
+		
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(file);
+			// get the content in bytes
+			byte[] contentInBytes = completeFile.toString().getBytes("UTF-8");
 
-		// get the content in bytes
-		byte[] contentInBytes = completeFile.toString().getBytes("UTF-8");
-
-		fos.write(contentInBytes);
-		fos.flush();
-		fos.close();
+			fos.write(contentInBytes);
+			fos.flush();
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			if (fos != null) {
+				fos.close();
+			}
+		}
 
 		System.out.println("Saved documentation to: " + file.getAbsolutePath());
 	}
