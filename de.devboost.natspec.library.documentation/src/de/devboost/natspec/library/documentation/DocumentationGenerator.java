@@ -215,7 +215,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		result.append(sectionCount);
 		result.append("\"/><h2>");
 		result.append(sectionCount);
-		result.append(" Table of Figures</h2>\n");;
+		result.append(" Table of Figures</h2>\n");
 		for (Map.Entry<Integer, NamedElement> e : imageMap.entrySet()) {
 			result.append("<a class=\"figure_table_reference\" href=\"#");
 			result.append(figureAnchorID(e.getKey()));
