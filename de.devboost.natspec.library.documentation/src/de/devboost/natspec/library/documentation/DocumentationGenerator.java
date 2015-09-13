@@ -11,6 +11,7 @@ import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -24,6 +25,8 @@ import de.devboost.natspec.library.documentation.util.DocumentationSwitch;
 
 // TODO Replace output to System.out and System.err with listener mechanism
 public class DocumentationGenerator extends DocumentationSwitch<String> {
+	
+	private static final Logger logger = Logger.getLogger(DocumentationGenerator.class.getName());
 
 	public static final String DOC_PATH = "./doc/";
 	public static final String DOC_FRAGMENT_PATH = "./doc/fragment/";
@@ -75,6 +78,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		if (file.exists()) {
 			if (file.isDirectory()) {
 				File[] files = file.listFiles();
+				if (files == null) {
+					return true;
+				}
 				for (File nestedFile : files) {
 					if (!deleteIfExists(nestedFile)) {
 						return false;
@@ -627,7 +633,9 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 		File targetPath = targetFile.getParentFile();
 		if (!targetPath.exists()) {
-			targetPath.mkdirs();
+			if (!targetPath.mkdirs()) {
+				logger.severe("Can't create directory " + targetPath.getPath());
+			}
 		}
 
 		FileInputStream fis = null;
@@ -718,9 +726,14 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 			if (!parentFile.exists()) {
-				parentFile.mkdirs();
+				if (!parentFile.mkdirs()) {
+					logger.severe("Can't create directory " +  parentFile.getPath());
+				}
 			}
-			file.createNewFile();
+			if (!file.createNewFile()) {
+				logger.severe("Can't create file " +  file.getPath());
+				return;
+			}
 		}
 
 		FileOutputStream fos = null;
