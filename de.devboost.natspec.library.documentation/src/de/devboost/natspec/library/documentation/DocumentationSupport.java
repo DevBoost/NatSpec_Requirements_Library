@@ -203,9 +203,7 @@ public class DocumentationSupport {
 	}
 
 	@TextSyntax("Paragraph #1")
-	public Paragraph createParagraphWithHeading(List<String> heading,
-			FragmentContainer container) {
-
+	public Paragraph createParagraphWithHeading(List<String> heading, FragmentContainer container) {
 		if (container instanceof Listing) {
 			Listing listing = (Listing) container;
 			EObject parent = listing.eContainer();
@@ -215,32 +213,14 @@ public class DocumentationSupport {
 		}
 
 		Paragraph paragraph = factory.createParagraph();
-		container = locateProperContainer(container);
 		container.getFragments().add(paragraph);
 		if (!heading.isEmpty()) {
 			HtmlCode headingLine = factory.createHtmlCode();
-			headingLine.setText("<strong>" + StringUtils.join(heading, " ")
-					+ " </strong>");
+			headingLine.setText("<strong>" + StringUtils.join(heading, " ") + " </strong>");
 			paragraph.getTexts().add(headingLine);
 		}
-		return paragraph;
-	}
-
-	// TODO This can be removed if the metamodel structure is correct
-	private FragmentContainer locateProperContainer(FragmentContainer container) {
-		while (container instanceof ListItem) {
-			EObject parentContainer = container.eContainer();
-			while (parentContainer != null && !(parentContainer instanceof FragmentContainer)) {
-				parentContainer = parentContainer.eContainer();
-			}
-			if (parentContainer instanceof FragmentContainer) {
-				container = (FragmentContainer) parentContainer;
-			} else {
-				break;
-			}
-		}
 		
-		return container;
+		return paragraph;
 	}
 
 	@TextSyntax("List")
