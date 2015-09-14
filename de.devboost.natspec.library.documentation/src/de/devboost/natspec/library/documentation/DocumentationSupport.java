@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.ecore.EObject;
@@ -18,14 +19,14 @@ import de.devboost.natspec.annotations.TextSyntax;
 
 public class DocumentationSupport {
 
-	private boolean withinTable;
-	private Documentation documentation;
-	private DocumentationFactory factory;
+	private final static Pattern FIXME_COMMENT_PATTERN = Pattern.compile("^//\\s*FIXME");
+	private final static Pattern TODO_COMMENT_PATTERN = Pattern.compile("^//\\s*TODO");
 
-	public DocumentationSupport(Class<?> testClass) {
-		super();
-		this.factory = DocumentationFactory.eINSTANCE;
-	}
+	private final static DocumentationFactory FACTORY = DocumentationFactory.eINSTANCE;
+
+	private Documentation documentation;
+
+	private boolean withinTable;
 
 	public Documentation getDocumentation() {
 		return this.documentation;
@@ -42,7 +43,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Documentation - #1")
 	public Documentation initDocumentation(List<String> name) {
-		documentation = factory.createDocumentation();
+		documentation = FACTORY.createDocumentation();
 		documentation.setTitle(flattenList(name));
 		return documentation;
 	}
@@ -51,7 +52,7 @@ public class DocumentationSupport {
 	public Reference addReference(String label, List<String> caption,
 			TextContainer container, Documentation documentation) {
 		
-		Reference reference = factory.createReference();
+		Reference reference = FACTORY.createReference();
 		reference.setName(flattenList(caption));
 		reference.setReferredLabel(label);
 
@@ -61,7 +62,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Section - #1")
 	public Section addSection(List<String> name, Documentation d) {
-		Section section = factory.createSection();
+		Section section = FACTORY.createSection();
 		section.setName(flattenList(name));
 		d.getSections().add(section);
 		return section;
@@ -76,7 +77,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Subsection - #1")
 	public Subsection addSubsection(List<String> name, Section section) {
-		Subsection subsection = factory.createSubsection();
+		Subsection subsection = FACTORY.createSubsection();
 		String subsectionName = flattenList(name);
 		subsection.setName(subsectionName);
 		section.getFragments().add(subsection);
@@ -93,7 +94,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Subsubsection - #1")
 	public Subsubsection addSubsubsection(List<String> name, Subsection s) {
-		Subsubsection subsubsection = factory.createSubsubsection();
+		Subsubsection subsubsection = FACTORY.createSubsubsection();
 		String subsubsectionName = flattenList(name);
 		subsubsection.setName(subsubsectionName);
 		s.getFragments().add(subsubsection);
@@ -110,7 +111,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Insert page break")
 	public void addPageBreak(FragmentContainer container) {
-		PageBreak fragment = factory.createPageBreak();
+		PageBreak fragment = FACTORY.createPageBreak();
 		container.getFragments().add(fragment);
 	}
 
@@ -127,7 +128,7 @@ public class DocumentationSupport {
 	}
 
 	private Line addLine(TextContainer container, String text) {
-		Line line = factory.createLine();
+		Line line = FACTORY.createLine();
 		line.setText(text);
 		if (container instanceof FragmentContainer) {
 			FragmentContainer fragmentContainer = (FragmentContainer) container;
@@ -143,7 +144,7 @@ public class DocumentationSupport {
 			FragmentContainer container) {
 		if (!withinTable) {
 			withinTable = true;
-			Table table = factory.createTable();
+			Table table = FACTORY.createTable();
 			container.getFragments().add(table);
 			return table;
 		} else {
@@ -155,10 +156,10 @@ public class DocumentationSupport {
 	@TextSyntax("|- #1 -|")
 	public void createTableHeader(List<String> headerContents, Table table) {
 		List<String> removeSeparators = removeSeparators(headerContents, "-|-");
-		TableHeader tableHeader = factory.createTableHeader();
+		TableHeader tableHeader = FACTORY.createTableHeader();
 		table.setTableHeader(tableHeader);
 		for (String cellValue : removeSeparators) {
-			TableCell cell = factory.createTableCell();
+			TableCell cell = FACTORY.createTableCell();
 			cell.setContent(cellValue);
 			tableHeader.getHeaderCells().add(cell );
 		}
@@ -167,10 +168,10 @@ public class DocumentationSupport {
 	@TextSyntax("| #1 |")
 	public void createTableRow(List<String> rowContents, Table table) {
 		List<String> removeSeparators = removeSeparators(rowContents, "|");
-		TableRow tableRow = factory.createTableRow();
+		TableRow tableRow = FACTORY.createTableRow();
 		table.getTableRows().add(tableRow);
 		for (String cellValue : removeSeparators) {
-			TableCell cell = factory.createTableCell();
+			TableCell cell = FACTORY.createTableCell();
 			cell.setContent(cellValue);
 			tableRow.getRowCells().add(cell);
 		}
@@ -212,10 +213,10 @@ public class DocumentationSupport {
 			}
 		}
 
-		Paragraph paragraph = factory.createParagraph();
+		Paragraph paragraph = FACTORY.createParagraph();
 		container.getFragments().add(paragraph);
 		if (!heading.isEmpty()) {
-			HtmlCode headingLine = factory.createHtmlCode();
+			HtmlCode headingLine = FACTORY.createHtmlCode();
 			headingLine.setText("<strong>" + StringUtils.join(heading, " ") + " </strong>");
 			paragraph.getTexts().add(headingLine);
 		}
@@ -226,7 +227,7 @@ public class DocumentationSupport {
 	@TextSyntax("List")
 	public de.devboost.natspec.library.documentation.List addList(
 			FragmentContainer container) {
-		de.devboost.natspec.library.documentation.List list = factory
+		de.devboost.natspec.library.documentation.List list = FACTORY
 				.createList();
 		container.getFragments().add(list);
 		return list;
@@ -235,7 +236,7 @@ public class DocumentationSupport {
 	@TextSyntax("* #1")
 	public ListItem addListItem(List<String> item,
 			de.devboost.natspec.library.documentation.List list) {
-		ListItem listItem = factory.createListItem();
+		ListItem listItem = FACTORY.createListItem();
 		list.getItems().add(listItem);
 		listItem.setText(flattenList(item));
 		return listItem;
@@ -250,7 +251,7 @@ public class DocumentationSupport {
 	@TextSyntax("Image of #1 at #2")
 	public Image image(List<String> name, String externalPath,
 			FragmentContainer container) {
-		Image image = factory.createImage();
+		Image image = FACTORY.createImage();
 		container.getFragments().add(image);
 		image.setName(StringUtils.join(name, " "));
 		image.setOriginalSource(externalPath);
@@ -263,7 +264,7 @@ public class DocumentationSupport {
 			FragmentContainer container) {
 		Image image = image(name, externalPath, container);
 		try {
-			Width width = factory.createWidth();
+			Width width = FACTORY.createWidth();
 			width.setWidth(Integer.parseInt(widthPercent));
 			Unit unit = Unit.get(stringUnit);
 			width.setUnit(unit);
@@ -306,11 +307,11 @@ public class DocumentationSupport {
 			
 			if (createSubSection && c instanceof Section) {
 				Section section = (Section) c;
-				Subsection subsection = factory.createSubsection();
+				Subsection subsection = FACTORY.createSubsection();
 				subsection.setName(contentKind + ": " + nameWithCamelCaseWhitespaces);
 				section.getFragments().add(subsection);	
 			} else {
-				HtmlCode code = factory.createHtmlCode();
+				HtmlCode code = FACTORY.createHtmlCode();
 				c.getFragments().add(code);
 				code.setText("<h3 class =\"scenario\">" + contentKind + ": "
 						+ nameWithCamelCaseWhitespaces
@@ -371,7 +372,7 @@ public class DocumentationSupport {
 				codeFragments.add(codeFragment);
 			}
 			for (String fragment : codeFragments) {
-				HtmlCode contents = factory.createHtmlCode();
+				HtmlCode contents = FACTORY.createHtmlCode();
 				c.getFragments().add(contents);
 				if (isComment(fragment)) {
 					contents.setText(fragment.substring(2));
@@ -406,11 +407,11 @@ public class DocumentationSupport {
 	}
 	
 	private boolean isFIXMEComment(String line) {
-		return line.trim().startsWith("// FIXME");
+		return FIXME_COMMENT_PATTERN.matcher(line.trim()).matches();
 	}
 	
 	private boolean isTODOComment(String line) {
-		return line.trim().startsWith("// TODO");
+		return TODO_COMMENT_PATTERN.matcher(line.trim()).matches();
 	}
 
 	@TextSyntax("Rules - #1")
@@ -421,7 +422,7 @@ public class DocumentationSupport {
 	@TextSyntax("Define #1 : #2")
 	public void addTerminoligyEntry(List<String> entryName,
 			List<String> entryDescription, Documentation documentation) {
-		TermEntry termEntry = factory.createTermEntry();
+		TermEntry termEntry = FACTORY.createTermEntry();
 		termEntry.setName(StringUtils.join(entryName, " "));
 		termEntry.setDescription(StringUtils.join(entryDescription, " "));
 		documentation.getTerminology().add(termEntry);
@@ -429,7 +430,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Author #1")
 	public void addAuthor(List<String> authors, FragmentContainer container) {
-		HtmlCode html = factory.createHtmlCode();
+		HtmlCode html = FACTORY.createHtmlCode();
 		html.setText("<div class=\"author_tag\">" + StringUtils.join(authors, " ")
 				+ "</div>");
 		container.getFragments().add(html);
@@ -446,14 +447,14 @@ public class DocumentationSupport {
 
 	@TextSyntax("Listing")
 	public Listing beginListing(FragmentContainer container) {
-		Listing createListing = factory.createListing();
+		Listing createListing = FACTORY.createListing();
 		container.getFragments().add(createListing);
 		return createListing;
 	}
 
 	@TextSyntax("Code #1")
 	public Code code(@Many String text, TextContainer container) {
-		Code code = factory.createCode();
+		Code code = FACTORY.createCode();
 		code.setText(text);
 		if (container instanceof FragmentContainer) {
 			FragmentContainer fragmentContainer = (FragmentContainer) container;
@@ -466,7 +467,7 @@ public class DocumentationSupport {
 
 	@TextSyntax("Link to #1")
 	public Link link(String uri, FragmentContainer container) {
-		Link link = factory.createLink();
+		Link link = FACTORY.createLink();
 		container.getFragments().add(link);
 		link.setName(uri);
 		link.setUri(uri);
