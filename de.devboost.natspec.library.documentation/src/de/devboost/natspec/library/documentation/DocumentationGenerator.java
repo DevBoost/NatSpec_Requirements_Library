@@ -628,14 +628,20 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	}
 
 	private String copyResource(String resource, String contextClassName) throws IOException {
+		InputStream inputStream = null;
 		try {
-			InputStream inputStream = Class.forName(contextClassName).getResourceAsStream(resource);
+			Class<?> contextClass = Class.forName(contextClassName);
+			inputStream = contextClass.getResourceAsStream(resource);
 			if (inputStream == null) {
 				throw new IOException("Can't find resource '" + resource + "' near class " + contextClassName);
 			}
 			return copy(inputStream, resource, resource);
 		} catch (ClassNotFoundException e) {
 			throw new IOException(e.getMessage(), e);
+		} finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		}
 	}
 
