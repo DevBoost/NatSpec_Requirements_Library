@@ -3,6 +3,7 @@ package de.devboost.natspec.library.documentation;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,13 +58,19 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 	 * Creates a new {@link DocumentationGenerator} using the given configuration.
 	 */
 	public DocumentationGenerator(Configuration configuration) {
+		this(configuration, new File(DOC_IMAGE_PATH));
+	}
+	
+	public DocumentationGenerator(Configuration configuration, File imagePath) {
 		Assert.isNotNull(configuration, "Configuration is required");
 
 		this.configuration = configuration;
-		this.imagePath = new File(DOC_IMAGE_PATH);
+		this.imagePath = imagePath;
 		if (configuration.isCopyImages()) {
-			if (!deleteIfExists(imagePath)) {
-				System.err.println("Warning: image path has not cleaned.");
+			if (configuration.isClearImagesFolder()) {
+				if (!deleteIfExists(imagePath)) {
+					System.err.println("Warning: image path has not cleaned.");
+				}
 			}
 		}
 	}
@@ -612,47 +619,68 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	protected String copyImage(Image image) throws IOException {
 		String originalSource = image.getOriginalSource();
-		return copyFile(originalSource);
+		if (originalSource != null) {
+			return copyFile(originalSource);
+		} else {
+			copyResource(image.getResource(), image.getContextClassName());
+			return image.getResource();
+		}
 	}
 
-	protected String copyFile(String fileName) throws IOException {
-		File sourceFile = new File(fileName);
-		File targetFile = new File(imagePath, sourceFile.getName());
-		int idx = 1;
-		if (targetFile.exists()) {
-			String baseFileName = StringUtils.substringBeforeLast(targetFile.getPath(), ".");
-			String fileExtension = StringUtils.substringAfterLast(targetFile.getPath(), ".");
-			String incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
-			File potentialTargetFile = new File(incrementedFileName);
-			while (potentialTargetFile.exists()) {
-				incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
-				potentialTargetFile = new File(incrementedFileName);
-			}
-			targetFile = potentialTargetFile;
-		}
-
-		File targetPath = targetFile.getParentFile();
-		if (!targetPath.exists()) {
-			if (!targetPath.mkdirs()) {
-				logger.severe("Can't create directory " + targetPath.getPath());
-			}
-		}
-
-		FileInputStream fis = null;
-		FileOutputStream fos = null;
+	private String copyResource(String resource, String contextClassName) throws IOException {
 		try {
-			fis = new FileInputStream(sourceFile);
+			InputStream inputStream = Class.forName(contextClassName).getResourceAsStream(resource);
+			if (inputStream == null) {
+				throw new IOException("Can't find resource '" + resource + "' near class " + contextClassName);
+			}
+			return copy(inputStream, resource, resource);
+		} catch (ClassNotFoundException e) {
+			throw new IOException(e.getMessage(), e);
+		}
+	}
+
+	protected String copyFile(String filePath) throws IOException {
+		File sourceFile = new File(filePath);
+		InputStream fis = new FileInputStream(sourceFile);
+		String fileName = sourceFile.getName();
+		return copy(fis, filePath, fileName);
+	}
+
+	private String copy(InputStream inputStream, String sourceFilePath, String sourceFileName) throws FileNotFoundException, IOException {
+		FileOutputStream fos = null;
+		File targetFile = new File(imagePath, sourceFileName);
+		try {
+			int idx = 1;
+			if (targetFile.exists()) {
+				String baseFileName = StringUtils.substringBeforeLast(targetFile.getPath(), ".");
+				String fileExtension = StringUtils.substringAfterLast(targetFile.getPath(), ".");
+				String incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
+				File potentialTargetFile = new File(incrementedFileName);
+				while (potentialTargetFile.exists()) {
+					incrementedFileName = baseFileName + "_" + (idx++) + "." + fileExtension;
+					potentialTargetFile = new File(incrementedFileName);
+				}
+				targetFile = potentialTargetFile;
+			}
+	
+			File targetPath = targetFile.getParentFile();
+			if (!targetPath.exists()) {
+				if (!targetPath.mkdirs()) {
+					logger.severe("Can't create directory " + targetPath.getPath());
+				}
+			}
+
 			fos = new FileOutputStream(targetFile);
-			byte[] bbuf = new byte[2048];
-			int read = fis.read(bbuf);
+			byte[] byteBuffer = new byte[2048];
+			int read = inputStream.read(byteBuffer);
 			while (read > 0) {
-				fos.write(bbuf, 0, read);
-				read = fis.read(bbuf);
+				fos.write(byteBuffer, 0, read);
+				read = inputStream.read(byteBuffer);
 			}
 		} finally {
-			if (fis != null) {
+			if (inputStream != null) {
 				try {
-					fis.close();
+					inputStream.close();
 				} catch (IOException e) {
 					// Ignore
 				}
@@ -666,7 +694,7 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 			}
 		}
 
-		System.out.println("Copied " + sourceFile.getPath() + " to " + targetFile.getPath());
+		System.out.println("Copied " + sourceFilePath + " to " + targetFile.getPath());
 
 		// TODO Why not use replace("\\", "/") instead of replaceAll()?
 		String rawPath = targetFile.getPath().replaceAll("\\\\", "/");

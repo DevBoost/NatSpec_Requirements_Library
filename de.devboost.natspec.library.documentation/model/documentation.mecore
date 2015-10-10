@@ -72,6 +72,8 @@ TableCell (
 )
 
 Image : Fragment, NamedElement (
+	resource EString
+	contextClassName EString
 	originalSource EString
 	width Width
 )

@@ -9,6 +9,7 @@ public class Configuration {
 
 	private boolean tableOfFigures = true;
 	private boolean copyImages = true;
+	private boolean clearImagesFolder = true;
 
 	/**
 	 * determines, if the table of figures shall be created
@@ -40,4 +41,11 @@ public class Configuration {
 		return this;
 	}
 
+	public boolean isClearImagesFolder() {
+		return clearImagesFolder;
+	}
+
+	public void setClearImagesFolder(boolean clearImagesFolder) {
+		this.clearImagesFolder = clearImagesFolder;
+	}
 }

@@ -45,6 +45,8 @@
     <genClasses ecoreClass="documentation.ecore#//Image">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/originalSource"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference documentation.ecore#//Image/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/resource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//Image/contextClassName"/>
     </genClasses>
     <genClasses ecoreClass="documentation.ecore#//TermEntry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute documentation.ecore#//TermEntry/description"/>
