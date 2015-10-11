@@ -647,9 +647,18 @@ public class DocumentationGenerator extends DocumentationSwitch<String> {
 
 	protected String copyFile(String filePath) throws IOException {
 		File sourceFile = new File(filePath);
-		InputStream fis = new FileInputStream(sourceFile);
-		String fileName = sourceFile.getName();
-		return copy(fis, filePath, fileName);
+		InputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(sourceFile);
+			String fileName = sourceFile.getName();
+			return copy(inputStream, filePath, fileName);
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
 	}
 
 	private String copy(InputStream inputStream, String sourceFilePath, String sourceFileName) throws FileNotFoundException, IOException {
